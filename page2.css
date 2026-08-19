@@ -1,4 +1,13 @@
 ```css
+/* =====================================================
+   PAGE 2 — BIRTHDAY PARTY
+   DESIGN / ANIMATIONS
+===================================================== */
+
+/* =====================================================
+   RESET
+===================================================== */
+
 * {
     margin: 0;
     padding: 0;
@@ -14,83 +23,199 @@ body {
 body {
     min-height: 100vh;
     overflow: hidden;
+
     font-family: "Poppins", sans-serif;
-    color: #8f243d;
+
+    color: #8d2340;
 
     background:
         radial-gradient(
             circle at 50% 20%,
             #fffdfd 0%,
             #fff4f5 35%,
-            #ffe7e9 70%,
-            #ffd5da 100%
+            #ffe7ea 70%,
+            #ffd6dc 100%
         );
+
+    transition:
+        transform 2.5s ease,
+        filter 2.5s ease,
+        opacity 2.5s ease;
 }
 
-button {
-    -webkit-tap-highlight-color: transparent;
-}
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
 
 .background-glow {
     position: fixed;
-    width: 650px;
-    height: 650px;
+
+    width: 700px;
+    height: 700px;
+
     left: 50%;
     top: 50%;
+
     transform: translate(-50%, -50%);
-    background: rgba(255, 100, 130, 0.15);
-    filter: blur(100px);
+
     border-radius: 50%;
+
+    background: rgba(255, 120, 145, 0.13);
+
+    filter: blur(100px);
+
     pointer-events: none;
 }
 
-body::before {
-    content: "";
+.floating-hearts {
     position: fixed;
+
     inset: 0;
-    background-image:
-        radial-gradient(
-            rgba(180, 40, 70, 0.08) 1px,
-            transparent 1px
-        );
-    background-size: 30px 30px;
+
     pointer-events: none;
+
+    z-index: 1;
 }
 
-/* ROPE */
+.floating-hearts span {
+    position: absolute;
+
+    font-size: 18px;
+
+    opacity: 0.25;
+
+    animation: floatHeart 7s ease-in-out infinite;
+}
+
+.floating-hearts span:nth-child(1) {
+    left: 8%;
+    top: 30%;
+}
+
+.floating-hearts span:nth-child(2) {
+    left: 22%;
+    top: 70%;
+    animation-delay: 1s;
+}
+
+.floating-hearts span:nth-child(3) {
+    left: 37%;
+    top: 18%;
+    animation-delay: 2s;
+}
+
+.floating-hearts span:nth-child(4) {
+    left: 56%;
+    top: 78%;
+    animation-delay: 1.5s;
+}
+
+.floating-hearts span:nth-child(5) {
+    left: 72%;
+    top: 25%;
+    animation-delay: 3s;
+}
+
+.floating-hearts span:nth-child(6) {
+    left: 88%;
+    top: 62%;
+    animation-delay: 2s;
+}
+
+.floating-hearts span:nth-child(7) {
+    left: 62%;
+    top: 45%;
+    animation-delay: 4s;
+}
+
+.floating-hearts span:nth-child(8) {
+    left: 94%;
+    top: 18%;
+    animation-delay: 2.5s;
+}
+
+@keyframes floatHeart {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0);
+    }
+
+    50% {
+        transform: translateY(-20px) rotate(15deg);
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY ROPE
+===================================================== */
 
 .birthday-rope {
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100%;
     height: 90px;
+
     display: flex;
-    align-items: flex-start;
+
     justify-content: space-around;
-    padding-top: 8px;
-    z-index: 20;
+
+    padding-top: 7px;
+
+    z-index: 30;
+
     pointer-events: none;
 }
 
 .rope-line {
     position: absolute;
-    top: 14px;
+
     left: 0;
+    top: 13px;
+
     width: 100%;
     height: 3px;
-    background: #b92c48;
+
+    background: #ad2946;
+
     opacity: 0.35;
 }
 
 .birthday-rope span {
     position: relative;
-    font-size: 34px;
-    animation: decorationSwing 3s ease-in-out infinite;
+
+    font-size: 33px;
+
+    animation: ropeSwing 3s ease-in-out infinite;
 }
 
-@keyframes decorationSwing {
-    0%, 100% {
+.birthday-rope span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.birthday-rope span:nth-child(4) {
+    animation-delay: 0.6s;
+}
+
+.birthday-rope span:nth-child(5) {
+    animation-delay: 0.9s;
+}
+
+.birthday-rope span:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+.birthday-rope span:nth-child(7) {
+    animation-delay: 1.5s;
+}
+
+@keyframes ropeSwing {
+    0%,
+    100% {
         transform: rotate(-4deg);
     }
 
@@ -99,129 +224,135 @@ body::before {
     }
 }
 
-/* CONFETTI */
 
-.confetti-background {
+/* =====================================================
+   TOP TITLE
+===================================================== */
+
+.top-title {
     position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
+
+    top: 47px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: 25;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(25px, 4vw, 42px);
+
+    font-weight: 700;
+
+    letter-spacing: 3px;
+
+    color: #9e2341;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 5px 20px rgba(150, 30, 60, 0.12);
 }
 
-.confetti-background span {
-    position: absolute;
-    font-size: 18px;
-    opacity: 0.35;
-    animation: floatingConfetti 8s ease-in-out infinite;
+.top-title span {
+    font-size: 20px;
 }
 
-.confetti-background span:nth-child(1) {
-    left: 8%;
-    top: 30%;
-}
 
-.confetti-background span:nth-child(2) {
-    left: 20%;
-    top: 75%;
-    animation-delay: 2s;
-}
-
-.confetti-background span:nth-child(3) {
-    left: 35%;
-    top: 20%;
-    animation-delay: 1s;
-}
-
-.confetti-background span:nth-child(4) {
-    left: 55%;
-    top: 80%;
-    animation-delay: 3s;
-}
-
-.confetti-background span:nth-child(5) {
-    left: 72%;
-    top: 25%;
-    animation-delay: 1.5s;
-}
-
-.confetti-background span:nth-child(6) {
-    left: 88%;
-    top: 65%;
-    animation-delay: 4s;
-}
-
-.confetti-background span:nth-child(7) {
-    left: 60%;
-    top: 45%;
-    animation-delay: 2.5s;
-}
-
-.confetti-background span:nth-child(8) {
-    left: 93%;
-    top: 18%;
-    animation-delay: 5s;
-}
-
-@keyframes floatingConfetti {
-    0%, 100% {
-        transform: translateY(0) rotate(0);
-    }
-
-    50% {
-        transform: translateY(-25px) rotate(90deg);
-    }
-}
-
-/* PROGRESS */
+/* =====================================================
+   PROGRESS
+===================================================== */
 
 .party-progress {
     position: fixed;
-    top: 105px;
+
+    top: 102px;
     left: 50%;
+
     transform: translateX(-50%);
+
     padding: 7px 16px;
-    background: rgba(255, 255, 255, 0.75);
-    border: 1px solid rgba(180, 40, 70, 0.12);
+
     border-radius: 999px;
-    backdrop-filter: blur(8px);
+
+    background: rgba(255, 255, 255, 0.72);
+
+    border: 1px solid rgba(170, 40, 70, 0.12);
+
+    backdrop-filter: blur(10px);
+
     font-size: 10px;
+
     letter-spacing: 1px;
-    color: #a52b46;
-    z-index: 25;
+
+    color: #a42b47;
+
+    z-index: 40;
 }
 
-/* MUSIC */
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
 
 .music-button {
     position: fixed;
+
     right: 20px;
     bottom: 20px;
-    width: 45px;
-    height: 45px;
+
+    width: 46px;
+    height: 46px;
+
     border: 1px solid rgba(170, 40, 70, 0.2);
+
     border-radius: 50%;
+
     background: rgba(255, 255, 255, 0.8);
-    color: #a52b46;
-    font-size: 18px;
+
+    color: #a32946;
+
+    font-size: 19px;
+
     cursor: pointer;
-    z-index: 50;
-    box-shadow: 0 10px 25px rgba(120, 20, 40, 0.12);
+
+    z-index: 100;
+
+    box-shadow:
+        0 10px 25px rgba(120, 20, 40, 0.15);
+
+    transition: 0.3s ease;
 }
 
-/* SECTIONS */
+.music-button:hover {
+    transform: scale(1.1);
+}
+
+
+/* =====================================================
+   SECTIONS
+===================================================== */
 
 .party-section {
     position: fixed;
+
     inset: 0;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     flex-direction: column;
-    padding: 120px 25px 70px;
+
+    padding: 125px 25px 65px;
 
     opacity: 0;
+
     visibility: hidden;
-    transform: scale(0.97) translateY(20px);
+
+    transform: scale(0.96) translateY(18px);
 
     transition:
         opacity 0.7s ease,
@@ -233,351 +364,269 @@ body::before {
 
 .party-section.active {
     opacity: 1;
+
     visibility: visible;
+
     transform: scale(1) translateY(0);
 }
 
-/* TEXT */
 
-.welcome-content {
-    text-align: center;
-    width: min(90%, 800px);
-}
-
-.birthday-crown {
-    font-size: 55px;
-    animation: crownFloat 2s ease-in-out infinite;
-}
-
-@keyframes crownFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-.small-title {
-    font-size: 10px;
-    letter-spacing: 4px;
-    font-weight: 700;
-    color: #ad4a60;
-    margin: 12px 0;
-}
-
-.welcome-content h1 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: clamp(60px, 10vw, 110px);
-    line-height: 0.8;
-    color: #a32342;
-}
-
-.welcome-content h2 {
-    font-family: "Great Vibes", cursive;
-    font-size: clamp(50px, 7vw, 75px);
-    color: #c73656;
-    margin: 15px 0;
-}
-
-.welcome-text {
-    font-family: "Great Vibes", cursive;
-    font-size: 30px;
-    margin-bottom: 30px;
-}
+/* =====================================================
+   SECTION HEADINGS
+===================================================== */
 
 .section-heading {
     text-align: center;
+
+    max-width: 750px;
+
     margin-bottom: 20px;
-    max-width: 700px;
 }
 
 .section-heading > span {
     font-size: 42px;
 }
 
-.section-heading h2 {
+.section-heading h1 {
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(38px, 6vw, 62px);
-    color: #9f2542;
-    margin: 5px 0;
+
+    font-size: clamp(38px, 6vw, 65px);
+
+    line-height: 1;
+
+    color: #9d2542;
+
+    margin: 5px 0 10px;
 }
 
 .section-heading p {
-    color: #a74d62;
+    color: #a14b60;
+
     font-size: 13px;
 }
 
-/* BUTTONS */
+
+/* =====================================================
+   BUTTONS
+===================================================== */
 
 .party-button,
 .small-button {
     border: none;
+
     cursor: pointer;
+
     font-family: "Poppins", sans-serif;
+
     font-weight: 700;
+
     border-radius: 999px;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
 }
 
 .party-button {
-    padding: 15px 28px;
-    background: #a92a48;
+    padding: 14px 28px;
+
+    background: #a72847;
+
     color: white;
-    box-shadow: 0 12px 25px rgba(130, 20, 45, 0.22);
+
+    box-shadow:
+        0 12px 25px rgba(130, 20, 45, 0.22);
 }
 
 .party-button:hover {
-    transform: translateY(-3px) scale(1.03);
+    transform: translateY(-4px) scale(1.03);
 }
 
 .small-button {
     padding: 10px 18px;
-    background: #ffe8eb;
+
+    background: #ffe7eb;
+
     color: #9d2944;
 }
 
-/* STATUS */
+.next-button {
+    position: fixed;
 
-.interaction-status {
-    margin-top: 18px;
-    font-size: 14px;
-    color: #a34b60;
-    text-align: center;
-}
-
-/* CANDLES */
-
-.cake-area {
-    position: relative;
-    width: 360px;
-    height: 330px;
-}
-
-.candles {
-    position: absolute;
-    width: 250px;
-    height: 130px;
-    left: 55px;
-    top: 0;
-    z-index: 4;
-}
-
-.candle {
-    position: absolute;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
-
-.candle:nth-child(1) {
-    left: 10px;
-    top: 25px;
-}
-
-.candle:nth-child(2) {
-    left: 60px;
-    top: 0;
-}
-
-.candle:nth-child(3) {
-    left: 105px;
-    top: 25px;
-}
-
-.candle:nth-child(4) {
-    left: 150px;
-    top: 0;
-}
-
-.candle:nth-child(5) {
-    left: 195px;
-    top: 25px;
-}
-
-.flame {
-    display: block;
-    font-size: 30px;
-    animation: flameFlicker 0.7s ease-in-out infinite alternate;
-}
-
-.candle-stick {
-    display: block;
-    width: 17px;
-    height: 60px;
-    margin: auto;
-    border-radius: 6px;
-    background: linear-gradient(
-        90deg,
-        #c73656,
-        #fff,
-        #c73656
-    );
-}
-
-.candle.blown .flame {
-    opacity: 0;
-    transform: scale(0);
-    transition: 0.3s ease;
-}
-
-.candle.blown .candle-stick {
-    box-shadow: 0 0 15px rgba(255,255,255,0.8);
-}
-
-@keyframes flameFlicker {
-    from {
-        transform: scale(0.9) rotate(-3deg);
-    }
-
-    to {
-        transform: scale(1.1) rotate(3deg);
-    }
-}
-
-.cake {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    height: 170px;
-}
-
-.cake-body {
-    position: absolute;
     bottom: 35px;
-    left: 15px;
-    width: 270px;
-    height: 95px;
-    border-radius: 20px 20px 35px 35px;
-    background: linear-gradient(
-        #fff4f3,
-        #ffc8cf
-    );
-    border: 5px solid #d75a72;
-}
 
-.cake-top {
-    position: absolute;
-    z-index: 2;
-    top: 15px;
     left: 50%;
+
     transform: translateX(-50%);
-    font-size: 90px;
 }
 
-.cake-plate {
-    position: absolute;
-    bottom: 10px;
-    left: 0;
-    width: 300px;
-    height: 25px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 10px 20px rgba(100,20,40,0.15);
+.hidden {
+    display: none !important;
 }
 
-/* CAKE CUTTING */
 
-.birthday-cake {
-    position: relative;
-    width: 300px;
-    height: 220px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    transition: 0.3s ease;
-}
+/* =====================================================
+   MESSAGE BOX
+===================================================== */
 
-.birthday-cake:hover {
-    transform: scale(1.04);
-}
+.message-box {
+    position: fixed;
 
-.cake-layer {
-    position: absolute;
-    left: 20px;
-    width: 260px;
-    border-radius: 15px;
-}
+    left: 50%;
+    top: 50%;
 
-.top-layer {
-    top: 15px;
-    height: 60px;
-    background: #fff1f1;
-    border: 4px solid #d45a72;
-    font-size: 28px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
 
-.middle-layer {
-    top: 70px;
-    height: 60px;
-    background: #f7aeba;
-}
+    width: min(90%, 480px);
 
-.bottom-layer {
-    top: 125px;
-    height: 65px;
-    background: #d94f6c;
-}
+    padding: 30px 25px;
 
-.cake-knife {
-    position: absolute;
-    right: -5px;
-    top: 30px;
-    font-size: 45px;
+    text-align: center;
+
+    background: rgba(255, 253, 251, 0.98);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 30px 70px rgba(100, 20, 40, 0.25);
+
+    opacity: 0;
+
+    visibility: hidden;
+
     transition: 0.4s ease;
+
+    z-index: 200;
 }
 
-.birthday-cake.cut1 .cake-knife {
-    transform: translateX(-40px) rotate(10deg);
+.message-box.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
 }
 
-.birthday-cake.cut2 .cake-knife {
-    transform: translateX(-80px) rotate(10deg);
+.message-icon {
+    font-size: 42px;
+
+    margin-bottom: 10px;
 }
 
-.birthday-cake.cut3 {
-    animation: cakeCelebrate 0.7s ease;
+.message-box p {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 25px;
+
+    line-height: 1.3;
+
+    color: #962940;
+
+    margin-bottom: 20px;
 }
 
-@keyframes cakeCelebrate {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.12) rotate(-2deg); }
-    100% { transform: scale(1); }
+.message-box h2 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 40px;
+
+    color: #a32342;
+
+    margin-bottom: 8px;
 }
 
-/* BALLOONS */
 
-.interactive-area {
+/* =====================================================
+   BALLOONS
+===================================================== */
+
+.balloon-area {
     position: relative;
-    width: min(900px, 95vw);
-    height: 390px;
+
+    width: min(950px, 94vw);
+
+    height: 430px;
 }
 
 .balloon {
     position: absolute;
+
     border: none;
+
     background: transparent;
-    font-size: 75px;
+
+    font-size: clamp(75px, 9vw, 115px);
+
     cursor: pointer;
-    filter: drop-shadow(0 15px 12px rgba(120,30,50,0.18));
+
+    filter:
+        drop-shadow(
+            0 18px 15px rgba(100, 20, 40, 0.18)
+        );
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+
+    animation: balloonFloat 3s ease-in-out infinite;
 }
 
-.balloon:nth-child(1) { left: 8%; top: 10%; }
-.balloon:nth-child(2) { left: 28%; top: 0; }
-.balloon:nth-child(3) { left: 48%; top: 12%; }
-.balloon:nth-child(4) { left: 70%; top: 3%; }
-.balloon:nth-child(5) { left: 15%; top: 55%; }
-.balloon:nth-child(6) { left: 38%; top: 62%; }
-.balloon:nth-child(7) { left: 60%; top: 53%; }
-.balloon:nth-child(8) { left: 82%; top: 58%; }
+.balloon:hover {
+    transform: scale(1.13) rotate(5deg);
+}
+
+.balloon-1 {
+    left: 5%;
+    top: 12%;
+}
+
+.balloon-2 {
+    left: 28%;
+    top: 0;
+    animation-delay: 0.5s;
+}
+
+.balloon-3 {
+    left: 52%;
+    top: 13%;
+    animation-delay: 1s;
+}
+
+.balloon-4 {
+    left: 76%;
+    top: 0;
+    animation-delay: 1.5s;
+}
+
+.balloon-5 {
+    left: 20%;
+    top: 52%;
+    animation-delay: 2s;
+}
+
+.balloon-6 {
+    left: 62%;
+    top: 54%;
+    animation-delay: 2.5s;
+}
+
+@keyframes balloonFloat {
+    0%,
+    100% {
+        margin-top: 0;
+    }
+
+    50% {
+        margin-top: -15px;
+    }
+}
 
 .balloon.popped {
-    animation: balloonPop 0.35s ease forwards;
+    animation: balloonPop 0.38s ease forwards;
 }
 
 @keyframes balloonPop {
@@ -586,8 +635,9 @@ body::before {
         opacity: 1;
     }
 
-    50% {
-        transform: scale(1.5);
+    45% {
+        transform: scale(1.4);
+        opacity: 1;
     }
 
     100% {
@@ -596,649 +646,1413 @@ body::before {
     }
 }
 
-/* MESSAGE */
 
-.message-box {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0.85);
-    width: min(90%, 470px);
-    padding: 30px 25px;
-    text-align: center;
-    background: rgba(255,252,250,0.98);
-    border-radius: 25px;
-    box-shadow: 0 30px 70px rgba(100,20,40,0.25);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.4s ease;
-    z-index: 100;
-}
-
-.message-box.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%, -50%) scale(1);
-}
-
-.message-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.message-box p {
-    font-family: "Poppins", sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
-    color: #8f2944;
-    margin-bottom: 20px;
-}
-
-/* COMPLETION */
-
-.completion-message {
-    position: fixed;
-    left: 50%;
-    bottom: 35px;
-    transform: translateX(-50%) translateY(20px);
-    width: min(90%, 500px);
-    padding: 18px 20px;
-    background: rgba(255,250,250,0.96);
-    border-radius: 20px;
-    text-align: center;
-    box-shadow: 0 15px 40px rgba(100,20,40,0.15);
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.5s ease;
-    z-index: 60;
-}
-
-.completion-message.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
-
-.completion-message h3 {
-    font-family: "Cormorant Garamond", serif;
-    font-size: 28px;
-    color: #a32745;
-}
-
-.completion-message p {
-    font-size: 13px;
-    color: #a64a5e;
-    margin: 6px 0 12px;
-}
-
-/* POPPERS */
+/* =====================================================
+   PARTY POPPERS
+===================================================== */
 
 .popper-area {
     display: flex;
+
+    align-items: center;
     justify-content: center;
-    gap: 35px;
+
+    gap: 45px;
+
     flex-wrap: wrap;
-    width: min(900px,90vw);
+
+    width: min(1000px, 94vw);
+
+    margin-top: 25px;
 }
 
 .popper {
     border: none;
+
     background: transparent;
-    font-size: 70px;
+
+    font-size: clamp(80px, 9vw, 120px);
+
     cursor: pointer;
+
+    filter:
+        drop-shadow(
+            0 18px 12px rgba(100, 20, 40, 0.16)
+        );
+
+    transition: 0.25s ease;
+}
+
+.popper:hover {
+    transform:
+        translateY(-10px)
+        rotate(8deg)
+        scale(1.1);
 }
 
 .popper.exploded {
-    animation: popperExplode 0.45s ease forwards;
+    animation: popperExplode 0.5s ease forwards;
 }
 
 @keyframes popperExplode {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.5) rotate(15deg); }
-    100% { transform: scale(0); opacity: 0; }
+    0% {
+        transform: scale(1);
+    }
+
+    35% {
+        transform:
+            scale(1.45)
+            rotate(15deg);
+    }
+
+    100% {
+        transform:
+            scale(0)
+            rotate(25deg);
+
+        opacity: 0;
+    }
 }
 
-/* CAMERA */
+
+/* =====================================================
+   CAKE
+===================================================== */
+
+.cake-area {
+    position: relative;
+
+    width: 430px;
+
+    height: 340px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.cake {
+    position: relative;
+
+    width: 340px;
+
+    height: 230px;
+
+    margin-top: 55px;
+}
+
+.cake-layer {
+    position: absolute;
+
+    left: 20px;
+
+    width: 300px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 12px 20px rgba(100, 20, 40, 0.15);
+}
+
+.layer-bottom {
+    bottom: 0;
+
+    height: 85px;
+
+    background:
+        linear-gradient(
+            #fff8f4,
+            #f7d5d9
+        );
+}
+
+.layer-middle {
+    bottom: 65px;
+
+    height: 75px;
+
+    width: 280px;
+
+    left: 30px;
+
+    background:
+        linear-gradient(
+            #fffdf9,
+            #f8dfe2
+        );
+}
+
+.layer-top {
+    bottom: 120px;
+
+    height: 65px;
+
+    width: 250px;
+
+    left: 45px;
+
+    background:
+        linear-gradient(
+            #fff,
+            #f8e5e6
+        );
+}
+
+.cake-top {
+    position: absolute;
+
+    left: 45px;
+    bottom: 164px;
+
+    width: 250px;
+    height: 35px;
+
+    border-radius: 50%;
+
+    background: #fff9f6;
+
+    box-shadow:
+        inset 0 -8px 0 #f1c6cc;
+}
+
+.cake-cream {
+    position: absolute;
+
+    height: 18px;
+
+    border-radius: 50%;
+
+    background: #fff;
+
+    z-index: 5;
+}
+
+.cream-1 {
+    left: 40px;
+    bottom: 115px;
+
+    width: 260px;
+}
+
+.cream-2 {
+    left: 25px;
+    bottom: 52px;
+
+    width: 290px;
+}
+
+.cake-decoration {
+    position: absolute;
+
+    left: 145px;
+    bottom: 78px;
+
+    z-index: 10;
+
+    font-size: 38px;
+
+    color: #a72847;
+}
+
+
+/* =====================================================
+   CANDLES
+===================================================== */
+
+.candle {
+    position: absolute;
+
+    bottom: 160px;
+
+    width: 25px;
+
+    height: 90px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 20;
+}
+
+.candle:nth-of-type(1) {
+    left: 75px;
+}
+
+.candle:nth-of-type(2) {
+    left: 120px;
+}
+
+.candle:nth-of-type(3) {
+    left: 165px;
+}
+
+.candle:nth-of-type(4) {
+    left: 210px;
+}
+
+.candle:nth-of-type(5) {
+    left: 255px;
+}
+
+.candle:nth-of-type(6) {
+    left: 300px;
+}
+
+.candle-stick {
+    position: absolute;
+
+    left: 6px;
+    bottom: 0;
+
+    width: 13px;
+    height: 58px;
+
+    border-radius: 5px;
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #c22f4f 0 7px,
+            #fff 7px 14px
+        );
+
+    box-shadow:
+        0 5px 8px rgba(100, 20, 40, 0.15);
+}
+
+.flame {
+    position: absolute;
+
+    left: 1px;
+    top: 0;
+
+    font-size: 25px;
+
+    transform-origin: bottom;
+
+    animation:
+        flameFlicker
+        0.7s ease-in-out infinite alternate;
+}
+
+.candle.blown .flame {
+    opacity: 0;
+
+    transform:
+        translateY(-15px)
+        scale(0);
+}
+
+.candle.blown::after {
+    content: "〰";
+
+    position: absolute;
+
+    top: -20px;
+    left: 2px;
+
+    font-size: 20px;
+
+    color: #999;
+
+    animation: smokeRise 1s ease forwards;
+}
+
+@keyframes flameFlicker {
+    from {
+        transform:
+            rotate(-5deg)
+            scale(0.9);
+    }
+
+    to {
+        transform:
+            rotate(5deg)
+            scale(1.1);
+    }
+}
+
+@keyframes smokeRise {
+    from {
+        opacity: 0;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0.5;
+        transform: translateY(-25px);
+    }
+}
+
+
+/* =====================================================
+   CAKE BUTTON
+===================================================== */
+
+.cake-button {
+    position: absolute;
+
+    inset: 0;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    z-index: 15;
+}
+
+.cake-button:disabled {
+    cursor: default;
+}
+
+.cake-button:not(:disabled) {
+    animation: cakeGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes cakeGlow {
+    from {
+        filter:
+            drop-shadow(
+                0 0 0 rgba(255, 100, 130, 0)
+            );
+    }
+
+    to {
+        filter:
+            drop-shadow(
+                0 0 25px rgba(255, 100, 130, 0.4)
+            );
+    }
+}
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
 
 .camera {
     position: relative;
+
     border: none;
+
     background: transparent;
+
     cursor: pointer;
+
     margin-top: 20px;
+
+    transition: 0.3s ease;
+}
+
+.camera:hover {
+    transform:
+        scale(1.05)
+        rotate(-2deg);
 }
 
 .camera-body {
     position: relative;
-    width: 270px;
-    height: 180px;
-    border-radius: 25px;
-    background: #9f2945;
-    box-shadow: 0 25px 40px rgba(90,20,40,0.25);
+
+    width: 280px;
+    height: 185px;
+
+    border-radius: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #bd3b58,
+            #8e203d
+        );
+
+    box-shadow:
+        0 25px 45px rgba(80, 20, 40, 0.25);
+
     display: flex;
+
     align-items: center;
     justify-content: center;
 }
 
 .camera-top {
     position: absolute;
+
     top: -25px;
     left: 35px;
-    background: #9f2945;
-    color: white;
+
     padding: 8px 18px;
-    border-radius: 12px 12px 0 0;
+
+    background: #9f2945;
+
+    color: white;
+
+    border-radius:
+        12px
+        12px
+        0
+        0;
+
     z-index: 2;
 }
 
 .camera-lens {
-    width: 95px;
-    height: 95px;
+    width: 105px;
+    height: 105px;
+
     border-radius: 50%;
+
     background:
         radial-gradient(
             circle,
-            #fff 0 12%,
-            #e5a3ae 13% 28%,
-            #761a34 29% 55%,
-            #3d1020 56%
+            #fff 0 10%,
+            #e3a4ae 11% 25%,
+            #71182f 26% 55%,
+            #32101c 56%
         );
-    border: 8px solid #f5cdd3;
+
+    border: 8px solid #f5d2d7;
 }
 
 .camera-button {
     position: absolute;
-    top: 18px;
+
     right: 25px;
+    top: 18px;
+
     color: white;
+
     font-size: 20px;
-}
-
-.camera-countdown {
-    position: fixed;
-    left: 50%;
-    top: 45%;
-    transform: translate(-50%,-50%);
-    font-size: 90px;
-    font-weight: 700;
-    color: #a32342;
-    opacity: 0;
-    z-index: 150;
-}
-
-.camera-countdown.show {
-    animation: countdownPop 0.8s ease;
-}
-
-@keyframes countdownPop {
-    0% {
-        opacity: 0;
-        transform: translate(-50%,-50%) scale(0.5);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%,-50%) scale(1.2);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(-50%,-50%) scale(1);
-    }
 }
 
 .camera-flash {
     position: fixed;
+
     inset: 0;
+
     background: white;
+
     opacity: 0;
+
     pointer-events: none;
-    z-index: 200;
+
+    z-index: 500;
 }
 
 .camera-flash.flash {
-    animation: cameraFlash 0.5s ease;
+    animation: flashEffect 0.55s ease;
 }
 
-@keyframes cameraFlash {
-    0% { opacity: 0; }
-    25% { opacity: 1; }
-    100% { opacity: 0; }
+@keyframes flashEffect {
+    0% {
+        opacity: 0;
+    }
+
+    25% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
-.camera-photo {
+.camera-countdown {
     position: fixed;
+
     left: 50%;
     top: 50%;
-    transform: translate(-50%,-50%) scale(0.7);
-    width: min(88%,380px);
-    padding: 15px;
-    background: white;
-    border-radius: 18px;
-    box-shadow: 0 30px 80px rgba(80,20,40,0.3);
+
+    transform: translate(-50%, -50%);
+
+    font-size: 100px;
+
+    font-weight: 700;
+
+    color: #a32342;
+
     opacity: 0;
+
+    z-index: 400;
+
+    pointer-events: none;
+}
+
+.camera-countdown.show {
+    animation:
+        countdownAnimation
+        0.75s ease;
+}
+
+@keyframes countdownAnimation {
+    0% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(0.5);
+    }
+
+    50% {
+        opacity: 1;
+        transform:
+            translate(-50%, -50%)
+            scale(1.2);
+    }
+
+    100% {
+        opacity: 0;
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+}
+
+
+/* =====================================================
+   PHOTO REVEAL
+===================================================== */
+
+.photo-reveal {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 18px;
+
+    background:
+        rgba(255, 242, 244, 0.97);
+
+    opacity: 0;
+
     visibility: hidden;
-    z-index: 120;
+
+    transform: scale(0.9);
+
     transition: 0.6s ease;
-    text-align: center;
+
+    z-index: 350;
 }
 
-.camera-photo.show {
+.photo-reveal.show {
     opacity: 1;
+
     visibility: visible;
-    transform: translate(-50%,-50%) scale(1);
+
+    transform: scale(1);
 }
 
-.camera-photo img {
+.photo-card {
+    width: min(330px, 80vw);
+
+    padding: 14px 14px 22px;
+
+    background: white;
+
+    box-shadow:
+        0 25px 60px rgba(90, 20, 40, 0.25);
+
+    transform:
+        rotate(-2deg);
+
+    animation:
+        photoAppear
+        0.8s ease;
+}
+
+.photo-card img {
+    display: block;
+
     width: 100%;
-    max-height: 350px;
+
+    aspect-ratio: 4 / 5;
+
     object-fit: cover;
-    border-radius: 12px;
 }
 
-.camera-photo h3 {
-    margin-top: 12px;
-    color: #a32343;
+.photo-card p {
     font-family: "Great Vibes", cursive;
+
     font-size: 27px;
+
+    text-align: center;
+
+    color: #a32342;
+
+    margin-top: 12px;
 }
 
-/* NOTES */
+@keyframes photoAppear {
+    from {
+        opacity: 0;
+        transform:
+            scale(0.7)
+            rotate(-10deg);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            scale(1)
+            rotate(-2deg);
+    }
+}
+
+
+/* =====================================================
+   SECRET NOTES
+===================================================== */
 
 .notes-area {
-    width: min(800px,90vw);
-    height: 350px;
     position: relative;
+
+    width: min(800px, 90vw);
+
+    height: 350px;
 }
 
 .note {
     position: absolute;
+
+    width: 105px;
+    height: 78px;
+
     border: none;
-    background: white;
-    width: 95px;
-    height: 70px;
-    border-radius: 10px;
-    font-size: 35px;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #fff2f1
+        );
+
+    font-size: 38px;
+
     cursor: pointer;
-    box-shadow: 0 15px 30px rgba(100,20,40,0.14);
+
+    box-shadow:
+        0 15px 30px rgba(100, 20, 40, 0.15);
+
+    transition: 0.3s ease;
 }
 
-.note:nth-child(1) { left: 5%; top: 10%; }
-.note:nth-child(2) { left: 28%; top: 2%; }
-.note:nth-child(3) { left: 58%; top: 12%; }
-.note:nth-child(4) { left: 80%; top: 30%; }
-.note:nth-child(5) { left: 18%; top: 62%; }
-.note:nth-child(6) { left: 55%; top: 68%; }
+.note:hover {
+    transform:
+        translateY(-9px)
+        rotate(3deg)
+        scale(1.06);
+}
+
+.note:nth-child(1) {
+    left: 5%;
+    top: 10%;
+}
+
+.note:nth-child(2) {
+    left: 28%;
+    top: 0;
+}
+
+.note:nth-child(3) {
+    left: 58%;
+    top: 12%;
+}
+
+.note:nth-child(4) {
+    left: 80%;
+    top: 30%;
+}
+
+.note:nth-child(5) {
+    left: 18%;
+    top: 62%;
+}
+
+.note:nth-child(6) {
+    left: 55%;
+    top: 68%;
+}
 
 .note.opened {
-    opacity: 0.45;
-    transform: scale(0.85);
+    opacity: 0.4;
+
+    transform:
+        scale(0.85)
+        rotate(5deg);
 }
 
-/* BOUQUET */
+
+/* =====================================================
+   ROSE TABLE & BOUQUET
+===================================================== */
 
 .rose-table {
     position: relative;
-    width: 420px;
-    height: 300px;
+
+    width: 500px;
+    height: 350px;
+
     display: flex;
+
+    align-items: center;
     justify-content: center;
-    align-items: flex-end;
 }
 
 .rose-table::after {
     content: "";
+
     position: absolute;
-    bottom: 25px;
-    width: 400px;
-    height: 45px;
-    border-radius: 50%;
-    background: linear-gradient(#6c3940,#41252a);
-    box-shadow: 0 15px 30px rgba(50,20,20,0.25);
-}
 
-.bouquet-reveal-button {
-    position: absolute;
-    z-index: 5;
-    bottom: 100px;
-    text-align: center;
-}
+    bottom: 20px;
 
-.bouquet-trigger {
-    width: 65px;
-    height: 65px;
-    border: none;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 10px 30px rgba(100,20,40,0.18);
-    font-size: 28px;
-    cursor: pointer;
-    animation: pulseButton 1.5s infinite;
-}
-
-.bouquet-reveal-button span {
-    display: block;
-    margin-top: 8px;
-    font-size: 11px;
-}
-
-@keyframes pulseButton {
-    0%,100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-}
-
-.rose-bouquet {
-    position: absolute;
-    z-index: 8;
-    bottom: 55px;
     left: 50%;
-    transform: translate(-50%,80px) scale(0.5);
-    width: 210px;
-    height: 210px;
-    border: none;
-    background: transparent;
-    opacity: 0;
-    visibility: hidden;
-    cursor: pointer;
-    transition: 0.9s cubic-bezier(.2,.8,.2,1);
-}
 
-.rose-bouquet.revealed {
-    opacity: 1;
-    visibility: visible;
-    transform: translate(-50%,0) scale(1);
-}
+    transform: translateX(-50%);
 
-.bouquet-paper {
-    position: absolute;
-    bottom: 0;
-    left: 35px;
-    width: 140px;
-    height: 125px;
+    width: 420px;
+    height: 35px;
+
+    border-radius: 50%;
+
     background:
         linear-gradient(
-            135deg,
-            #161616,
-            #30252a,
-            #0c0c0c
+            #6c3e39,
+            #3d2020
         );
-    clip-path: polygon(8% 0,92% 0,100% 100%,50% 80%,0 100%);
-    border-radius: 8px;
+
+    box-shadow:
+        0 15px 25px rgba(70, 20, 30, 0.25);
 }
 
-.rose {
+.bouquet {
     position: absolute;
-    font-size: 55px;
-    z-index: 4;
+
+    left: 50%;
+    top: 30px;
+
+    transform:
+        translateX(-50%);
+
+    width: 270px;
+    height: 250px;
+
+    transition:
+        transform
+        1s
+        cubic-bezier(.2,.8,.2,1);
+
+    z-index: 5;
 }
 
-.rose1 { left: 78px; top: 15px; }
-.rose2 { left: 35px; top: 42px; }
-.rose3 { left: 115px; top: 42px; }
-.rose4 { left: 60px; top: 70px; }
-.rose5 { left: 95px; top: 70px; }
-.rose6 { left: 77px; top: 98px; }
-
-.bouquet-ribbon {
+.bouquet-flowers {
     position: absolute;
-    z-index: 8;
-    left: 84px;
-    bottom: 42px;
-    font-size: 35px;
-}
 
-/* WINE */
-
-.wine-bottle {
-    position: relative;
-    width: 190px;
-    height: 380px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-}
-
-.bottle-cap {
-    position: absolute;
-    left: 73px;
     top: 0;
-    width: 44px;
-    height: 18px;
-    background: #40101e;
-    border-radius: 5px 5px 2px 2px;
-    z-index: 4;
-}
+    left: 20px;
 
-.bottle-neck {
-    position: absolute;
-    left: 66px;
-    top: 15px;
-    width: 58px;
-    height: 120px;
-    background: linear-gradient(
-        90deg,
-        #42101f,
-        #7d1d38,
-        #40101f
-    );
-    border-radius: 12px 12px 4px 4px;
+    width: 230px;
+
+    height: 150px;
+
     z-index: 3;
 }
 
-.bottle {
+.bouquet-flowers span {
     position: absolute;
-    left: 20px;
-    bottom: 0;
-    width: 150px;
-    height: 285px;
+
+    font-size: 62px;
+}
+
+.bouquet-flowers span:nth-child(1) {
+    left: 80px;
+    top: 0;
+}
+
+.bouquet-flowers span:nth-child(2) {
+    left: 25px;
+    top: 25px;
+}
+
+.bouquet-flowers span:nth-child(3) {
+    left: 135px;
+    top: 20px;
+}
+
+.bouquet-flowers span:nth-child(4) {
+    left: 55px;
+    top: 60px;
+}
+
+.bouquet-flowers span:nth-child(5) {
+    left: 110px;
+    top: 60px;
+}
+
+.bouquet-flowers span:nth-child(6) {
+    left: 5px;
+    top: 70px;
+}
+
+.bouquet-flowers span:nth-child(7) {
+    left: 160px;
+    top: 65px;
+}
+
+.bouquet-wrap {
+    position: absolute;
+
+    left: 38px;
+    bottom: 25px;
+
+    width: 195px;
+    height: 150px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #080808
+        );
+
+    clip-path:
+        polygon(
+            10% 0,
+            90% 0,
+            100% 100%,
+            0 100%
+        );
+
+    box-shadow:
+        0 20px 30px rgba(30, 10, 15, 0.35);
+
+    z-index: 2;
+}
+
+.bouquet-ribbon {
+    position: absolute;
+
+    left: 115px;
+    bottom: 45px;
+
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #a52b47;
+
+    color: white;
+
+    z-index: 5;
+}
+
+.bouquet.triggered {
+    transform:
+        translateX(-50%)
+        translateY(-80px)
+        scale(1.25);
+
+    filter:
+        drop-shadow(
+            0 0 30px
+            rgba(220, 45, 80, 0.55)
+        );
+}
+
+.bouquet-trigger {
+    position: absolute;
+
+    bottom: 50px;
+
+    z-index: 10;
+
+    border: none;
+
+    padding: 13px 24px;
+
+    border-radius: 999px;
+
+    background: #a72847;
+
+    color: white;
+
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.bouquet-trigger:hover {
+    transform: scale(1.05);
+}
+
+
+/* =====================================================
+   WINE BOTTLE
+===================================================== */
+
+.wine-bottle {
+    position: relative;
+
+    width: 200px;
+    height: 390px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    margin-top: 5px;
+
+    transition:
+        transform
+        0.35s ease;
+}
+
+.wine-bottle:hover {
+    transform: scale(1.04);
+}
+
+.wine-neck {
+    position: absolute;
+
+    left: 71px;
+    top: 0;
+
+    width: 58px;
+    height: 125px;
+
+    border-radius:
+        10px
+        10px
+        4px
+        4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #35101d,
+            #731a36,
+            #35101d
+        );
+
+    z-index: 2;
+}
+
+.wine-neck::before {
+    content: "";
+
+    position: absolute;
+
+    top: -12px;
+    left: 2px;
+
+    width: 54px;
+    height: 20px;
+
+    border-radius: 5px;
+
+    background: #4a1225;
+}
+
+.wine-neck-label {
+    position: absolute;
+
+    left: 7px;
+    top: 55px;
+
+    width: 44px;
+    height: 35px;
+
+    background: #f8e9df;
+}
+
+.wine-body {
+    position: absolute;
+
+    left: 18px;
+    bottom: 15px;
+
+    width: 164px;
+    height: 295px;
+
     overflow: hidden;
-    border-radius: 50px 50px 28px 28px;
-    background: linear-gradient(
-        90deg,
-        #3e0d1d,
-        #761b35,
-        #3b0b1b
-    );
-    box-shadow: 0 25px 50px rgba(80,15,35,0.35);
+
+    border-radius:
+        50px
+        50px
+        28px
+        28px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #34101c,
+            #731b37,
+            #40111f
+        );
+
+    box-shadow:
+        0 25px 55px rgba(70, 15, 30, 0.32);
 }
 
 .wine-level {
     position: absolute;
+
     left: 0;
     bottom: 0;
+
     width: 100%;
-    height: 85%;
-    background: linear-gradient(
-        90deg,
-        #430817,
-        #8d163a,
-        #430817
-    );
-    transition: height 0.9s ease;
+    height: 84%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #4a0d21,
+            #8f2042,
+            #4a0d21
+        );
+
+    transition:
+        height
+        0.9s
+        cubic-bezier(.2,.8,.2,1);
 }
 
-.bottle-shine {
+.wine-shine {
     position: absolute;
-    left: 23px;
-    top: 20px;
-    width: 13px;
+
+    left: 25px;
+    top: 25px;
+
+    width: 14px;
     height: 210px;
+
     border-radius: 20px;
-    background: rgba(255,255,255,0.2);
+
+    background:
+        rgba(255, 255, 255, 0.18);
+
+    z-index: 3;
+}
+
+.wine-label {
+    position: absolute;
+
+    left: 23px;
+    right: 23px;
+
+    top: 115px;
+
+    padding: 16px 5px;
+
+    background: #fff1e8;
+
+    color: #962941;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
     z-index: 4;
 }
 
-.bottle-label {
-    position: absolute;
-    left: 22px;
-    right: 22px;
-    top: 110px;
-    padding: 18px 5px;
-    background: #fff3ed;
-    color: #9a2943;
-    font-family: "Cormorant Garamond",serif;
-    font-size: 24px;
-    font-weight: 700;
+.wine-label small {
+    display: block;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 7px;
+
     letter-spacing: 2px;
-    z-index: 5;
+
+    margin-top: 5px;
 }
 
-.bottle-label small {
-    display: block;
-    font-family: "Poppins",sans-serif;
-    font-size: 7px;
-    letter-spacing: 2px;
-    margin-top: 4px;
+.wine-base {
+    position: absolute;
+
+    left: 25px;
+    bottom: 0;
+
+    width: 150px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #30101a;
+
+    z-index: 4;
 }
 
 .wine-message {
-    font-family: "Great Vibes",cursive;
-    font-size: 28px;
-    color: #a32846;
-    min-height: 40px;
-    margin-top: 5px;
+    min-height: 45px;
+
+    margin-top: 8px;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 26px;
+
+    font-weight: 600;
+
     text-align: center;
+
+    color: #962940;
 }
+
+
+/* =====================================================
+   WINE FINALE
+===================================================== */
 
 .wine-final {
     position: fixed;
+
     inset: 0;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
+
     text-align: center;
-    background: rgba(255,239,241,0.97);
+
+    background:
+        rgba(255, 239, 242, 0.97);
+
     opacity: 0;
+
     visibility: hidden;
-    z-index: 300;
+
+    z-index: 600;
+
     transition: 0.8s ease;
 }
 
 .wine-final.show {
     opacity: 1;
+
     visibility: visible;
 }
 
 .wine-final h2 {
-    font-family: "Cormorant Garamond",serif;
-    font-size: 60px;
-    color: #9d2040;
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(45px, 7vw, 75px);
+
+    color: #98213f;
+
+    margin-bottom: 15px;
 }
 
 .wine-final p {
     max-width: 500px;
+
     padding: 0 20px;
+
     font-size: 16px;
+
     color: #9c4b5e;
+
     line-height: 1.6;
 }
 
-.hold-on {
-    font-family: "Great Vibes",cursive;
-    font-size: 35px !important;
+.wine-final .hold-on {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 36px;
+
     margin-top: 20px;
 }
 
 .countdown {
     margin-top: 20px;
-    font-size: 70px;
+
+    font-size: 75px;
+
     font-weight: 700;
+
+    color: #a32846;
 }
 
-/* SMOOTH DIZZY */
 
-body.dizzy #party-page {
-    animation: smoothDizzy 2.8s cubic-bezier(.65,0,.35,1) forwards;
+/* =====================================================
+   DIZZY EFFECT
+===================================================== */
+
+body.dizzy {
+    animation:
+        finalDizzy
+        2.8s
+        cubic-bezier(.65,.05,.36,1)
+        forwards;
 }
 
-@keyframes smoothDizzy {
+@keyframes finalDizzy {
     0% {
-        transform: rotate(0) scale(1);
-        opacity: 1;
+        transform:
+            rotate(0deg)
+            scale(1);
+
+        filter: blur(0);
     }
 
     25% {
-        transform: rotate(3deg) scale(1.02);
+        transform:
+            rotate(3deg)
+            scale(1.02);
+
+        filter: blur(0);
     }
 
     50% {
-        transform: rotate(-6deg) scale(1.05);
+        transform:
+            rotate(-5deg)
+            scale(1.05);
+
+        filter: blur(1px);
     }
 
     75% {
-        transform: rotate(10deg) scale(1.08);
+        transform:
+            rotate(12deg)
+            scale(1.12);
+
+        filter: blur(2px);
     }
 
     100% {
-        transform: rotate(360deg) scale(0.15);
+        transform:
+            rotate(360deg)
+            scale(0.1);
+
+        filter: blur(8px);
+
         opacity: 0;
     }
 }
 
-/* MOBILE */
 
-@media (max-width:650px) {
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 650px) {
+
+    .birthday-rope {
+        height: 70px;
+    }
 
     .birthday-rope span {
-        font-size: 25px;
+        font-size: 24px;
+    }
+
+    .top-title {
+        top: 38px;
+
+        font-size: 24px;
     }
 
     .party-progress {
-        top: 82px;
+        top: 78px;
     }
 
     .party-section {
-        padding-top: 105px;
-        padding-bottom: 55px;
+        padding:
+            105px
+            15px
+            55px;
     }
 
-    .cake-area {
-        transform: scale(0.82);
+    .section-heading h1 {
+        font-size: 38px;
     }
 
-    .interactive-area {
-        height: 350px;
+    .balloon-area {
+        height: 390px;
     }
 
     .balloon {
-        font-size: 55px;
+        font-size: 65px;
+    }
+
+    .popper-area {
+        gap: 15px;
     }
 
     .popper {
-        font-size: 55px;
+        font-size: 65px;
+    }
+
+    .cake-area {
+        transform: scale(0.78);
     }
 
     .camera-body {
-        width: 220px;
-        height: 145px;
+        width: 230px;
+        height: 150px;
     }
 
     .camera-lens {
-        width: 75px;
-        height: 75px;
+        width: 80px;
+        height: 80px;
     }
 
     .notes-area {
-        height: 330px;
+        height: 310px;
     }
 
     .note {
         width: 75px;
         height: 60px;
+
         font-size: 28px;
     }
 
     .rose-table {
-        transform: scale(0.85);
+        transform: scale(0.78);
     }
 
     .wine-bottle {
-        transform: scale(0.85);
+        transform: scale(0.78);
     }
 
-    .wine-final h2 {
-        font-size: 45px;
+    .wine-bottle:hover {
+        transform: scale(0.82);
+    }
+
+    .wine-message {
+        font-size: 22px;
     }
 }
 ```
