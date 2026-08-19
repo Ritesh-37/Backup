@@ -21,17 +21,28 @@ body {
     background:
         radial-gradient(
             circle at 50% 20%,
-            #fffafa 0%,
-            #fff1f1 35%,
-            #ffe4e6 70%,
-            #ffd4d9 100%
+            #fffdfd 0%,
+            #fff4f5 35%,
+            #ffe7ea 70%,
+            #ffd5dc 100%
         );
+
+    transition: background 1s ease;
+}
+
+button {
+    font-family: inherit;
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(170, 40, 70, 0.3);
+    outline-offset: 4px;
 }
 
 
-/* ==============================
+/* =========================================
    BACKGROUND
-============================== */
+========================================= */
 
 .background-glow {
     position: fixed;
@@ -44,19 +55,22 @@ body {
 
     transform: translate(-50%, -50%);
 
-    background: rgba(255, 130, 150, 0.15);
+    background: rgba(255, 120, 145, 0.15);
 
     filter: blur(90px);
 
     border-radius: 50%;
 
     pointer-events: none;
+
+    z-index: 0;
 }
 
 body::before {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     background-image:
@@ -68,12 +82,14 @@ body::before {
     background-size: 30px 30px;
 
     pointer-events: none;
+
+    z-index: 0;
 }
 
 
-/* ==============================
+/* =========================================
    BIRTHDAY ROPE
-============================== */
+========================================= */
 
 .birthday-rope {
     position: fixed;
@@ -82,14 +98,14 @@ body::before {
     left: 0;
 
     width: 100%;
-    height: 95px;
+    height: 90px;
 
     display: flex;
 
     align-items: flex-start;
     justify-content: space-around;
 
-    padding-top: 8px;
+    padding-top: 7px;
 
     z-index: 20;
 
@@ -99,7 +115,7 @@ body::before {
 .rope-line {
     position: absolute;
 
-    top: 13px;
+    top: 14px;
     left: 0;
 
     width: 100%;
@@ -139,7 +155,6 @@ body::before {
 }
 
 @keyframes decorationSwing {
-
     0%,
     100% {
         transform: rotate(-4deg);
@@ -151,9 +166,9 @@ body::before {
 }
 
 
-/* ==============================
-   CONFETTI BACKGROUND
-============================== */
+/* =========================================
+   CONFETTI
+========================================= */
 
 .confetti-background {
     position: fixed;
@@ -172,7 +187,7 @@ body::before {
 
     opacity: 0.35;
 
-    animation: floatingConfetti 8s linear infinite;
+    animation: floatingConfetti 8s ease-in-out infinite;
 }
 
 .confetti-background span:nth-child(1) {
@@ -223,42 +238,38 @@ body::before {
 }
 
 @keyframes floatingConfetti {
-
-    0% {
+    0%,
+    100% {
         transform: translateY(0) rotate(0);
     }
 
     50% {
         transform: translateY(-25px) rotate(90deg);
     }
-
-    100% {
-        transform: translateY(0) rotate(180deg);
-    }
 }
 
 
-/* ==============================
+/* =========================================
    PROGRESS
-============================== */
+========================================= */
 
 .party-progress {
     position: fixed;
 
-    top: 105px;
+    top: 103px;
     left: 50%;
 
     transform: translateX(-50%);
 
     padding: 7px 16px;
 
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.75);
 
     border: 1px solid rgba(180, 40, 70, 0.12);
 
     border-radius: 999px;
 
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
 
     font-size: 10px;
 
@@ -270,9 +281,9 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
    MUSIC
-============================== */
+========================================= */
 
 .music-button {
     position: fixed;
@@ -287,7 +298,7 @@ body::before {
 
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.75);
 
     color: #a52b46;
 
@@ -295,9 +306,10 @@ body::before {
 
     cursor: pointer;
 
-    z-index: 50;
+    z-index: 500;
 
-    box-shadow: 0 10px 25px rgba(120, 20, 40, 0.12);
+    box-shadow:
+        0 10px 25px rgba(120, 20, 40, 0.12);
 
     transition: 0.3s ease;
 }
@@ -307,9 +319,9 @@ body::before {
 }
 
 
-/* ==============================
-   PARTY SECTIONS
-============================== */
+/* =========================================
+   SECTIONS
+========================================= */
 
 .party-section {
     position: fixed;
@@ -323,12 +335,15 @@ body::before {
 
     flex-direction: column;
 
-    padding: 120px 25px 70px;
+    padding: 125px 25px 70px;
 
     opacity: 0;
+
     visibility: hidden;
 
-    transform: scale(0.97) translateY(20px);
+    transform:
+        scale(0.97)
+        translateY(20px);
 
     transition:
         opacity 0.7s ease,
@@ -343,18 +358,20 @@ body::before {
 
     visibility: visible;
 
-    transform: scale(1) translateY(0);
+    transform:
+        scale(1)
+        translateY(0);
 }
 
 
-/* ==============================
+/* =========================================
    WELCOME
-============================== */
+========================================= */
 
 .welcome-content {
     text-align: center;
 
-    width: min(90%, 800px);
+    width: min(90%, 850px);
 }
 
 .birthday-crown {
@@ -366,7 +383,6 @@ body::before {
 }
 
 @keyframes crownFloat {
-
     0%,
     100% {
         transform: translateY(0);
@@ -398,7 +414,8 @@ body::before {
 
     color: #a32342;
 
-    text-shadow: 0 10px 30px rgba(130, 30, 50, 0.12);
+    text-shadow:
+        0 10px 30px rgba(130, 30, 50, 0.12);
 }
 
 .welcome-content h2 {
@@ -408,7 +425,17 @@ body::before {
 
     color: #c73656;
 
-    margin: 12px 0 15px;
+    margin: 12px 0;
+}
+
+.entrance-divider {
+    color: #c73656;
+
+    font-size: 18px;
+
+    letter-spacing: 3px;
+
+    margin: 10px 0;
 }
 
 .welcome-text {
@@ -422,16 +449,16 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
    HEADINGS
-============================== */
+========================================= */
 
 .section-heading {
     text-align: center;
 
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 
-    max-width: 650px;
+    max-width: 700px;
 }
 
 .section-heading > span {
@@ -455,17 +482,15 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
    BUTTONS
-============================== */
+========================================= */
 
 .party-button,
 .small-button {
     border: none;
 
     cursor: pointer;
-
-    font-family: "Poppins", sans-serif;
 
     font-weight: 700;
 
@@ -479,7 +504,12 @@ body::before {
 .party-button {
     padding: 15px 28px;
 
-    background: #a92a48;
+    background:
+        linear-gradient(
+            135deg,
+            #a92a48,
+            #c43d5c
+        );
 
     color: white;
 
@@ -488,7 +518,9 @@ body::before {
 }
 
 .party-button:hover {
-    transform: translateY(-4px) scale(1.03);
+    transform:
+        translateY(-4px)
+        scale(1.03);
 
     box-shadow:
         0 17px 32px rgba(130, 20, 45, 0.28);
@@ -503,18 +535,286 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
+   CAKE
+========================================= */
+
+.cake-scene {
+    position: relative;
+
+    width: 350px;
+    height: 230px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    margin: 5px 0 15px;
+}
+
+.cake {
+    position: relative;
+
+    width: 260px;
+    height: 180px;
+}
+
+.cake-bottom,
+.cake-middle,
+.cake-top {
+    position: absolute;
+
+    left: 0;
+
+    width: 100%;
+
+    border-radius: 18px 18px 10px 10px;
+
+    box-shadow:
+        0 15px 25px rgba(120, 30, 50, 0.14);
+}
+
+.cake-bottom {
+    bottom: 0;
+
+    height: 65px;
+
+    background:
+        linear-gradient(
+            #d95b73,
+            #b92e4c
+        );
+}
+
+.cake-middle {
+    bottom: 48px;
+
+    height: 60px;
+
+    width: 92%;
+
+    left: 4%;
+
+    background:
+        linear-gradient(
+            #fff4f5,
+            #ffd8de
+        );
+}
+
+.cake-top {
+    bottom: 95px;
+
+    height: 55px;
+
+    width: 84%;
+
+    left: 8%;
+
+    background:
+        linear-gradient(
+            #fff,
+            #ffe6ea
+        );
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 22px;
+
+    font-size: 22px;
+}
+
+.candle {
+    position: absolute;
+
+    width: 16px;
+    height: 60px;
+
+    bottom: 135px;
+
+    background:
+        repeating-linear-gradient(
+            45deg,
+            #fff,
+            #fff 7px,
+            #e85d79 7px,
+            #e85d79 12px
+        );
+
+    border-radius: 7px;
+
+    z-index: 4;
+}
+
+.candle-one {
+    left: 28%;
+}
+
+.candle-two {
+    left: 47%;
+}
+
+.candle-three {
+    left: 66%;
+}
+
+.flame {
+    position: absolute;
+
+    width: 20px;
+    height: 28px;
+
+    left: -2px;
+    top: -24px;
+
+    border-radius:
+        50%
+        50%
+        50%
+        0;
+
+    transform:
+        rotate(-45deg);
+
+    background:
+        radial-gradient(
+            circle at 60% 60%,
+            #fff8c7,
+            #ffad3d 55%,
+            #ff5c45
+        );
+
+    animation:
+        flameFlicker 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes flameFlicker {
+    from {
+        transform:
+            rotate(-45deg)
+            scale(0.9);
+    }
+
+    to {
+        transform:
+            rotate(-45deg)
+            scale(1.1);
+    }
+}
+
+.cake.cut .cake-middle {
+    transform:
+        rotate(-3deg)
+        translateX(-12px);
+}
+
+.cake.cut .cake-top {
+    transform:
+        rotate(4deg)
+        translateX(12px);
+}
+
+.cake.cut .cake-middle,
+.cake.cut .cake-top {
+    transition: 0.8s ease;
+}
+
+.candles-out .flame {
+    animation: blowOut 0.5s forwards;
+}
+
+@keyframes blowOut {
+    to {
+        transform:
+            translateY(-25px)
+            scale(0);
+
+        opacity: 0;
+    }
+}
+
+.interaction-hint {
+    color: #a64a5e;
+
+    font-size: 13px;
+
+    margin-bottom: 12px;
+}
+
+.cake-message {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
+
+    width: min(90%, 500px);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 252, 250, 0.98);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 30px 70px rgba(100, 20, 40, 0.25);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: 0.4s ease;
+
+    z-index: 100;
+}
+
+.cake-message.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+}
+
+.cake-message h3 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 32px;
+
+    color: #a32745;
+
+    margin-bottom: 12px;
+}
+
+.cake-message p {
+    color: #9c4b5e;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================
    BALLOONS
-============================== */
+========================================= */
 
 .interactive-area {
     position: relative;
 
     width: min(900px, 95vw);
 
-    height: 390px;
-
-    margin-top: 5px;
+    height: 380px;
 }
 
 .balloon {
@@ -534,12 +834,13 @@ body::before {
         );
 
     transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
+        transform 0.25s ease;
 }
 
 .balloon:hover {
-    transform: scale(1.15) rotate(5deg);
+    transform:
+        scale(1.15)
+        rotate(5deg);
 }
 
 .balloon:nth-child(1) {
@@ -583,17 +884,17 @@ body::before {
 }
 
 .balloon.popped {
-    animation: balloonPop 0.35s ease forwards;
+    animation:
+        balloonPop 0.4s ease forwards;
 }
 
 @keyframes balloonPop {
-
     0% {
         transform: scale(1);
         opacity: 1;
     }
 
-    50% {
+    45% {
         transform: scale(1.5);
         opacity: 1;
     }
@@ -605,9 +906,9 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
    MESSAGE BOX
-============================== */
+========================================= */
 
 .message-box {
     position: fixed;
@@ -615,7 +916,9 @@ body::before {
     left: 50%;
     top: 50%;
 
-    transform: translate(-50%, -50%) scale(0.85);
+    transform:
+        translate(-50%, -50%)
+        scale(0.85);
 
     width: min(90%, 470px);
 
@@ -623,7 +926,8 @@ body::before {
 
     text-align: center;
 
-    background: rgba(255, 252, 250, 0.98);
+    background:
+        rgba(255, 252, 250, 0.98);
 
     border-radius: 25px;
 
@@ -631,6 +935,7 @@ body::before {
         0 30px 70px rgba(100, 20, 40, 0.25);
 
     opacity: 0;
+
     visibility: hidden;
 
     transition: 0.4s ease;
@@ -640,9 +945,12 @@ body::before {
 
 .message-box.show {
     opacity: 1;
+
     visibility: visible;
 
-    transform: translate(-50%, -50%) scale(1);
+    transform:
+        translate(-50%, -50%)
+        scale(1);
 }
 
 .message-icon {
@@ -656,17 +964,17 @@ body::before {
 
     font-size: 25px;
 
-    line-height: 1.25;
+    line-height: 1.3;
 
-    color: #9d2943;
+    color: #8f243d;
 
     margin-bottom: 20px;
 }
 
 
-/* ==============================
+/* =========================================
    COMPLETION
-============================== */
+========================================= */
 
 .completion-message {
     position: fixed;
@@ -674,21 +982,26 @@ body::before {
     left: 50%;
     bottom: 35px;
 
-    transform: translateX(-50%) translateY(20px);
+    transform:
+        translateX(-50%)
+        translateY(20px);
 
     width: min(90%, 500px);
 
     padding: 18px 20px;
 
-    background: rgba(255, 250, 250, 0.95);
+    background:
+        rgba(255, 250, 250, 0.96);
 
     border-radius: 20px;
 
     text-align: center;
 
-    box-shadow: 0 15px 40px rgba(100, 20, 40, 0.15);
+    box-shadow:
+        0 15px 40px rgba(100, 20, 40, 0.15);
 
     opacity: 0;
+
     visibility: hidden;
 
     transition: 0.5s ease;
@@ -698,9 +1011,12 @@ body::before {
 
 .completion-message.show {
     opacity: 1;
+
     visibility: visible;
 
-    transform: translateX(-50%) translateY(0);
+    transform:
+        translateX(-50%)
+        translateY(0);
 }
 
 .completion-message h3 {
@@ -722,9 +1038,9 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
    POPPERS
-============================== */
+========================================= */
 
 .popper-area {
     display: flex;
@@ -754,33 +1070,39 @@ body::before {
 }
 
 .popper:hover {
-    transform: translateY(-10px) rotate(8deg) scale(1.1);
+    transform:
+        translateY(-10px)
+        rotate(8deg)
+        scale(1.1);
 }
 
 .popper.exploded {
-    animation: popperExplode 0.45s ease;
+    animation:
+        popperExplode 0.45s ease forwards;
 }
 
 @keyframes popperExplode {
-
     0% {
         transform: scale(1);
     }
 
     50% {
-        transform: scale(1.5) rotate(15deg);
+        transform:
+            scale(1.5)
+            rotate(15deg);
     }
 
     100% {
-        transform: scale(0);
+        transform:
+            scale(0);
         opacity: 0;
     }
 }
 
 
-/* ==============================
+/* =========================================
    CAMERA
-============================== */
+========================================= */
 
 .camera {
     position: relative;
@@ -797,7 +1119,9 @@ body::before {
 }
 
 .camera:hover {
-    transform: scale(1.05) rotate(-2deg);
+    transform:
+        scale(1.05)
+        rotate(-2deg);
 }
 
 .camera-body {
@@ -808,7 +1132,12 @@ body::before {
 
     border-radius: 25px;
 
-    background: #9f2945;
+    background:
+        linear-gradient(
+            135deg,
+            #a92a48,
+            #7f1d37
+        );
 
     box-shadow:
         0 25px 40px rgba(90, 20, 40, 0.25);
@@ -832,7 +1161,11 @@ body::before {
 
     padding: 8px 18px;
 
-    border-radius: 12px 12px 0 0;
+    border-radius:
+        12px
+        12px
+        0
+        0;
 
     z-index: 2;
 }
@@ -872,7 +1205,8 @@ body::before {
     left: 50%;
     top: 45%;
 
-    transform: translate(-50%, -50%);
+    transform:
+        translate(-50%, -50%);
 
     font-size: 90px;
 
@@ -888,24 +1222,33 @@ body::before {
 }
 
 .camera-countdown.show {
-    animation: countdownPop 0.8s ease;
+    animation:
+        countdownPop 0.8s ease;
 }
 
 @keyframes countdownPop {
-
     0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
+
+        transform:
+            translate(-50%, -50%)
+            scale(0.5);
     }
 
     50% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.2);
     }
 
     100% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(1);
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
     }
 }
 
@@ -924,11 +1267,11 @@ body::before {
 }
 
 .camera-flash.flash {
-    animation: cameraFlash 0.5s ease;
+    animation:
+        cameraFlash 0.5s ease;
 }
 
 @keyframes cameraFlash {
-
     0% {
         opacity: 0;
     }
@@ -943,9 +1286,130 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================
+   PHOTO REVEAL
+========================================= */
+
+.photo-reveal {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(255, 239, 243, 0.96);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: scale(1.04);
+
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease,
+        visibility 0.7s ease;
+
+    z-index: 180;
+}
+
+.photo-reveal.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: scale(1);
+}
+
+.photo-card {
+    width: min(88vw, 430px);
+
+    padding: 18px;
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 30px 70px rgba(100, 20, 40, 0.25);
+
+    text-align: center;
+
+    transform:
+        rotate(-2deg)
+        translateY(25px);
+
+    animation:
+        photoDrop 0.8s
+        cubic-bezier(.2, .8, .2, 1)
+        forwards;
+}
+
+@keyframes photoDrop {
+    to {
+        transform:
+            rotate(-2deg)
+            translateY(0);
+    }
+}
+
+.photo-frame {
+    width: 100%;
+
+    aspect-ratio: 4 / 5;
+
+    overflow: hidden;
+
+    background: #f8dfe3;
+
+    border-radius: 10px;
+
+    border: 8px solid #fff;
+
+    box-shadow:
+        inset 0 0 0 1px #f0c5cd;
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.photo-card p {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 31px;
+
+    color: #a32342;
+
+    margin:
+        16px
+        0
+        5px;
+}
+
+.photo-card span {
+    display: block;
+
+    font-size: 11px;
+
+    color: #a65b6c;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================
    NOTES
-============================== */
+========================================= */
 
 .notes-area {
     width: min(800px, 90vw);
@@ -978,7 +1442,9 @@ body::before {
 }
 
 .note:hover {
-    transform: translateY(-8px) rotate(2deg);
+    transform:
+        translateY(-8px)
+        rotate(2deg);
 }
 
 .note:nth-child(1) {
@@ -1012,15 +1478,17 @@ body::before {
 }
 
 .note.opened {
-    transform: scale(0.85) rotate(5deg);
+    transform:
+        scale(0.85)
+        rotate(5deg);
 
     opacity: 0.45;
 }
 
 
-/* ==============================
-   ROSES
-============================== */
+/* =========================================
+   ROSE BOUQUET
+========================================= */
 
 .rose-bouquet {
     border: none;
@@ -1029,73 +1497,162 @@ body::before {
 
     cursor: pointer;
 
-    position: absolute;
+    position: fixed;
 
-    right: 8%;
-    bottom: 8%;
+    right: 7%;
+    bottom: 7%;
 
-    font-size: 70px;
-
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 220px;
 
     transition:
-        transform 0.9s cubic-bezier(.2, .8, .2, 1);
+        transform 1.2s
+        cubic-bezier(.2, .8, .2, 1),
+        filter 1.2s ease;
+
+    z-index: 30;
 }
 
-.rose-bouquet span {
+.rose-flowers {
     position: absolute;
+
+    left: 25px;
+    top: 0;
+
+    width: 130px;
+    height: 125px;
+
+    z-index: 3;
 }
 
-.rose-bouquet span:nth-child(1) {
-    left: 45px;
-    top: 5px;
+.rose-flowers span {
+    position: absolute;
+
+    font-size: 55px;
+
+    filter:
+        drop-shadow(
+            0 5px 8px rgba(80, 10, 20, 0.2)
+        );
 }
 
-.rose-bouquet span:nth-child(2) {
-    left: 15px;
-    top: 35px;
+.rose-flowers span:nth-child(1) {
+    left: 40px;
+    top: 0;
 }
 
-.rose-bouquet span:nth-child(3) {
+.rose-flowers span:nth-child(2) {
+    left: 0;
+    top: 25px;
+}
+
+.rose-flowers span:nth-child(3) {
     left: 75px;
-    top: 35px;
+    top: 25px;
 }
 
-.rose-bouquet span:nth-child(4) {
-    left: 30px;
-    top: 65px;
+.rose-flowers span:nth-child(4) {
+    left: 25px;
+    top: 55px;
 }
 
-.rose-bouquet span:nth-child(5) {
-    left: 60px;
-    top: 65px;
+.rose-flowers span:nth-child(5) {
+    left: 55px;
+    top: 50px;
 }
 
-.rose-bouquet span:nth-child(6) {
-    left: 45px;
-    top: 95px;
+.rose-flowers span:nth-child(6) {
+    left: 90px;
+    top: 60px;
+}
+
+.rose-flowers span:nth-child(7) {
+    left: 48px;
+    top: 75px;
+}
+
+.rose-wrapping {
+    position: absolute;
+
+    left: 42px;
+    bottom: 5px;
+
+    width: 100px;
+    height: 105px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #111,
+            #292929 45%,
+            #050505
+        );
+
+    clip-path:
+        polygon(
+            15% 0,
+            85% 0,
+            100% 100%,
+            0 100%
+        );
+
+    box-shadow:
+        0 15px 25px rgba(0, 0, 0, 0.25);
+
+    z-index: 2;
+}
+
+.rose-ribbon {
+    position: absolute;
+
+    left: 76px;
+    bottom: 60px;
+
+    font-size: 30px;
+
+    z-index: 5;
+}
+
+.rose-bouquet:hover {
+    transform:
+        scale(1.05)
+        rotate(-2deg);
 }
 
 .rose-bouquet.center {
     right: 50%;
-
     bottom: 50%;
 
     transform:
         translate(50%, 50%)
-        scale(1.35);
+        scale(1.45);
 
     filter:
         drop-shadow(
-            0 0 30px rgba(220, 45, 80, 0.5)
+            0 0 25px rgba(200, 35, 70, 0.5)
+        )
+        drop-shadow(
+            0 0 55px rgba(220, 60, 90, 0.3)
         );
 }
 
+.bouquet-hint {
+    position: fixed;
 
-/* ==============================
+    right: 7%;
+    bottom: 2%;
+
+    font-size: 10px;
+
+    color: #a65b6c;
+
+    pointer-events: none;
+}
+
+
+/* =========================================
    WINE
-============================== */
+========================================= */
 
 .wine-bottle {
     border: none;
@@ -1109,13 +1666,35 @@ body::before {
     width: 180px;
     height: 330px;
 
-    margin-top: 15px;
+    margin-top: 5px;
 
-    transition: transform 0.25s ease;
+    transition:
+        transform 0.35s ease;
 }
 
 .wine-bottle:hover {
-    transform: scale(1.04);
+    transform:
+        scale(1.04);
+}
+
+.wine-bottle.shake {
+    animation:
+        bottleShake 0.45s ease;
+}
+
+@keyframes bottleShake {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+
+    25% {
+        transform: rotate(-5deg);
+    }
+
+    75% {
+        transform: rotate(5deg);
+    }
 }
 
 .bottle-neck {
@@ -1127,9 +1706,19 @@ body::before {
     left: 66px;
     top: 0;
 
-    background: #541628;
+    background:
+        linear-gradient(
+            90deg,
+            #35101c,
+            #702038,
+            #35101c
+        );
 
-    border-radius: 8px 8px 3px 3px;
+    border-radius:
+        8px
+        8px
+        3px
+        3px;
 
     z-index: 1;
 }
@@ -1143,16 +1732,20 @@ body::before {
     left: 17px;
     bottom: 0;
 
-    border-radius: 45px 45px 25px 25px;
+    border-radius:
+        45px
+        45px
+        25px
+        25px;
 
     overflow: hidden;
 
     background:
         linear-gradient(
             90deg,
-            #4c1224,
-            #7b1d38,
-            #4a1123
+            #3c0e1d,
+            #711d37,
+            #3b0d1c
         );
 
     box-shadow:
@@ -1166,18 +1759,54 @@ body::before {
     bottom: 0;
 
     width: 100%;
+
     height: 85%;
 
     background:
         linear-gradient(
             90deg,
-            #4b0e22,
-            #871d3c,
-            #4a0d20
+            #410b1c,
+            #8f2042,
+            #410b1c
         );
 
     transition:
-        height 0.8s ease;
+        height 0.9s
+        cubic-bezier(.2, .8, .2, 1);
+}
+
+.wine-level::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+        rgba(255, 170, 185, 0.7);
+
+    box-shadow:
+        0 0 12px rgba(255, 100, 130, 0.5);
+}
+
+.wine-empty-line {
+    position: absolute;
+
+    left: 10px;
+    right: 10px;
+
+    bottom: 15px;
+
+    height: 2px;
+
+    border-top:
+        2px dashed rgba(255,255,255,0.35);
+
+    z-index: 5;
 }
 
 .bottle-shine {
@@ -1191,7 +1820,10 @@ body::before {
 
     border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.2);
+    background:
+        rgba(255, 255, 255, 0.2);
+
+    z-index: 5;
 }
 
 .bottle-label {
@@ -1208,13 +1840,17 @@ body::before {
 
     color: #9a2943;
 
-    font-family: "Cormorant Garamond", serif;
+    font-family:
+        "Cormorant Garamond",
+        serif;
 
     font-size: 24px;
 
     font-weight: 700;
 
     letter-spacing: 2px;
+
+    z-index: 10;
 }
 
 .bottle-label small {
@@ -1229,19 +1865,94 @@ body::before {
     margin-top: 4px;
 }
 
+.wine-meter {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: min(300px, 80vw);
+
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    letter-spacing: 1px;
+
+    color: #a65b6c;
+}
+
+.wine-meter-bar {
+    flex: 1;
+
+    height: 7px;
+
+    border-radius: 999px;
+
+    background: rgba(160, 40, 65, 0.12);
+
+    overflow: hidden;
+}
+
+#wine-meter-fill {
+    width: 85%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8c1d3b,
+            #c23b5c
+        );
+
+    border-radius: inherit;
+
+    transition:
+        width 0.9s ease;
+}
+
 .wine-message {
-    font-family: "Great Vibes", cursive;
-
-    font-size: 27px;
-
-    color: #a32846;
-
-    min-height: 40px;
+    min-height: 50px;
 
     margin-top: 10px;
 
+    padding: 8px 20px;
+
+    font-family:
+        "Cormorant Garamond",
+        serif;
+
+    font-size: 24px;
+
+    font-weight: 600;
+
+    color: #8f243d;
+
     text-align: center;
 }
+
+.wine-pour {
+    position: absolute;
+
+    left: 50%;
+    bottom: 5px;
+
+    width: 5px;
+    height: 0;
+
+    background: #9b2344;
+
+    border-radius: 999px;
+
+    opacity: 0;
+}
+
+
+/* =========================================
+   WINE FINAL
+========================================= */
 
 .wine-final {
     position: fixed;
@@ -1250,30 +1961,71 @@ body::before {
 
     display: flex;
 
-    flex-direction: column;
-
     align-items: center;
     justify-content: center;
 
     text-align: center;
 
-    background: rgba(255, 239, 241, 0.96);
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 250, 251, 0.98),
+            rgba(255, 226, 232, 0.98)
+        );
 
     opacity: 0;
+
     visibility: hidden;
 
     z-index: 300;
 
-    transition: 0.5s ease;
+    transition:
+        opacity 0.8s ease;
 }
 
 .wine-final.show {
     opacity: 1;
+
     visibility: visible;
 }
 
+.wine-final-content {
+    width: min(90%, 600px);
+
+    transform:
+        translateY(20px);
+
+    transition:
+        transform 0.8s ease;
+}
+
+.wine-final.show .wine-final-content {
+    transform:
+        translateY(0);
+}
+
+.wine-final-emoji {
+    font-size: 55px;
+
+    animation:
+        gentleSway 1.5s ease-in-out infinite;
+}
+
+@keyframes gentleSway {
+    0%,
+    100% {
+        transform: rotate(-3deg);
+    }
+
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
 .wine-final h2 {
-    font-family: "Cormorant Garamond", serif;
+    font-family:
+        "Cormorant Garamond",
+        serif;
 
     font-size: 60px;
 
@@ -1285,6 +2037,9 @@ body::before {
 .wine-final p {
     max-width: 500px;
 
+    margin:
+        0 auto;
+
     font-size: 16px;
 
     color: #9c4b5e;
@@ -1293,7 +2048,9 @@ body::before {
 }
 
 .wine-final .hold-on {
-    font-family: "Great Vibes", cursive;
+    font-family:
+        "Great Vibes",
+        cursive;
 
     font-size: 35px;
 
@@ -1311,38 +2068,121 @@ body::before {
 }
 
 
-/* ==============================
-   TRANSITION
-============================== */
+/* =========================================
+   SMOOTH DIZZY TRANSITION
+========================================= */
 
 body.dizzy #party-page {
-    animation: dizzyTransition 2.5s ease forwards;
+    animation:
+        smoothDizzyExit 2.6s
+        cubic-bezier(.65, 0, .35, 1)
+        forwards;
 }
 
-@keyframes dizzyTransition {
+@keyframes smoothDizzyExit {
 
     0% {
-        transform: rotate(0) scale(1);
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        filter:
+            blur(0);
+
+        opacity: 1;
     }
 
-    35% {
-        transform: rotate(5deg) scale(1.03);
+    25% {
+        transform:
+            scale(1.025)
+            rotate(2deg);
+
+        filter:
+            blur(0);
     }
 
-    65% {
-        transform: rotate(-8deg) scale(1.08);
+    50% {
+        transform:
+            scale(1.04)
+            rotate(-3deg);
+
+        filter:
+            blur(1px);
+    }
+
+    70% {
+        transform:
+            scale(1.08)
+            rotate(4deg);
+
+        filter:
+            blur(2px);
+    }
+
+    85% {
+        transform:
+            scale(1.13)
+            rotate(-5deg);
+
+        filter:
+            blur(4px);
+
+        opacity: 0.8;
     }
 
     100% {
-        transform: rotate(360deg) scale(0);
+        transform:
+            scale(1.25)
+            rotate(8deg);
+
+        filter:
+            blur(12px);
+
         opacity: 0;
     }
 }
 
+body.dizzy::after {
+    content: "";
 
-/* ==============================
+    position: fixed;
+
+    inset: -20%;
+
+    background:
+        radial-gradient(
+            circle,
+            transparent 30%,
+            rgba(255, 220, 228, 0.65) 100%
+        );
+
+    z-index: 999;
+
+    pointer-events: none;
+
+    animation:
+        dizzyOverlay 2.6s ease forwards;
+}
+
+@keyframes dizzyOverlay {
+
+    0% {
+        opacity: 0;
+    }
+
+    55% {
+        opacity: 0.1;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================
    MOBILE
-============================== */
+========================================= */
 
 @media (max-width: 650px) {
 
@@ -1359,8 +2199,10 @@ body.dizzy #party-page {
     }
 
     .party-section {
-        padding-top: 105px;
-        padding-bottom: 55px;
+        padding:
+            105px
+            15px
+            55px;
     }
 
     .welcome-content h1 {
@@ -1375,8 +2217,14 @@ body.dizzy #party-page {
         font-size: 25px;
     }
 
+    .cake-scene {
+        transform: scale(0.82);
+        margin-top: -10px;
+        margin-bottom: -10px;
+    }
+
     .interactive-area {
-        height: 360px;
+        height: 350px;
     }
 
     .balloon {
@@ -1402,7 +2250,7 @@ body.dizzy #party-page {
     }
 
     .notes-area {
-        height: 330px;
+        height: 320px;
     }
 
     .note {
@@ -1412,9 +2260,10 @@ body.dizzy #party-page {
     }
 
     .rose-bouquet {
-        right: 3%;
+        right: 1%;
         bottom: 5%;
-        transform: scale(0.8);
+
+        transform: scale(0.75);
     }
 
     .rose-bouquet.center {
@@ -1426,11 +2275,17 @@ body.dizzy #party-page {
             scale(1.05);
     }
 
+    .bouquet-hint {
+        right: 2%;
+        bottom: 1%;
+    }
+
     .wine-final h2 {
         font-size: 45px;
     }
 
     .wine-final p {
-        padding: 0 25px;
+        padding:
+            0 25px;
     }
 }
