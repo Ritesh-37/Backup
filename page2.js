@@ -1,12 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    /* =====================================================
-       HELPERS
-    ===================================================== */
-
     function get(id) {
         return document.getElementById(id);
     }
+
+
+    /* =========================
+       AUDIO
+    ========================== */
+
+    const music = get("birthday-music");
+    const musicButton = get("music-button");
+
+    const candleSound = get("candle-sound");
+    const balloonSound = get("balloon-pop-sound");
+    const popperSound = get("popper-sound");
+    const crackleSound = get("crackle-sound");
 
 
     function playSound(audio, volume) {
@@ -18,36 +27,19 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
 
             audio.pause();
-
             audio.currentTime = 0;
-
             audio.volume = volume || 0.6;
 
             const promise = audio.play();
 
             if (promise) {
-                promise.catch(function () {
-                    // Browser may block audio.
-                });
+                promise.catch(function () {});
             }
 
         } catch (error) {
             console.log("Audio error:", error);
         }
     }
-
-
-    /* =====================================================
-       AUDIO
-    ===================================================== */
-
-    const music = get("birthday-music");
-    const musicButton = get("music-button");
-
-    const candleSound = get("candle-sound");
-    const balloonSound = get("balloon-pop-sound");
-    const popperSound = get("popper-sound");
-    const crackleSound = get("crackle-sound");
 
 
     function startBirthdayMusic() {
@@ -64,48 +56,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
             promise
                 .then(function () {
-
                     musicButton.textContent = "♫";
-
                 })
                 .catch(function () {
-
                     musicButton.textContent = "🔇";
-
                 });
+
         }
     }
 
 
-    musicButton.addEventListener("click", function () {
+    musicButton.addEventListener(
+        "click",
+        function () {
 
-        if (!music) {
-            return;
+            if (!music) {
+                return;
+            }
+
+            if (music.paused) {
+
+                music.play()
+                    .then(function () {
+                        musicButton.textContent = "♫";
+                    })
+                    .catch(function () {});
+
+            } else {
+
+                music.pause();
+
+                musicButton.textContent = "🔇";
+            }
+
         }
-
-        if (music.paused) {
-
-            music.play()
-                .then(function () {
-
-                    musicButton.textContent = "♫";
-
-                })
-                .catch(function () {});
-
-        } else {
-
-            music.pause();
-
-            musicButton.textContent = "🔇";
-        }
-
-    });
+    );
 
 
-    /* =====================================================
+    /* =========================
        SECTION SWITCH
-    ===================================================== */
+    ========================== */
 
     function showSection(id) {
 
@@ -133,9 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       WELCOME SEQUENCE
-    ===================================================== */
+    /* =========================
+       WELCOME
+    ========================== */
 
     const welcomeSteps =
         document.querySelectorAll(".welcome-step");
@@ -146,41 +136,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     welcomeButtons.forEach(function (button) {
 
-        button.addEventListener("click", function () {
+        button.addEventListener(
+            "click",
+            function () {
 
-            const next =
-                button.getAttribute("data-next");
-
-
-            welcomeSteps.forEach(function (step) {
-
-                step.classList.remove("active");
-
-            });
+                const next =
+                    button.getAttribute("data-next");
 
 
-            const nextStep =
-                get("welcome-step-" + next);
+                welcomeSteps.forEach(function (step) {
+
+                    step.classList.remove("active");
+
+                });
 
 
-            if (nextStep) {
+                const nextStep =
+                    get("welcome-step-" + next);
 
-                setTimeout(function () {
 
-                    nextStep.classList.add("active");
+                if (nextStep) {
 
-                }, 100);
+                    setTimeout(function () {
+
+                        nextStep.classList.add("active");
+
+                    }, 100);
+
+                }
 
             }
-
-        });
+        );
 
     });
 
 
-    /* =====================================================
+    /* =========================
        ENTER CAKE
-    ===================================================== */
+    ========================== */
 
     get("start-cake").addEventListener(
         "click",
@@ -194,9 +187,9 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
 
-    /* =====================================================
-       CAKE + CANDLES
-    ===================================================== */
+    /* =========================
+       CANDLES
+    ========================== */
 
     const candles =
         document.querySelectorAll(".candle");
@@ -212,89 +205,80 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     let candlesOff = 0;
-
     let celebrationStarted = false;
 
 
     candles.forEach(function (candle) {
 
-        candle.addEventListener("click", function () {
+        candle.addEventListener(
+            "click",
+            function () {
 
-            if (
-                candle.classList.contains("off")
-            ) {
-                return;
-            }
-
-
-            /* TURN CANDLE OFF */
-
-            candle.classList.add("off");
-
-            candlesOff++;
+                if (
+                    candle.classList.contains("off")
+                ) {
+                    return;
+                }
 
 
-            /* CANDLE SOUND */
+                candle.classList.add("off");
 
-            playSound(
-                candleSound,
-                0.5
-            );
+                candlesOff++;
 
 
-            /* SMALL SPARKLE */
-
-            createSmallSparkle(candle);
-
-
-            /* UPDATE TEXT */
-
-            const remaining =
-                candles.length - candlesOff;
+                playSound(
+                    candleSound,
+                    0.5
+                );
 
 
-            if (remaining > 0) {
-
-                cakeInstruction.textContent =
-                    remaining +
-                    " candle" +
-                    (
-                        remaining === 1
-                            ? ""
-                            : "s"
-                    ) +
-                    " left, sweetheart... 🕯️❤️";
-
-            }
+                createSmallSparkle(candle);
 
 
-            /* LAST CANDLE */
+                const remaining =
+                    candles.length - candlesOff;
 
-            if (
-                candlesOff === candles.length
-            ) {
 
-                cakeInstruction.textContent =
-                    "MAKE A WISH, BEAUTIFUL GIRL... ❤️✨";
+                if (remaining > 0) {
 
-                startMegaCelebration();
+                    cakeInstruction.textContent =
+                        remaining +
+                        " candle" +
+                        (
+                            remaining === 1
+                                ? ""
+                                : "s"
+                        ) +
+                        " left, sweetheart... 🕯️❤️";
+
+                }
+
+
+                if (
+                    candlesOff === candles.length
+                ) {
+
+                    cakeInstruction.textContent =
+                        "MAKE A WISH, BEAUTIFUL GIRL... ❤️✨";
+
+                    startMegaCelebration();
+
+                }
 
             }
-
-        });
+        );
 
     });
 
 
-    /* =====================================================
-       SMALL CANDLE SPARKLE
-    ===================================================== */
+    /* =========================
+       SMALL SPARKLES
+    ========================== */
 
     function createSmallSparkle(candle) {
 
         const rect =
             candle.getBoundingClientRect();
-
 
         const symbols = [
             "✦",
@@ -309,10 +293,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const sparkle =
                 document.createElement("div");
 
-
             sparkle.className =
                 "celebration-particle sparkle";
-
 
             sparkle.textContent =
                 symbols[
@@ -328,7 +310,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     rect.left +
                     rect.width / 2
                 ) + "px";
-
 
             sparkle.style.top =
                 rect.top + "px";
@@ -348,7 +329,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 (
                     Math.random() - .5
                 ) * 120;
-
 
             const y =
                 -(
@@ -395,9 +375,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       10 SECOND MEGA CELEBRATION
-    ===================================================== */
+    /* =========================
+       10 SECOND CELEBRATION
+    ========================== */
 
     function startMegaCelebration() {
 
@@ -410,22 +390,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         celebrationLayer.classList.add("active");
 
-
         startBirthdayMusic();
 
 
-        /* INITIAL HUGE BURST */
-
         createMegaBurst();
-
         createBalloonBurst();
-
         createPopperBurst();
-
         createFirework();
 
-
-        /* REPEATED CELEBRATION */
 
         const celebrationStart =
             Date.now();
@@ -472,28 +444,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       BIG CENTRAL BURST
-    ===================================================== */
+    /* =========================
+       MEGA BURST
+    ========================== */
 
     function createMegaBurst() {
 
+        const symbols = [
+            "✨",
+            "✦",
+            "✧",
+            "🎉",
+            "🎊",
+            "❤️",
+            "💖"
+        ];
+
+
         for (let i = 0; i < 55; i++) {
-
-            const symbols = [
-                "✨",
-                "✦",
-                "✧",
-                "🎉",
-                "🎊",
-                "❤️",
-                "💖"
-            ];
-
 
             const particle =
                 document.createElement("div");
-
 
             particle.className =
                 "celebration-particle sparkle";
@@ -512,16 +483,13 @@ document.addEventListener("DOMContentLoaded", function () {
             particle.style.top = "50%";
 
 
-            document.body.appendChild(
-                particle
-            );
+            document.body.appendChild(particle);
 
 
             const angle =
                 Math.random() *
                 Math.PI *
                 2;
-
 
             const distance =
                 100 +
@@ -532,7 +500,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const x =
                 Math.cos(angle) *
                 distance;
-
 
             const y =
                 Math.sin(angle) *
@@ -584,9 +551,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================
        SPARKLE WAVE
-    ===================================================== */
+    ========================== */
 
     function createSparkleWave() {
 
@@ -604,7 +571,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const particle =
                 document.createElement("div");
 
-
             particle.className =
                 "celebration-particle sparkle";
 
@@ -619,28 +585,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             particle.style.left =
-                Math.random() *
-                100 +
-                "%";
-
+                Math.random() * 100 + "%";
 
             particle.style.top =
-                Math.random() *
-                100 +
-                "%";
+                Math.random() * 100 + "%";
 
 
             particle.style.fontSize =
                 (
                     12 +
                     Math.random() * 25
-                ) +
-                "px";
+                ) + "px";
 
 
-            document.body.appendChild(
-                particle
-            );
+            document.body.appendChild(particle);
 
 
             particle.animate(
@@ -664,8 +622,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         900 +
-                        Math.random() *
-                        800
+                        Math.random() * 800
                 }
             );
 
@@ -681,9 +638,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================
        CONFETTI
-    ===================================================== */
+    ========================== */
 
     function createConfettiBurst() {
 
@@ -701,7 +658,6 @@ document.addEventListener("DOMContentLoaded", function () {
             Math.random() *
             window.innerWidth;
 
-
         const y =
             window.innerHeight *
             .1;
@@ -711,7 +667,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const piece =
                 document.createElement("div");
-
 
             piece.className =
                 "celebration-particle confetti";
@@ -729,14 +684,11 @@ document.addEventListener("DOMContentLoaded", function () {
             piece.style.left =
                 x + "px";
 
-
             piece.style.top =
                 y + "px";
 
 
-            document.body.appendChild(
-                piece
-            );
+            document.body.appendChild(piece);
 
 
             const moveX =
@@ -744,11 +696,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     Math.random() - .5
                 ) * 350;
 
-
             const moveY =
                 250 +
-                Math.random() *
-                500;
+                Math.random() * 500;
 
 
             piece.animate(
@@ -765,10 +715,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             "px," +
                             moveY +
                             "px) rotate(" +
-                            (
-                                Math.random() *
-                                720
-                            ) +
+                            Math.random() *
+                            720 +
                             "deg)",
                         opacity: 0
                     }
@@ -776,8 +724,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         1200 +
-                        Math.random() *
-                        900,
+                        Math.random() * 900,
 
                     easing: "ease-out"
                 }
@@ -795,16 +742,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       BALLOON BURST
-    ===================================================== */
+    /* =========================
+       BALLOON POP
+    ========================== */
 
     function createBalloonBurst() {
 
         const x =
             Math.random() *
             window.innerWidth;
-
 
         const y =
             100 +
@@ -824,10 +770,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const particle =
             document.createElement("div");
 
-
         particle.className =
             "celebration-particle";
-
 
         particle.textContent =
             "🎈💥";
@@ -836,31 +780,25 @@ document.addEventListener("DOMContentLoaded", function () {
         particle.style.left =
             x + "px";
 
-
         particle.style.top =
             y + "px";
 
 
-        document.body.appendChild(
-            particle
-        );
+        document.body.appendChild(particle);
 
 
         particle.animate(
             [
                 {
-                    transform:
-                        "scale(.2)",
+                    transform: "scale(.2)",
                     opacity: 0
                 },
                 {
-                    transform:
-                        "scale(1.5)",
+                    transform: "scale(1.5)",
                     opacity: 1
                 },
                 {
-                    transform:
-                        "scale(0)",
+                    transform: "scale(0)",
                     opacity: 0
                 }
             ],
@@ -879,9 +817,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================
        PARTY POPPER
-    ===================================================== */
+    ========================== */
 
     function createPopperBurst() {
 
@@ -908,10 +846,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const popper =
             document.createElement("div");
 
-
         popper.className =
             "celebration-particle";
-
 
         popper.textContent =
             "🎉";
@@ -920,14 +856,11 @@ document.addEventListener("DOMContentLoaded", function () {
         popper.style.left =
             x + "px";
 
-
         popper.style.top =
             y + "px";
 
 
-        document.body.appendChild(
-            popper
-        );
+        document.body.appendChild(popper);
 
 
         popper.animate(
@@ -954,13 +887,10 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        /* CONFETTI FROM POPPER */
-
         for (let i = 0; i < 12; i++) {
 
             const piece =
                 document.createElement("div");
-
 
             piece.className =
                 "celebration-particle confetti";
@@ -982,14 +912,11 @@ document.addEventListener("DOMContentLoaded", function () {
             piece.style.left =
                 x + "px";
 
-
             piece.style.top =
                 y + "px";
 
 
-            document.body.appendChild(
-                piece
-            );
+            document.body.appendChild(piece);
 
 
             const direction =
@@ -1033,8 +960,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         700 +
-                        Math.random() *
-                        700,
+                        Math.random() * 700,
 
                     easing: "ease-out"
                 }
@@ -1059,16 +985,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       DIWALI CRACKLE / FIREWORK
-    ===================================================== */
+    /* =========================
+       FIREWORK
+    ========================== */
 
     function createFirework() {
 
         const x =
             10 +
             Math.random() * 80;
-
 
         const y =
             15 +
@@ -1084,10 +1009,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const firework =
             document.createElement("div");
 
-
         firework.className =
             "celebration-particle crackle";
-
 
         firework.textContent =
             "💥";
@@ -1096,14 +1019,11 @@ document.addEventListener("DOMContentLoaded", function () {
         firework.style.left =
             x + "%";
 
-
         firework.style.top =
             y + "%";
 
 
-        document.body.appendChild(
-            firework
-        );
+        document.body.appendChild(firework);
 
 
         firework.animate(
@@ -1137,13 +1057,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 700);
 
 
-        /* CRACKLING SPARKS */
-
         for (let i = 0; i < 20; i++) {
 
             const spark =
                 document.createElement("div");
-
 
             spark.className =
                 "celebration-particle sparkle";
@@ -1164,14 +1081,11 @@ document.addEventListener("DOMContentLoaded", function () {
             spark.style.left =
                 x + "%";
 
-
             spark.style.top =
                 y + "%";
 
 
-            document.body.appendChild(
-                spark
-            );
+            document.body.appendChild(spark);
 
 
             const angle =
@@ -1182,13 +1096,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const distance =
                 40 +
-                Math.random() * 170;
+                Math.random() *
+                170;
 
 
             const moveX =
                 Math.cos(angle) *
                 distance;
-
 
             const moveY =
                 Math.sin(angle) *
@@ -1214,9 +1128,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     {
                         transform:
                             "translate(" +
-                            (moveX * 1.2) +
+                            moveX * 1.2 +
                             "px," +
-                            (moveY * 1.2) +
+                            moveY * 1.2 +
                             "px) scale(.1)",
                         opacity: 0
                     }
@@ -1224,8 +1138,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         600 +
-                        Math.random() *
-                        500,
+                        Math.random() * 500,
 
                     easing: "ease-out"
                 }
@@ -1243,9 +1156,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
-       END CELEBRATION
-    ===================================================== */
+    /* =========================
+       FINISH
+    ========================== */
 
     function finishCelebration() {
 
@@ -1254,15 +1167,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setTimeout(function () {
 
-            celebrationLayer.classList.remove(
-                "active"
-            );
+            celebrationLayer.classList.remove("active");
 
-
-            birthdayPopup.classList.add(
-                "show"
-            );
-
+            birthdayPopup.classList.add("show");
 
             cakeInstruction.textContent =
                 "Happy Birthday, beautiful girl. ❤️";
@@ -1272,9 +1179,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-    /* =====================================================
+    /* =========================
        PAGE 3
-    ===================================================== */
+    ========================== */
 
     get("page3-button").addEventListener(
         "click",
