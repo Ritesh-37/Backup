@@ -1,7 +1,3 @@
-/* =========================================================
-   RESET
-========================================================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -33,9 +29,9 @@ body {
 }
 
 
-/* =========================================================
+/* =========================
    BACKGROUND
-========================================================= */
+========================= */
 
 .background-glow {
     position: fixed;
@@ -80,9 +76,9 @@ body::before {
 }
 
 
-/* =========================================================
+/* =========================
    FLOATING DECOR
-========================================================= */
+========================= */
 
 .floating-decor {
     position: fixed;
@@ -155,7 +151,6 @@ body::before {
 }
 
 @keyframes floatDecor {
-
     0%,
     100% {
         transform:
@@ -171,9 +166,9 @@ body::before {
 }
 
 
-/* =========================================================
-   BIRTHDAY ROPE
-========================================================= */
+/* =========================
+   TOP ROPE
+========================= */
 
 .birthday-rope {
     position: fixed;
@@ -222,24 +217,7 @@ body::before {
         infinite;
 }
 
-.birthday-rope span:nth-child(3) {
-    animation-delay: .3s;
-}
-
-.birthday-rope span:nth-child(4) {
-    animation-delay: .6s;
-}
-
-.birthday-rope span:nth-child(5) {
-    animation-delay: .9s;
-}
-
-.birthday-rope span:nth-child(6) {
-    animation-delay: 1.2s;
-}
-
 @keyframes ropeSwing {
-
     0%,
     100% {
         transform: rotate(-4deg);
@@ -251,9 +229,9 @@ body::before {
 }
 
 
-/* =========================================================
+/* =========================
    MUSIC
-========================================================= */
+========================= */
 
 .music-button {
     position: fixed;
@@ -290,9 +268,9 @@ body::before {
 }
 
 
-/* =========================================================
+/* =========================
    PAGE
-========================================================= */
+========================= */
 
 #party-page {
     position: relative;
@@ -351,9 +329,9 @@ body::before {
 }
 
 
-/* =========================================================
+/* =========================
    WELCOME
-========================================================= */
+========================= */
 
 #welcome-section {
     text-align: center;
@@ -390,33 +368,7 @@ body::before {
         scale(1);
 }
 
-.birthday-crown {
-    font-size: 65px;
-
-    margin-bottom: 12px;
-
-    animation:
-        crownFloat 3s
-        ease-in-out
-        infinite;
-}
-
-@keyframes crownFloat {
-
-    0%,
-    100% {
-        transform:
-            translateY(0)
-            rotate(-3deg);
-    }
-
-    50% {
-        transform:
-            translateY(-12px)
-            rotate(3deg);
-    }
-}
-
+.birthday-crown,
 .welcome-big-icon {
     font-size: 65px;
 
@@ -429,7 +381,6 @@ body::before {
 }
 
 @keyframes iconFloat {
-
     0%,
     100% {
         transform: translateY(0);
@@ -473,13 +424,13 @@ body::before {
 
 .welcome-step h2 {
     font-family:
-        "Great Vibes",
-        cursive;
+        "Cormorant Garamond",
+        serif;
 
     font-size:
         clamp(48px, 7vw, 75px);
 
-    font-weight: 400;
+    font-weight: 600;
 
     color: #a92549;
 
@@ -502,9 +453,9 @@ body::before {
 }
 
 
-/* =========================================================
-   BUTTONS
-========================================================= */
+/* =========================
+   BUTTON
+========================= */
 
 .party-button {
     border: none;
@@ -545,45 +496,40 @@ body::before {
     transform:
         translateY(-4px)
         scale(1.04);
-
-    box-shadow:
-        0 18px 35px
-        rgba(143, 36, 61, .35);
 }
 
 
-/* =========================================================
+/* =========================
    CAKE HEADING
-========================================================= */
+========================= */
 
 .cake-heading {
     text-align: center;
 
-    margin-bottom: 8px;
+    margin-bottom: 2px;
 
     z-index: 5;
 }
 
 .cake-heading-icon {
-    font-size: 42px;
+    font-size: 35px;
 
-    margin-bottom: 4px;
+    color: #d99a19;
 
     animation:
-        cakeIconFloat 2.5s
+        sparkleFloat 2s
         ease-in-out
         infinite;
 }
 
-@keyframes cakeIconFloat {
-
+@keyframes sparkleFloat {
     0%,
     100% {
-        transform: translateY(0);
+        transform: scale(.9);
     }
 
     50% {
-        transform: translateY(-7px);
+        transform: scale(1.15);
     }
 }
 
@@ -613,16 +559,16 @@ body::before {
 }
 
 
-/* =========================================================
-   CAKE STAGE
-========================================================= */
+/* ==================================================
+   CSS CAKE
+================================================== */
 
 .cake-stage {
     position: relative;
 
-    width: min(500px, 95vw);
+    width: min(520px, 95vw);
 
-    height: 300px;
+    height: 330px;
 
     display: flex;
 
@@ -636,9 +582,8 @@ body::before {
 .cake-wrapper {
     position: relative;
 
-    width: 330px;
-
-    height: 270px;
+    width: 370px;
+    height: 300px;
 
     display: flex;
 
@@ -649,121 +594,311 @@ body::before {
     filter:
         drop-shadow(
             0 25px 30px
-            rgba(100, 20, 40, .15)
+            rgba(100, 20, 40, .16)
         );
 }
 
 
-/* =========================================================
-   CAKE
-========================================================= */
+/* CAKE PLATE */
 
-.birthday-cake {
-    position: relative;
+.cake-plate {
+    position: absolute;
 
-    width: 280px;
+    bottom: 5px;
+    left: 50%;
 
-    height: 190px;
+    transform:
+        translateX(-50%);
+
+    width: 350px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #fff,
+            #f2d9df
+        );
+
+    border:
+        2px solid
+        rgba(143, 36, 61, .15);
+
+    box-shadow:
+        0 8px 10px
+        rgba(80, 20, 40, .15);
+}
+
+
+/* BOTTOM CAKE */
+
+.cake-bottom-layer {
+    position: absolute;
+
+    bottom: 27px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 315px;
+    height: 95px;
+
+    border-radius:
+        0 0 25px 25px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d94d6c,
+            #f07891
+        );
+
+    border:
+        3px solid
+        #b93755;
+
+    overflow: hidden;
+
+    box-shadow:
+        inset 0 -10px 15px
+        rgba(120, 20, 50, .12);
+}
+
+.bottom-cream-line {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 18px;
+
+    background: #fff4f6;
+
+    border-radius: 0 0 50% 50%;
+}
+
+
+/* MIDDLE */
+
+.cake-middle-layer {
+    position: absolute;
+
+    bottom: 105px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: 295px;
+    height: 75px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8a7b7,
+            #ffd0d9
+        );
+
+    border:
+        3px solid
+        #d75a78;
+
+    border-radius:
+        22px 22px 10px 10px;
+
+    overflow: hidden;
+
+    z-index: 3;
+}
+
+.cream-line {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 17px;
+
+    background: #fff7f8;
+
+    border-radius:
+        0 0 50% 50%;
+}
+
+.cake-decoration {
+    position: absolute;
+
+    bottom: 15px;
+
+    left: 0;
+
+    width: 100%;
 
     display: flex;
 
-    justify-content: center;
-
-    align-items: flex-end;
-
-    cursor: default;
-
-    z-index: 5;
+    justify-content: space-evenly;
 }
 
-.cake-emoji {
-    font-size:
-        clamp(155px, 20vw, 205px);
+.cake-decoration span {
+    width: 11px;
+    height: 11px;
 
-    line-height: 1;
+    border-radius: 50%;
 
-    filter:
-        drop-shadow(
-            0 12px 12px
-            rgba(120, 20, 50, .2)
-        );
+    background: #a92549;
 
-    animation:
-        cakeBreath 3s
-        ease-in-out
-        infinite;
+    box-shadow:
+        0 2px 4px
+        rgba(100, 20, 40, .2);
 }
 
-@keyframes cakeBreath {
 
-    0%,
-    100% {
-        transform: scale(1);
-    }
+/* TOP */
 
-    50% {
-        transform: scale(1.025);
-    }
-}
-
-.cake-top {
+.cake-top-layer {
     position: absolute;
 
-    top: 3px;
+    bottom: 170px;
+    left: 50%;
 
-    font-size: 28px;
+    transform:
+        translateX(-50%);
+
+    width: 275px;
+    height: 65px;
+
+    border-radius:
+        25px 25px 15px 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe1e7,
+            #fff7f8
+        );
+
+    border:
+        3px solid
+        #df8197;
 
     z-index: 6;
-
-    animation:
-        berryFloat 2s
-        ease-in-out
-        infinite;
-}
-
-@keyframes berryFloat {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
 }
 
 
-/* =========================================================
+/* CREAM DRIPS */
+
+.cream-drip {
+    position: absolute;
+
+    top: 40px;
+
+    width: 25px;
+    height: 28px;
+
+    background: #fff7f8;
+
+    border-radius:
+        0 0 15px 15px;
+}
+
+.drip-one {
+    left: 30px;
+}
+
+.drip-two {
+    left: 95px;
+
+    height: 38px;
+}
+
+.drip-three {
+    right: 95px;
+
+    height: 32px;
+}
+
+.drip-four {
+    right: 30px;
+
+    height: 25px;
+}
+
+
+/* BERRIES */
+
+.berry {
+    position: absolute;
+
+    width: 18px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffb0c0,
+            #c82e52
+        );
+
+    box-shadow:
+        0 3px 5px
+        rgba(120, 20, 40, .2);
+}
+
+.berry-one {
+    left: 45px;
+    top: 15px;
+}
+
+.berry-two {
+    left: 50%;
+    top: 8px;
+
+    transform:
+        translateX(-50%);
+}
+
+.berry-three {
+    right: 45px;
+    top: 15px;
+}
+
+
+/* ==================================================
    CANDLES
-========================================================= */
+================================================== */
 
 .cake-candles {
     position: absolute;
 
-    top: 48px;
+    bottom: 215px;
 
     left: 50%;
 
     transform:
         translateX(-50%);
 
+    width: 235px;
+
     display: flex;
+
+    justify-content: space-between;
 
     align-items: flex-end;
 
-    justify-content: center;
-
-    gap: 18px;
-
-    z-index: 20;
+    z-index: 30;
 }
 
 .candle {
     position: relative;
 
-    width: 30px;
-
+    width: 28px;
     height: 95px;
 
     padding: 0;
@@ -774,8 +909,7 @@ body::before {
 
     cursor: pointer;
 
-    -webkit-tap-highlight-color:
-        transparent;
+    -webkit-tap-highlight-color: transparent;
 
     transition:
         transform .2s ease;
@@ -787,16 +921,17 @@ body::before {
         scale(1.08);
 }
 
+
+/* CANDLE BODY */
+
 .candle-stick {
     position: absolute;
 
     bottom: 0;
-
-    left: 8px;
+    left: 7px;
 
     width: 14px;
-
-    height: 68px;
+    height: 62px;
 
     border-radius: 5px;
 
@@ -804,36 +939,77 @@ body::before {
         repeating-linear-gradient(
             -45deg,
             #e9576f 0,
-            #e9576f 8px,
-            #fff 8px,
-            #fff 15px
+            #e9576f 7px,
+            #fff 7px,
+            #fff 14px
         );
+
+    border:
+        1px solid
+        rgba(130, 30, 50, .2);
 
     box-shadow:
         0 3px 6px
-        rgba(0, 0, 0, .16);
+        rgba(0, 0, 0, .15);
 }
+
+
+/* WICK */
+
+.wick {
+    position: absolute;
+
+    bottom: 61px;
+    left: 12px;
+
+    width: 4px;
+    height: 8px;
+
+    background: #3b2222;
+
+    border-radius: 3px;
+}
+
+
+/* FLAME */
 
 .flame {
     position: absolute;
 
-    top: -3px;
+    bottom: 67px;
+    left: 5px;
 
-    left: 2px;
+    width: 18px;
+    height: 25px;
 
-    font-size: 25px;
+    border-radius:
+        50% 50% 50% 50% /
+        60% 60% 40% 40%;
 
-    z-index: 3;
+    background:
+        radial-gradient(
+            circle at 50% 70%,
+            #fff7a8 0 25%,
+            #ffc43d 35%,
+            #ff7138 65%,
+            transparent 70%
+        );
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255, 165, 40, .9)
+        );
 
     animation:
-        flameFlicker
-        .35s
-        infinite
-        alternate;
+        flameFlicker .35s
+        infinite alternate;
+
+    transform-origin:
+        bottom center;
 }
 
 @keyframes flameFlicker {
-
     from {
         transform:
             scale(1)
@@ -846,6 +1022,9 @@ body::before {
             rotate(4deg);
     }
 }
+
+
+/* TURNED OFF */
 
 .candle.off {
     pointer-events: none;
@@ -863,12 +1042,15 @@ body::before {
         translateY(-10px);
 }
 
+.candle.off .wick {
+    opacity: .5;
+}
+
 .candle.off .candle-stick {
     opacity: .65;
 }
 
 @keyframes candleOut {
-
     0% {
         transform: scale(1);
     }
@@ -885,12 +1067,12 @@ body::before {
 }
 
 
-/* =========================================================
-   CAKE INSTRUCTION
-========================================================= */
+/* =========================
+   INSTRUCTION
+========================= */
 
 .cake-instruction {
-    margin-top: 2px;
+    margin-top: -3px;
 
     font-size: 14px;
 
@@ -899,14 +1081,12 @@ body::before {
     opacity: .8;
 
     z-index: 10;
-
-    transition: .4s;
 }
 
 
-/* =========================================================
-   CELEBRATION LAYER
-========================================================= */
+/* ==================================================
+   CELEBRATION
+================================================== */
 
 .celebration-layer {
     position: fixed;
@@ -930,11 +1110,6 @@ body::before {
     visibility: visible;
 }
 
-
-/* =========================================================
-   FLASH
-========================================================= */
-
 .celebration-flash {
     position: absolute;
 
@@ -955,7 +1130,6 @@ body::before {
 }
 
 @keyframes celebrationFlash {
-
     0% {
         opacity: 0;
     }
@@ -982,9 +1156,7 @@ body::before {
 }
 
 
-/* =========================================================
-   GENERATED CELEBRATION PARTICLES
-========================================================= */
+/* PARTICLES */
 
 .celebration-particle {
     position: fixed;
@@ -1021,12 +1193,6 @@ body::before {
             25px +
             3vw
         );
-
-    filter:
-        drop-shadow(
-            0 0 12px
-            #ffb347
-        );
 }
 
 .celebration-particle.confetti {
@@ -1038,9 +1204,7 @@ body::before {
 }
 
 
-/* =========================================================
-   BIG CELEBRATION TEXT
-========================================================= */
+/* BIG CELEBRATION */
 
 .celebration-title {
     position: absolute;
@@ -1053,12 +1217,10 @@ body::before {
         scale(0);
 
     font-size:
-        clamp(70px, 15vw, 170px);
-
-    filter:
-        drop-shadow(
-            0 0 25px
-            rgba(255, 255, 255, .8)
+        clamp(
+            70px,
+            15vw,
+            170px
         );
 }
 
@@ -1072,7 +1234,6 @@ body::before {
 }
 
 @keyframes celebrationTitle {
-
     0% {
         transform:
             translate(-50%, -50%)
@@ -1099,9 +1260,9 @@ body::before {
 }
 
 
-/* =========================================================
-   BIRTHDAY POPUP
-========================================================= */
+/* ==================================================
+   FINAL POPUP
+================================================== */
 
 .birthday-popup {
     position: fixed;
@@ -1110,7 +1271,10 @@ body::before {
     top: 50%;
 
     width:
-        min(92vw, 540px);
+        min(
+            92vw,
+            540px
+        );
 
     padding:
         35px
@@ -1121,18 +1285,33 @@ body::before {
     border-radius: 30px;
 
     background:
-        rgba(255, 255, 255, .96);
+        rgba(
+            255,
+            255,
+            255,
+            .97
+        );
 
     backdrop-filter:
         blur(18px);
 
     border:
         1px solid
-        rgba(143, 36, 61, .12);
+        rgba(
+            143,
+            36,
+            61,
+            .12
+        );
 
     box-shadow:
         0 30px 100px
-        rgba(90, 10, 30, .3);
+        rgba(
+            90,
+            10,
+            30,
+            .3
+        );
 
     opacity: 0;
 
@@ -1161,9 +1340,7 @@ body::before {
 }
 
 
-/* =========================================================
-   POPUP SPARKLES
-========================================================= */
+/* POPUP SPARKLES */
 
 .popup-sparkles {
     font-size: 24px;
@@ -1181,7 +1358,6 @@ body::before {
 }
 
 @keyframes popupSparkle {
-
     from {
         transform: scale(.9);
         opacity: .7;
@@ -1194,16 +1370,15 @@ body::before {
 }
 
 .popup-icon {
-    font-size: 55px;
+    font-size: 48px;
 
     margin-bottom: 8px;
 }
 
 
-/* =========================================================
-   FINAL HAPPY BIRTHDAY MESSAGE
-   PREMIUM NON-CURVY FONT
-========================================================= */
+/* ==================================================
+   PREMIUM NON-CURVY BIRTHDAY FONT
+================================================== */
 
 .birthday-popup h2 {
     font-family:
@@ -1211,13 +1386,15 @@ body::before {
         serif;
 
     font-size:
-        clamp(42px, 7vw, 64px);
+        clamp(
+            40px,
+            7vw,
+            62px
+        );
 
-    font-weight: 600;
+    font-weight: 700;
 
-    letter-spacing: 2px;
-
-    text-transform: uppercase;
+    letter-spacing: 1px;
 
     color: #7d1834;
 
@@ -1229,13 +1406,29 @@ body::before {
 }
 
 
-/* =========================================================
-   POPUP TEXT
-========================================================= */
+/* POPUP DIVIDER */
+
+.popup-divider {
+    width: 70px;
+
+    height: 2px;
+
+    margin:
+        15px
+        auto;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #b52d51,
+            transparent
+        );
+}
 
 .birthday-popup p {
     margin:
-        18px
+        14px
         auto
         8px;
 
@@ -1261,9 +1454,9 @@ body::before {
 }
 
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* ==================================================
+   MOBILE
+================================================== */
 
 @media (max-width: 700px) {
 
@@ -1303,29 +1496,19 @@ body::before {
     }
 
     .cake-stage {
-        height: 285px;
+        height: 300px;
 
         transform: scale(.82);
     }
 
     .cake-candles {
-        gap: 13px;
-    }
-
-    .celebration-particle {
-        font-size: 22px;
+        width: 220px;
     }
 
     .birthday-popup {
         padding:
             30px
             20px;
-    }
-
-    .birthday-popup h2 {
-        font-size: 42px;
-
-        letter-spacing: 1.5px;
     }
 }
 
@@ -1357,7 +1540,7 @@ body::before {
     }
 
     .cake-candles {
-        gap: 9px;
+        width: 220px;
     }
 
     .welcome-step h1 {
@@ -1377,8 +1560,6 @@ body::before {
     }
 
     .birthday-popup h2 {
-        font-size: 38px;
-
-        letter-spacing: 1px;
+        font-size: 40px;
     }
 }
