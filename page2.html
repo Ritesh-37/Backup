@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tisha's Birthday Party 🎂</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="page2.css">
+</head>
+
+<body>
+
+    <!-- =========================================
+         AMBIENT BACKGROUND
+    ========================================== -->
+
+    <div class="blue-glow glow-one"></div>
+    <div class="blue-glow glow-two"></div>
+
+    <div class="fairy-lights">
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+        <span>✧</span>
+        <span>✦</span>
+        <span>✧</span>
+    </div>
+
+    <!-- =========================================
+         BALLOONS IN BACKGROUND
+    ========================================== -->
+
+    <div class="background-balloons">
+        <span class="balloon white-balloon">🎈</span>
+        <span class="balloon blue-balloon">🎈</span>
+        <span class="balloon white-balloon">🎈</span>
+        <span class="balloon blue-balloon">🎈</span>
+        <span class="balloon white-balloon">🎈</span>
+        <span class="balloon blue-balloon">🎈</span>
+    </div>
+
+    <!-- =========================================
+         CONFETTI
+    ========================================== -->
+
+    <div id="confetti-container"></div>
+
+    <!-- =========================================
+         MAIN PAGE
+    ========================================== -->
+
+    <main id="party-page">
+
+        <!-- =====================================
+             INTRO
+        ====================================== -->
+
+        <section id="intro-section" class="party-section active">
+
+            <div class="intro-card">
+
+                <div class="party-crown">👑</div>
+
+                <p class="small-heading">
+                    ATTENTION, BIRTHDAY GIRL
+                </p>
+
+                <h1>
+                    The party<br>
+                    <span>starts now.</span>
+                </h1>
+
+                <p class="intro-text">
+                    Tisha, you have officially entered
+                    your very own little birthday party. 🎂
+                </p>
+
+                <p class="script-text">
+                    And yes... I planned this whole thing. 😌
+                </p>
+
+                <button id="start-party-btn" class="main-button">
+                    LET'S PARTY 🎉
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             CAKE SECTION
+        ====================================== -->
+
+        <section id="cake-section" class="party-section">
+
+            <div class="section-card">
+
+                <p class="small-heading">
+                    FIRST THINGS FIRST
+                </p>
+
+                <h2>
+                    Make a wish, birthday girl. 🎂
+                </h2>
+
+                <p class="section-description">
+                    You have to put out every candle.
+                </p>
+
+                <div id="cake" class="cake">
+
+                    <div class="cake-candles">
+
+                        <button class="candle" data-candle="1">
+                            <span class="flame">🔥</span>
+                        </button>
+
+                        <button class="candle" data-candle="2">
+                            <span class="flame">🔥</span>
+                        </button>
+
+                        <button class="candle" data-candle="3">
+                            <span class="flame">🔥</span>
+                        </button>
+
+                        <button class="candle" data-candle="4">
+                            <span class="flame">🔥</span>
+                        </button>
+
+                        <button class="candle" data-candle="5">
+                            <span class="flame">🔥</span>
+                        </button>
+
+                    </div>
+
+                    <div class="cake-top">
+                        <span>HAPPY</span>
+                    </div>
+
+                    <div class="cake-middle">
+                        <span>BIRTHDAY</span>
+                    </div>
+
+                    <div class="cake-bottom"></div>
+
+                </div>
+
+                <p id="candle-message" class="interaction-message">
+                    Click the candles to blow them out. 🕯️
+                </p>
+
+                <button
+                    id="cake-next-btn"
+                    class="main-button hidden"
+                >
+                    CAKE SURVIVED 😭 → 
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             BALLOON POPPING
+        ====================================== -->
+
+        <section id="balloon-section" class="party-section">
+
+            <div class="section-card wide-card">
+
+                <p class="small-heading">
+                    ROUND TWO
+                </p>
+
+                <h2>
+                    POP THE BALLOONS! 🎈
+                </h2>
+
+                <p class="section-description">
+                    There are secrets hiding inside some of them.
+                </p>
+
+                <div id="balloon-arena">
+
+                    <button class="pop-balloon balloon-one">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-two">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-three">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-four">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-five">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-six">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-seven">
+                        🎈
+                    </button>
+
+                    <button class="pop-balloon balloon-eight">
+                        🎈
+                    </button>
+
+                </div>
+
+                <p id="balloon-message" class="interaction-message">
+                    Burst them all, cutuuuu. 😂
+                </p>
+
+                <button
+                    id="balloon-next-btn"
+                    class="main-button hidden"
+                >
+                    MORE CHAOS → 
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             PARTY POPPERS
+        ====================================== -->
+
+        <section id="popper-section" class="party-section">
+
+            <div class="section-card">
+
+                <p class="small-heading">
+                    THIS IS GETTING OUT OF HAND
+                </p>
+
+                <h2>
+                    PARTY POPPERS! 🎊
+                </h2>
+
+                <p class="section-description">
+                    Pull them. I dare you.
+                </p>
+
+                <div class="party-poppers">
+
+                    <button class="popper" data-popper="1">
+                        🎉
+                    </button>
+
+                    <button class="popper" data-popper="2">
+                        🎉
+                    </button>
+
+                    <button class="popper" data-popper="3">
+                        🎉
+                    </button>
+
+                </div>
+
+                <p id="popper-message" class="interaction-message">
+                    Don't be shy. 😌
+                </p>
+
+                <button
+                    id="popper-next-btn"
+                    class="main-button hidden"
+                >
+                    KEEP GOING → 
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             CAMERA
+        ====================================== -->
+
+        <section id="camera-section" class="party-section">
+
+            <div class="section-card">
+
+                <p class="small-heading">
+                    SAY CHEESE
+                </p>
+
+                <h2>
+                    One picture for the birthday girl. 📸
+                </h2>
+
+                <p class="section-description">
+                    Come on... give me that smile.
+                </p>
+
+                <div class="camera-area">
+
+                    <button id="camera-btn" class="camera">
+                        <div class="camera-lens"></div>
+                        <div class="camera-flash"></div>
+                    </button>
+
+                    <p id="camera-message">
+                        CLICK ME 📸
+                    </p>
+
+                </div>
+
+                <div id="polaroid" class="polaroid">
+
+                    <div class="photo-placeholder">
+                        📸
+                    </div>
+
+                    <p>
+                        TISHA
+                    </p>
+
+                    <span>
+                        Certified Birthday Cutie™
+                    </span>
+
+                </div>
+
+                <button
+                    id="camera-next-btn"
+                    class="main-button hidden"
+                >
+                    NEXT → 
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             MYSTERY NOTES
+        ====================================== -->
+
+        <section id="notes-section" class="party-section">
+
+            <div class="section-card wide-card">
+
+                <p class="small-heading">
+                    SOMETHING IS HIDING HERE...
+                </p>
+
+                <h2>
+                    Mystery Notes 💌
+                </h2>
+
+                <p class="section-description">
+                    Open every little note.
+                </p>
+
+                <div class="notes-container">
+
+                    <button class="mystery-note" data-note="1">
+                        <span>?</span>
+                    </button>
+
+                    <button class="mystery-note" data-note="2">
+                        <span>?</span>
+                    </button>
+
+                    <button class="mystery-note" data-note="3">
+                        <span>?</span>
+                    </button>
+
+                    <button class="mystery-note" data-note="4">
+                        <span>?</span>
+                    </button>
+
+                    <button class="mystery-note" data-note="5">
+                        <span>?</span>
+                    </button>
+
+                </div>
+
+                <div id="note-reveal" class="note-reveal">
+                    Click a note. 👀
+                </div>
+
+                <button
+                    id="notes-next-btn"
+                    class="main-button hidden"
+                >
+                    ONE LAST THING... 🍷
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             WINE FINALE
+        ====================================== -->
+
+        <section id="wine-section" class="party-section wine-section">
+
+            <div class="wine-card">
+
+                <p class="small-heading">
+                    BEFORE YOU GO...
+                </p>
+
+                <h2>
+                    One last little celebration. 🍷
+                </h2>
+
+                <p class="wine-description">
+                    Click the bottle.
+                </p>
+
+                <div id="wine-area">
+
+                    <button id="wine-bottle" class="wine-bottle">
+
+                        <div class="bottle-neck"></div>
+
+                        <div class="bottle-body">
+
+                            <div class="wine-liquid">
+                                <div class="wine-shine"></div>
+                            </div>
+
+                            <div class="bottle-label">
+                                <strong>TISHA</strong>
+                                <span>Birthday Reserve</span>
+                                <small>Est. 2026</small>
+                            </div>
+
+                        </div>
+
+                    </button>
+
+                </div>
+
+                <p id="wine-message" class="wine-message">
+                    Click me... 👀
+                </p>
+
+                <div class="wine-progress">
+                    <span id="wine-progress-bar"></span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================================
+         MUSIC CONTROL
+    ========================================== -->
+
+    <button
+        id="music-control"
+        class="music-control"
+        aria-label="Toggle music"
+    >
+        ♫
+    </button>
+
+    <audio id="party-music" loop>
+        <source src="party-music.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- =========================================
+         SCRIPT
+    ========================================== -->
+
+    <script src="page2.js"></script>
+
+</body>
+</html>
