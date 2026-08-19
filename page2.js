@@ -1,28 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
-       SECTIONS
+       HELPER FUNCTIONS
     ========================================== */
 
-    const sections = [
-        document.getElementById("intro-section"),
-        document.getElementById("cake-section"),
-        document.getElementById("balloon-section"),
-        document.getElementById("popper-section"),
-        document.getElementById("camera-section"),
-        document.getElementById("notes-section"),
-        document.getElementById("wine-section")
-    ];
+    function get(id) {
+        return document.getElementById(id);
+    }
 
-    function showSection(section) {
 
-        sections.forEach(function (item) {
-            item.classList.remove("active");
+    function showSection(sectionId) {
+
+        const sections =
+            document.querySelectorAll(".party-section");
+
+        sections.forEach(function (section) {
+            section.classList.remove("active");
         });
 
-        setTimeout(function () {
-            section.classList.add("active");
-        }, 120);
+        const target = get(sectionId);
+
+        if (target) {
+            setTimeout(function () {
+                target.classList.add("active");
+            }, 150);
+        }
+    }
+
+
+    function updateProgress(number) {
+
+        get("progress-text").textContent =
+            "Birthday Party • " + number + " / 6";
     }
 
 
@@ -30,156 +39,75 @@ document.addEventListener("DOMContentLoaded", function () {
        MUSIC
     ========================================== */
 
-    const music = document.getElementById("party-music");
-    const musicControl = document.getElementById("music-control");
+    const music = get("party-music");
+    const musicButton = get("music-button");
+
+    let musicStarted = false;
 
     function startMusic() {
 
-        music.volume = 0.35;
+        if (!music) {
+            return;
+        }
 
-        const playPromise = music.play();
+        music.volume = 0.3;
 
-        if (playPromise !== undefined) {
+        const promise = music.play();
 
-            playPromise
+        if (promise !== undefined) {
+
+            promise
                 .then(function () {
-                    musicControl.textContent = "♫";
+
+                    musicStarted = true;
+
+                    musicButton.textContent = "♫";
+
                 })
                 .catch(function () {
-                    musicControl.textContent = "🔇";
+
+                    musicButton.textContent = "🔇";
+
                 });
         }
     }
 
-    musicControl.addEventListener("click", function () {
+
+    musicButton.addEventListener("click", function () {
+
+        if (!music) {
+            return;
+        }
 
         if (music.paused) {
 
             music.play();
 
-            musicControl.textContent = "♫";
+            musicButton.textContent = "♫";
 
         } else {
 
             music.pause();
 
-            musicControl.textContent = "🔇";
+            musicButton.textContent = "🔇";
+
         }
+
     });
 
 
     /* =========================================
-       CONFETTI
+       START PARTY
     ========================================== */
 
-    function createConfetti(amount) {
-
-        const container =
-            document.getElementById("confetti-container");
-
-        for (let i = 0; i < amount; i++) {
-
-            const piece =
-                document.createElement("span");
-
-            piece.className = "confetti-piece";
-
-            piece.style.left =
-                Math.random() * 100 + "%";
-
-            piece.style.top =
-                (-20 - Math.random() * 30) + "px";
-
-            piece.style.animationDelay =
-                Math.random() * 0.8 + "s";
-
-            piece.style.transform =
-                "rotate(" +
-                Math.random() * 360 +
-                "deg)";
-
-            container.appendChild(piece);
-
-            setTimeout(function () {
-                piece.remove();
-            }, 3500);
-        }
-    }
-
-
-    /* =========================================
-       INTRO
-    ========================================== */
-
-    const startPartyButton =
-        document.getElementById("start-party-btn");
-
-    startPartyButton.addEventListener("click", function () {
+    get("start-party").addEventListener("click", function () {
 
         startMusic();
 
-        createConfetti(60);
+        updateProgress(1);
 
-        showSection(
-            document.getElementById("cake-section")
-        );
-    });
+        showSection("balloon-section");
 
-
-    /* =========================================
-       CAKE
-    ========================================== */
-
-    const candles =
-        document.querySelectorAll(".candle");
-
-    const candleMessage =
-        document.getElementById("candle-message");
-
-    const cakeNextButton =
-        document.getElementById("cake-next-btn");
-
-    let candlesOut = 0;
-
-    candles.forEach(function (candle) {
-
-        candle.addEventListener("click", function () {
-
-            if (candle.classList.contains("out")) {
-                return;
-            }
-
-            candle.classList.add("out");
-
-            candlesOut++;
-
-            if (candlesOut === candles.length) {
-
-                candleMessage.textContent =
-                    "WISH LOCKED IN. 🎂✨";
-
-                createConfetti(90);
-
-                cakeNextButton.classList.remove("hidden");
-
-            } else {
-
-                candleMessage.textContent =
-                    "That's " +
-                    candlesOut +
-                    " candle down... 👀";
-            }
-
-        });
-
-    });
-
-
-    cakeNextButton.addEventListener("click", function () {
-
-        showSection(
-            document.getElementById("balloon-section")
-        );
     });
 
 
@@ -188,28 +116,24 @@ document.addEventListener("DOMContentLoaded", function () {
     ========================================== */
 
     const balloons =
-        document.querySelectorAll(".pop-balloon");
+        document.querySelectorAll(".balloon");
 
     const balloonMessage =
-        document.getElementById("balloon-message");
+        get("balloon-message");
 
-    const balloonNextButton =
-        document.getElementById("balloon-next-btn");
+    const balloonMessageText =
+        get("balloon-message-text");
+
+    const closeBalloonMessage =
+        get("close-balloon-message");
+
+    const balloonComplete =
+        get("balloon-complete");
 
     let balloonsPopped = 0;
 
-    const balloonMessages = [
-        "CUTUUUUU 🎀",
-        "Hey! Don't miss me! 😂",
-        "Someone is having fun. 👀",
-        "POP POP POP!",
-        "You're doing great, birthday girl. ❤️",
-        "Okay... you're getting dangerous.",
-        "Almost there...",
-        "BURST THEM ALL CUTUUUU! 🎈"
-    ];
 
-    balloons.forEach(function (balloon, index) {
+    balloons.forEach(function (balloon) {
 
         balloon.addEventListener("click", function () {
 
@@ -217,25 +141,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            const message =
+                balloon.getAttribute("data-message");
+
             balloon.classList.add("popped");
 
             balloonsPopped++;
 
-            createConfetti(10);
+            balloonMessageText.textContent = message;
 
-            balloonMessage.textContent =
-                balloonMessages[index];
+            balloonMessage.classList.add("show");
+
+            createConfetti(
+                balloon.getBoundingClientRect().left +
+                balloon.offsetWidth / 2,
+
+                balloon.getBoundingClientRect().top +
+                balloon.offsetHeight / 2
+            );
 
             if (balloonsPopped === balloons.length) {
 
-                balloonMessage.textContent =
-                    "YOU POPPED EVERYTHING! 😭🎈";
+                setTimeout(function () {
 
-                createConfetti(80);
+                    balloonComplete.classList.add("show");
 
-                balloonNextButton.classList.remove(
-                    "hidden"
-                );
+                }, 700);
+
             }
 
         });
@@ -243,11 +175,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    balloonNextButton.addEventListener("click", function () {
+    closeBalloonMessage.addEventListener("click", function () {
 
-        showSection(
-            document.getElementById("popper-section")
-        );
+        balloonMessage.classList.remove("show");
+
+    });
+
+
+    get("balloon-next").addEventListener("click", function () {
+
+        balloonComplete.classList.remove("show");
+
+        updateProgress(2);
+
+        showSection("popper-section");
+
     });
 
 
@@ -259,38 +201,55 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelectorAll(".popper");
 
     const popperMessage =
-        document.getElementById("popper-message");
+        get("popper-message");
 
-    const popperNextButton =
-        document.getElementById("popper-next-btn");
+    const popperMessageText =
+        get("popper-message-text");
+
+    const closePopperMessage =
+        get("close-popper-message");
+
+    const popperComplete =
+        get("popper-complete");
 
     let poppersUsed = 0;
+
 
     poppers.forEach(function (popper) {
 
         popper.addEventListener("click", function () {
 
-            if (popper.classList.contains("used")) {
+            if (popper.classList.contains("exploded")) {
                 return;
             }
 
-            popper.classList.add("used");
+            const message =
+                popper.getAttribute("data-message");
+
+            popper.classList.add("exploded");
 
             poppersUsed++;
 
-            createConfetti(100);
+            popperMessageText.textContent = message;
 
-            popperMessage.textContent =
-                "BOOOOOM! 🎊😂";
+            popperMessage.classList.add("show");
+
+            createConfetti(
+                popper.getBoundingClientRect().left +
+                popper.offsetWidth / 2,
+
+                popper.getBoundingClientRect().top +
+                popper.offsetHeight / 2
+            );
 
             if (poppersUsed === poppers.length) {
 
-                popperMessage.textContent =
-                    "Okay... we've officially made a mess. 😭";
+                setTimeout(function () {
 
-                popperNextButton.classList.remove(
-                    "hidden"
-                );
+                    popperComplete.classList.add("show");
+
+                }, 700);
+
             }
 
         });
@@ -298,11 +257,21 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    popperNextButton.addEventListener("click", function () {
+    closePopperMessage.addEventListener("click", function () {
 
-        showSection(
-            document.getElementById("camera-section")
-        );
+        popperMessage.classList.remove("show");
+
+    });
+
+
+    get("popper-next").addEventListener("click", function () {
+
+        popperComplete.classList.remove("show");
+
+        updateProgress(3);
+
+        showSection("camera-section");
+
     });
 
 
@@ -310,84 +279,102 @@ document.addEventListener("DOMContentLoaded", function () {
        CAMERA
     ========================================== */
 
-    const cameraButton =
-        document.getElementById("camera-btn");
+    const camera =
+        get("camera");
+
+    const cameraCountdown =
+        get("camera-countdown");
+
+    const cameraFlash =
+        document.querySelector(".camera-flash");
 
     const cameraMessage =
-        document.getElementById("camera-message");
+        get("camera-message");
 
-    const polaroid =
-        document.getElementById("polaroid");
+    let cameraUsed = false;
 
-    const cameraNextButton =
-        document.getElementById("camera-next-btn");
 
-    cameraButton.addEventListener("click", function () {
+    camera.addEventListener("click", function () {
 
-        cameraMessage.textContent =
-            "📸 SAY CHEESEEEEE!";
+        if (cameraUsed) {
+            return;
+        }
 
-        document.body.classList.add("camera-flash");
+        cameraUsed = true;
 
-        setTimeout(function () {
+        let count = 3;
 
-            document.body.classList.remove(
-                "camera-flash"
-            );
+        cameraCountdown.textContent = count;
 
-        }, 250);
+        cameraCountdown.classList.add("show");
 
-        polaroid.classList.add("show");
+        const countdownTimer =
+            setInterval(function () {
 
-        createConfetti(35);
+                count--;
 
-        cameraNextButton.classList.remove(
-            "hidden"
-        );
+                if (count > 0) {
+
+                    cameraCountdown.textContent = count;
+
+                    cameraCountdown.classList.remove("show");
+
+                    void cameraCountdown.offsetWidth;
+
+                    cameraCountdown.classList.add("show");
+
+                } else {
+
+                    clearInterval(countdownTimer);
+
+                    cameraCountdown.classList.remove("show");
+
+                    cameraFlash.classList.add("flash");
+
+                    setTimeout(function () {
+
+                        cameraMessage.classList.add("show");
+
+                    }, 450);
+
+                }
+
+            }, 800);
+
     });
 
 
-    cameraNextButton.addEventListener("click", function () {
+    get("camera-next").addEventListener("click", function () {
 
-        showSection(
-            document.getElementById("notes-section")
-        );
+        cameraMessage.classList.remove("show");
+
+        updateProgress(4);
+
+        showSection("notes-section");
+
     });
 
 
     /* =========================================
-       MYSTERY NOTES
+       SECRET NOTES
     ========================================== */
 
     const notes =
-        document.querySelectorAll(".mystery-note");
+        document.querySelectorAll(".note");
 
-    const noteReveal =
-        document.getElementById("note-reveal");
+    const noteMessage =
+        get("note-message");
 
-    const notesNextButton =
-        document.getElementById("notes-next-btn");
+    const noteMessageText =
+        get("note-message-text");
+
+    const closeNoteMessage =
+        get("close-note-message");
+
+    const notesComplete =
+        get("notes-complete");
 
     let notesOpened = 0;
-
-    const messages = {
-
-        1:
-            "You are more loved than you probably realize. ❤️",
-
-        2:
-            "Someone thinks your smile is ridiculously cute. 🥹",
-
-        3:
-            "Someone is VERY lucky to have you around. 🤍",
-
-        4:
-            "There is a certain boy who is completely gone for you. 😌",
-
-        5:
-            "Okay... enough clues. The real trouble starts next. 👀"
-
-    };
 
 
     notes.forEach(function (note) {
@@ -398,26 +385,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
+            const message =
+                note.getAttribute("data-message");
+
             note.classList.add("opened");
 
             notesOpened++;
 
-            const number =
-                note.getAttribute("data-note");
+            noteMessageText.textContent = message;
 
-            noteReveal.textContent =
-                messages[number];
-
-            createConfetti(15);
+            noteMessage.classList.add("show");
 
             if (notesOpened === notes.length) {
 
-                noteReveal.textContent =
-                    "Every note opened. 💌 Now... one last thing.";
+                setTimeout(function () {
 
-                notesNextButton.classList.remove(
-                    "hidden"
-                );
+                    notesComplete.classList.add("show");
+
+                }, 700);
+
             }
 
         });
@@ -425,11 +411,65 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    notesNextButton.addEventListener("click", function () {
+    closeNoteMessage.addEventListener("click", function () {
 
-        showSection(
-            document.getElementById("wine-section")
-        );
+        noteMessage.classList.remove("show");
+
+    });
+
+
+    get("notes-next").addEventListener("click", function () {
+
+        notesComplete.classList.remove("show");
+
+        updateProgress(5);
+
+        showSection("rose-section");
+
+    });
+
+
+    /* =========================================
+       ROSE BOUQUET
+    ========================================== */
+
+    const roseBouquet =
+        get("rose-bouquet");
+
+    const roseMessage =
+        get("rose-message");
+
+    let roseClicked = false;
+
+
+    roseBouquet.addEventListener("click", function () {
+
+        if (roseClicked) {
+            return;
+        }
+
+        roseClicked = true;
+
+        roseBouquet.classList.add("center");
+
+        createRosePetals();
+
+        setTimeout(function () {
+
+            roseMessage.classList.add("show");
+
+        }, 900);
+
+    });
+
+
+    get("rose-next").addEventListener("click", function () {
+
+        roseMessage.classList.remove("show");
+
+        updateProgress(6);
+
+        showSection("wine-section");
 
     });
 
@@ -439,30 +479,33 @@ document.addEventListener("DOMContentLoaded", function () {
     ========================================== */
 
     const wineBottle =
-        document.getElementById("wine-bottle");
+        get("wine-bottle");
 
-    const wineLiquid =
-        document.querySelector(".wine-liquid");
+    const wineLevel =
+        get("wine-level");
 
     const wineMessage =
-        document.getElementById("wine-message");
+        get("wine-message");
 
-    const progressBar =
-        document.getElementById("wine-progress-bar");
+    const wineInstruction =
+        get("wine-instruction");
+
+    const wineFinal =
+        get("wine-final");
 
     let wineClicks = 0;
 
     const wineMessages = [
 
-        "Hmm... that's one. 👀",
+        "Just one little sip. 🍷❤️",
 
-        "Okay... that's two. 😌",
+        "Okay… maybe another one. 😂",
 
-        "Tisha... are you sure about this? 😂",
+        "You're getting carried away now. 😭😂",
 
-        "The room feels a little strange...",
+        "Nimbu! Put the bottle down. RIGHT NOW. 😂",
 
-        "Oh no... I think we've made a mistake. 😭"
+        "TOO LATE. 😭🍷"
 
     ];
 
@@ -476,75 +519,239 @@ document.addEventListener("DOMContentLoaded", function () {
         wineClicks++;
 
         const remaining =
-            100 - (wineClicks * 20);
+            85 - (wineClicks * 17);
 
-        wineLiquid.style.height =
-            remaining + "%";
-
-        progressBar.style.width =
-            remaining + "%";
+        wineLevel.style.height =
+            Math.max(0, remaining) + "%";
 
         wineMessage.textContent =
             wineMessages[wineClicks - 1];
 
-        wineBottle.style.transform =
-            "rotate(" +
-            (wineClicks % 2 === 0 ? 5 : -5) +
-            "deg)";
 
-        setTimeout(function () {
+        if (wineClicks === 3) {
 
-            wineBottle.style.transform =
-                "rotate(0deg)";
+            document.body.classList.add("slightly-dizzy");
 
-        }, 250);
-
-        if (wineClicks >= 3) {
-
-            document
-                .getElementById("wine-section")
-                .classList.add("dizzy");
-
-            document.body.classList.add("dizzy");
         }
+
+
+        if (wineClicks === 4) {
+
+            document.body.classList.add("very-dizzy");
+
+        }
+
 
         if (wineClicks === 5) {
 
-            wineMessage.textContent =
-                "OH NOOOOO... 🍷😭";
-
-            createConfetti(100);
+            wineInstruction.textContent =
+                "Okay sweetheart… I think that's enough. 😂❤️";
 
             setTimeout(function () {
 
-                goToPage3();
+                wineFinal.classList.add("show");
 
-            }, 1800);
+                startFinalTransition();
+
+            }, 900);
+
         }
 
     });
 
 
     /* =========================================
-       PAGE 3 TRANSITION
+       FINAL TRANSITION
     ========================================== */
 
-    function goToPage3() {
+    function startFinalTransition() {
 
-        document.body.classList.remove("dizzy");
+        let count = 3;
 
-        document.body.classList.add(
-            "page-transition"
-        );
+        const finalCount =
+            get("final-count");
 
-        music.volume = 0.12;
+        finalCount.textContent = count;
 
-        setTimeout(function () {
 
-            window.location.href =
-                "part3.html";
+        const timer =
+            setInterval(function () {
 
-        }, 1500);
+                count--;
+
+                if (count > 0) {
+
+                    finalCount.textContent = count;
+
+                } else {
+
+                    clearInterval(timer);
+
+                    document.body.classList.add("dizzy");
+
+                    setTimeout(function () {
+
+                        window.location.href =
+                            "page3.html";
+
+                    }, 2300);
+
+                }
+
+            }, 1000);
+
     }
+
+
+    /* =========================================
+       CONFETTI EFFECT
+    ========================================== */
+
+    function createConfetti(x, y) {
+
+        for (let i = 0; i < 18; i++) {
+
+            const piece =
+                document.createElement("span");
+
+            piece.textContent =
+                ["✦", "♥", "•", "✧"][Math.floor(Math.random() * 4)];
+
+            piece.style.position = "fixed";
+
+            piece.style.left = x + "px";
+
+            piece.style.top = y + "px";
+
+            piece.style.zIndex = "250";
+
+            piece.style.pointerEvents = "none";
+
+            piece.style.fontSize =
+                (10 + Math.random() * 14) + "px";
+
+            const angle =
+                Math.random() * Math.PI * 2;
+
+            const distance =
+                50 + Math.random() * 120;
+
+            const targetX =
+                Math.cos(angle) * distance;
+
+            const targetY =
+                Math.sin(angle) * distance;
+
+            piece.animate(
+
+                [
+                    {
+                        transform: "translate(0, 0) scale(1)",
+                        opacity: 1
+                    },
+
+                    {
+                        transform:
+                            "translate(" +
+                            targetX +
+                            "px, " +
+                            targetY +
+                            "px) scale(0.2)",
+
+                        opacity: 0
+                    }
+                ],
+
+                {
+                    duration: 800 + Math.random() * 400,
+
+                    easing: "cubic-bezier(.2,.8,.2,1)"
+                }
+
+            );
+
+            document.body.appendChild(piece);
+
+            setTimeout(function () {
+
+                piece.remove();
+
+            }, 1400);
+
+        }
+
+    }
+
+
+    /* =========================================
+       ROSE PETALS
+    ========================================== */
+
+    function createRosePetals() {
+
+        for (let i = 0; i < 20; i++) {
+
+            const petal =
+                document.createElement("div");
+
+            petal.textContent = "🌹";
+
+            petal.style.position = "fixed";
+
+            petal.style.left =
+                Math.random() * 100 + "%";
+
+            petal.style.top = "-30px";
+
+            petal.style.fontSize =
+                (14 + Math.random() * 18) + "px";
+
+            petal.style.zIndex = "90";
+
+            petal.style.pointerEvents = "none";
+
+            petal.animate(
+
+                [
+                    {
+                        transform:
+                            "translateY(0) rotate(0deg)",
+
+                        opacity: 0
+                    },
+
+                    {
+                        opacity: 1
+                    },
+
+                    {
+                        transform:
+                            "translateY(110vh) rotate(360deg)",
+
+                        opacity: 0
+                    }
+                ],
+
+                {
+                    duration:
+                        3000 + Math.random() * 3000,
+
+                    easing: "linear"
+                }
+
+            );
+
+            document.body.appendChild(petal);
+
+            setTimeout(function () {
+
+                petal.remove();
+
+            }, 6500);
+
+        }
+
+    }
+
 
 });
