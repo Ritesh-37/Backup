@@ -19,10 +19,7 @@
 
 <body>
 
-    <!-- ==============================
-         BACKGROUND
-    =============================== -->
-
+    <!-- BACKGROUND -->
     <div class="background-glow"></div>
 
     <div class="confetti-background">
@@ -36,13 +33,8 @@
         <span>♥</span>
     </div>
 
-
-    <!-- ==============================
-         BIRTHDAY ROPE
-    =============================== -->
-
+    <!-- BIRTHDAY ROPE -->
     <div class="birthday-rope">
-
         <div class="rope-line"></div>
 
         <span>🎈</span>
@@ -54,28 +46,15 @@
         <span>🎈</span>
         <span>🎀</span>
         <span>🎈</span>
-
     </div>
 
-
-    <!-- ==============================
-         PROGRESS
-    =============================== -->
-
+    <!-- PROGRESS -->
     <div class="party-progress">
-
-        <span id="progress-text">
-            Birthday Party • 0 / 6
-        </span>
-
+        <span id="progress-text">Birthday Party • 1 / 8</span>
     </div>
 
-
-    <!-- ==============================
-         MUSIC
-    =============================== -->
-
-    <button id="music-button" class="music-button">
+    <!-- MUSIC -->
+    <button id="music-button" class="music-button" aria-label="Music">
         ♫
     </button>
 
@@ -83,28 +62,34 @@
         <source src="party.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- SOUND EFFECTS -->
+    <audio id="balloon-sound">
+        <source src="balloon-pop.mp3" type="audio/mpeg">
+    </audio>
 
-    <!-- ==============================
-         MAIN PAGE
-    =============================== -->
+    <audio id="popper-sound">
+        <source src="popper.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="camera-sound">
+        <source src="camera-click.mp3" type="audio/mpeg">
+    </audio>
+
 
     <main id="party-page">
 
-
-        <!-- ==========================
-             WELCOME
-        =========================== -->
+        <!-- ======================================
+             1. GREAT BIRTHDAY ENTRANCE
+        ======================================= -->
 
         <section id="welcome-section" class="party-section active">
 
             <div class="welcome-content">
 
-                <div class="birthday-crown">
-                    👑
-                </div>
+                <div class="birthday-crown">👑</div>
 
                 <p class="small-title">
-                    TODAY'S PARTY IS FOR ONE VERY SPECIAL GIRL
+                    THE PARTY HAS OFFICIALLY BEGUN
                 </p>
 
                 <h1>
@@ -112,9 +97,11 @@
                     BIRTHDAY
                 </h1>
 
-                <h2>
-                    Tisha ❤️
-                </h2>
+                <h2>Tisha ❤️</h2>
+
+                <div class="entrance-divider">
+                    ✦ ───── ♥ ───── ✦
+                </div>
 
                 <p class="welcome-text">
                     Welcome to your little birthday party,
@@ -122,7 +109,7 @@
                 </p>
 
                 <button id="start-party" class="party-button">
-                    START THE PARTY 🎉
+                    ENTER THE PARTY 🎉
                 </button>
 
             </div>
@@ -130,9 +117,102 @@
         </section>
 
 
-        <!-- ==========================
-             BALLOONS
-        =========================== -->
+        <!-- ======================================
+             2. CAKE + CANDLES
+        ======================================= -->
+
+        <section id="cake-section" class="party-section">
+
+            <div class="section-heading">
+
+                <span>🎂</span>
+
+                <h2>
+                    MAKE A WISH, BIRTHDAY GIRL
+                </h2>
+
+                <p>
+                    First we cut the cake... then you blow the candles. 🕯️✨
+                </p>
+
+            </div>
+
+            <div class="cake-scene">
+
+                <div class="cake">
+
+                    <div class="candle candle-one">
+                        <div class="flame"></div>
+                    </div>
+
+                    <div class="candle candle-two">
+                        <div class="flame"></div>
+                    </div>
+
+                    <div class="candle candle-three">
+                        <div class="flame"></div>
+                    </div>
+
+                    <div class="cake-top">
+                        <span>❤️</span>
+                        <span>🎀</span>
+                        <span>❤️</span>
+                    </div>
+
+                    <div class="cake-middle"></div>
+                    <div class="cake-bottom"></div>
+
+                </div>
+
+            </div>
+
+            <p id="cake-instruction" class="interaction-hint">
+                Click the cake to cut it. 🎂
+            </p>
+
+            <button id="cake-action" class="party-button">
+                CUT THE CAKE 🎂
+            </button>
+
+            <div id="cake-message" class="cake-message">
+
+                <h3>
+                    HAPPY BIRTHDAY, CUTUUU! 🥹❤️
+                </h3>
+
+                <p>
+                    Now close your eyes, make your sweetest wish...
+                    and blow the candles. 🕯️✨
+                </p>
+
+                <button id="blow-candles" class="party-button">
+                    BLOW THE CANDLES 💨🕯️
+                </button>
+
+            </div>
+
+            <div id="cake-complete" class="completion-message">
+
+                <h3>
+                    WISH GRANTED! ✨
+                </h3>
+
+                <p>
+                    May this year bring you everything your heart secretly wishes for. ❤️
+                </p>
+
+                <button id="cake-next" class="party-button">
+                    NOW LET'S PARTY 🎈
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================
+             3. BALLOONS
+        ======================================= -->
 
         <section id="balloon-section" class="party-section">
 
@@ -145,48 +225,46 @@
                 </h2>
 
                 <p>
-                    Each one has a little something for you. 👀❤️
+                    Each balloon has a little something for you. 👀❤️
                 </p>
 
             </div>
 
-
             <div id="balloon-area" class="interactive-area">
 
-                <button class="balloon balloon-red" data-message="Cutuuu, why are you this ridiculously cute? 😭🎀💗">
+                <button class="balloon" data-message="Cutuuu, why are you this ridiculously cute? 😭🎀💗">
                     🎈
                 </button>
 
-                <button class="balloon balloon-pink" data-message="Nimbu, you really thought I'd let you escape without troubling you? 😂🍋🙈">
+                <button class="balloon" data-message="Nimbu, you really thought I'd let you escape without troubling you? 😂🍋🙈">
                     🎈
                 </button>
 
-                <button class="balloon balloon-white" data-message="You have absolutely no idea how special you are to me. 🥹💗✨">
+                <button class="balloon" data-message="You have absolutely no idea how special you are to me. 🥹💗✨">
                     🎈
                 </button>
 
-                <button class="balloon balloon-dark" data-message="Okay… why are you looking this sexy? I was trying to keep this birthday innocent. 😏❤️‍🔥🙈">
+                <button class="balloon" data-message="Okay... why are you looking this sexy? I was trying to keep this birthday innocent. 😏❤️‍🔥🙈">
                     🎈
                 </button>
 
-                <button class="balloon balloon-red" data-message="Your smile should honestly be illegal, sweetuuu. 🥹🌸💗✨">
+                <button class="balloon" data-message="Your smile should honestly be illegal, sweetuuu. 🥹🌸💗✨">
                     🎈
                 </button>
 
-                <button class="balloon balloon-pink" data-message="Warning: excessive cuteness detected. Please behave yourself. 😂🎀🚨💗">
+                <button class="balloon" data-message="Warning: excessive cuteness detected. Please behave yourself. 😂🎀🚨💗">
                     🎈
                 </button>
 
-                <button class="balloon balloon-white" data-message="I hope you always know how loved and precious you are. 🥹❤️🌷✨">
+                <button class="balloon" data-message="I hope you always know how loved and precious you are. 🥹❤️🌷✨">
                     🎈
                 </button>
 
-                <button class="balloon balloon-dark" data-message="Okay nimbuuu, enough compliments… now POP ME! 😂🎈💥💗">
+                <button class="balloon" data-message="Okay nimbuuu, enough compliments... now POP ME! 😂🎈💥💗">
                     🎈
                 </button>
 
             </div>
-
 
             <div id="balloon-message" class="message-box">
 
@@ -202,11 +280,10 @@
 
             </div>
 
-
             <div id="balloon-complete" class="completion-message">
 
                 <h3>
-                    OHHHHH! 😭🎈
+                    OHHHHH! 🎈💥
                 </h3>
 
                 <p>
@@ -222,9 +299,9 @@
         </section>
 
 
-        <!-- ==========================
-             PARTY POPPERS
-        =========================== -->
+        <!-- ======================================
+             4. PARTY POPPERS
+        ======================================= -->
 
         <section id="popper-section" class="party-section">
 
@@ -242,14 +319,13 @@
 
             </div>
 
-
             <div class="popper-area">
 
-                <button class="popper" data-message="One thing I absolutely love about you… you make every place feel more alive just by being there. ❤️✨">
+                <button class="popper" data-message="One thing I absolutely love about you... you make every place feel more alive just by being there. ❤️✨">
                     🎉
                 </button>
 
-                <button class="popper" data-message="Something I don't say enough… I'm genuinely very lucky to have you this close to my life. 🥹❤️">
+                <button class="popper" data-message="Something I don't say enough... I'm genuinely very lucky to have you this close to my life. 🥹❤️">
                     🎉
                 </button>
 
@@ -267,7 +343,6 @@
 
             </div>
 
-
             <div id="popper-message" class="message-box">
 
                 <div class="message-icon">
@@ -282,7 +357,6 @@
 
             </div>
 
-
             <div id="popper-complete" class="completion-message">
 
                 <h3>
@@ -290,7 +364,7 @@
                 </h3>
 
                 <p>
-                    Okay okay… party officially started. 😂❤️
+                    Okay okay... party officially started. 😂❤️
                 </p>
 
                 <button id="popper-next" class="party-button">
@@ -302,9 +376,9 @@
         </section>
 
 
-        <!-- ==========================
-             CAMERA
-        =========================== -->
+        <!-- ======================================
+             5. CAMERA
+        ======================================= -->
 
         <section id="camera-section" class="party-section">
 
@@ -317,11 +391,10 @@
                 </h2>
 
                 <p>
-                    Smile, beautuuu...
+                    Smile, beautuuu... this one's going into the memories. ❤️
                 </p>
 
             </div>
-
 
             <button id="camera" class="camera">
 
@@ -343,33 +416,45 @@
 
             </button>
 
-
             <div id="camera-countdown" class="camera-countdown"></div>
 
+            <!-- PHOTO REVEAL -->
 
-            <div id="camera-message" class="message-box camera-message">
+            <div id="photo-reveal" class="photo-reveal">
 
-                <div class="message-icon">
-                    📸❤️
+                <div class="photo-card">
+
+                    <div class="photo-frame">
+
+                        <img
+                            id="tisha-photo"
+                            src="tisha-photo.jpg"
+                            alt="Tisha">
+
+                    </div>
+
+                    <p>
+                        Happy Birthday my sexy woman ❤️👠⭐
+                    </p>
+
+                    <span>
+                        📸 A moment worth keeping forever.
+                    </span>
+
+                    <button id="photo-next" class="party-button">
+                        KEEP THIS MOMENT 💗
+                    </button>
+
                 </div>
-
-                <p>
-                    Some moments deserve to be captured forever. ❤️
-                    And this little celebration is definitely one of them.
-                </p>
-
-                <button id="camera-next" class="party-button">
-                    CONTINUE 💌
-                </button>
 
             </div>
 
         </section>
 
 
-        <!-- ==========================
-             SECRET NOTES
-        =========================== -->
+        <!-- ======================================
+             6. SECRET NOTES
+        ======================================= -->
 
         <section id="notes-section" class="party-section">
 
@@ -387,35 +472,39 @@
 
             </div>
 
-
             <div class="notes-area">
 
-                <button class="note" data-message="A tiny secret… you make people around you feel comfortable just by being yourself. 💗">
+                <button class="note"
+                    data-message="A tiny secret... you make people around you feel comfortable just by being yourself. 💗">
                     💌
                 </button>
 
-                <button class="note" data-message="You are way more lovable than you probably realise. 🥹❤️">
+                <button class="note"
+                    data-message="You are way more lovable than you probably realise. 🥹❤️">
                     💌
                 </button>
 
-                <button class="note" data-message="Confession time 👀 Your energy is genuinely addictive. ✨❤️">
+                <button class="note"
+                    data-message="Confession time 👀 Your energy is genuinely addictive. ✨❤️">
                     💌
                 </button>
 
-                <button class="note" data-message="Don't tell anyone… I could probably listen to you talk for way longer than I admit. 😂❤️">
+                <button class="note"
+                    data-message="Don't tell anyone... I could probably listen to you talk for way longer than I admit. 😂❤️">
                     💌
                 </button>
 
-                <button class="note" data-message="You deserve to be celebrated—not just today, but on ordinary days too. ❤️🌷">
+                <button class="note"
+                    data-message="You deserve to be celebrated—not just today, but on ordinary days too. ❤️🌷">
                     💌
                 </button>
 
-                <button class="note" data-message="Okay… enough secrets for now. There's something waiting for you over there. 🌹👀">
+                <button class="note"
+                    data-message="Okay... enough secrets for now. There's something waiting for you over there. 🌹👀">
                     💌
                 </button>
 
             </div>
-
 
             <div id="note-message" class="message-box">
 
@@ -430,7 +519,6 @@
                 </button>
 
             </div>
-
 
             <div id="notes-complete" class="completion-message">
 
@@ -451,9 +539,9 @@
         </section>
 
 
-        <!-- ==========================
-             ROSE BOUQUET
-        =========================== -->
+        <!-- ======================================
+             7. ROSE BOUQUET
+        ======================================= -->
 
         <section id="rose-section" class="party-section">
 
@@ -466,23 +554,34 @@
                 </h2>
 
                 <p>
-                    Psst... there's something here. 👀
+                    There's a little surprise waiting in the corner... 👀
                 </p>
 
             </div>
 
-
             <button id="rose-bouquet" class="rose-bouquet">
 
-                <span>🌹</span>
-                <span>🌹</span>
-                <span>🌹</span>
-                <span>🌹</span>
-                <span>🌹</span>
-                <span>🌹</span>
+                <div class="rose-flowers">
+                    <span>🌹</span>
+                    <span>🌹</span>
+                    <span>🌹</span>
+                    <span>🌹</span>
+                    <span>🌹</span>
+                    <span>🌹</span>
+                    <span>🌹</span>
+                </div>
+
+                <div class="rose-wrapping"></div>
+
+                <div class="rose-ribbon">
+                    🎀
+                </div>
 
             </button>
 
+            <div class="bouquet-hint">
+                Click anywhere to receive your bouquet. 🌹
+            </div>
 
             <div id="rose-message" class="message-box rose-message">
 
@@ -491,8 +590,9 @@
                 </div>
 
                 <p>
-                    A little bouquet for you…
-                    because you deserve a little extra beauty today. 🌹❤️
+                    A little bouquet for you, love...
+                    because even the prettiest flowers deserve
+                    someone prettier to hold them. 🌹❤️
                 </p>
 
                 <button id="rose-next" class="party-button">
@@ -504,9 +604,9 @@
         </section>
 
 
-        <!-- ==========================
-             WINE FINALE
-        =========================== -->
+        <!-- ======================================
+             8. WINE FINALE
+        ======================================= -->
 
         <section id="wine-section" class="party-section">
 
@@ -519,11 +619,10 @@
                 </h2>
 
                 <p id="wine-instruction">
-                    Okay love… one last little celebration. 🍷
+                    Okay love... one last little celebration. 🍷
                 </p>
 
             </div>
-
 
             <button id="wine-bottle" class="wine-bottle">
 
@@ -532,6 +631,8 @@
                 <div class="bottle">
 
                     <div id="wine-level" class="wine-level"></div>
+
+                    <div class="wine-empty-line"></div>
 
                     <div class="bottle-shine"></div>
 
@@ -542,31 +643,49 @@
 
                 </div>
 
+                <div id="wine-pour" class="wine-pour"></div>
+
             </button>
 
+            <div class="wine-meter">
+                <span>FULL</span>
 
-            <div id="wine-message" class="wine-message">
-                🍷
+                <div class="wine-meter-bar">
+                    <div id="wine-meter-fill"></div>
+                </div>
+
+                <span>EMPTY</span>
             </div>
 
+            <div id="wine-message" class="wine-message">
+                🍷 Just one little sip. ❤️
+            </div>
 
             <div id="wine-final" class="wine-final">
 
-                <h2>
-                    TOO LATE. 😭🍷
-                </h2>
+                <div class="wine-final-content">
 
-                <p>
-                    Okay sweetheart… I think you've had enough
-                    birthday wine for one night. 😂❤️
-                </p>
+                    <div class="wine-final-emoji">
+                        🍷😵‍💫
+                    </div>
 
-                <p class="hold-on">
-                    Hold on, beautuuu... 👀
-                </p>
+                    <h2>
+                        TOO LATE. 😭🍷
+                    </h2>
 
-                <div class="countdown">
-                    <span id="final-count">3</span>
+                    <p>
+                        Okay sweetheart... I think you've had enough
+                        birthday wine for one night. 😂❤️
+                    </p>
+
+                    <p class="hold-on">
+                        Hold on, beautuuu... 👀
+                    </p>
+
+                    <div class="countdown">
+                        <span id="final-count">3</span>
+                    </div>
+
                 </div>
 
             </div>
@@ -576,14 +695,11 @@
     </main>
 
 
-    <!-- ==============================
-         MESSAGE OVERLAY
-    =============================== -->
-
+    <!-- GLOBAL OVERLAY -->
     <div id="message-overlay" class="message-overlay"></div>
-
 
     <script src="page2.js"></script>
 
 </body>
+
 </html>
