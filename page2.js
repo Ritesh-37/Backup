@@ -31,7 +31,7 @@ document.addEventListener(
 
                 if (promise) {
                     promise.catch(function () {
-                        // Mobile browser may block audio.
+                        /* Mobile browser may block audio */
                     });
                 }
 
@@ -41,6 +41,7 @@ document.addEventListener(
                     error
                 );
             }
+
         }
 
 
@@ -94,6 +95,7 @@ document.addEventListener(
 
                     });
             }
+
         }
 
 
@@ -162,6 +164,7 @@ document.addEventListener(
                 },
                 50
             );
+
         }
 
 
@@ -192,6 +195,7 @@ document.addEventListener(
                             button.getAttribute(
                                 "data-next"
                             );
+
 
                         welcomeSteps.forEach(
                             function (step) {
@@ -265,10 +269,8 @@ document.addEventListener(
         const cakeInstruction =
             get("cake-instruction");
 
-
         const celebrationLayer =
             get("celebration-layer");
-
 
         const birthdayPopup =
             get("birthday-popup");
@@ -344,7 +346,6 @@ document.addEventListener(
 
                             cakeInstruction.textContent =
                                 "MAKE A WISH, BEAUTIFUL GIRL... ❤️✨";
-
 
                             startMegaCelebration();
 
@@ -513,7 +514,6 @@ document.addEventListener(
 
             const celebrationStart =
                 Date.now();
-
 
             const celebrationDuration =
                 10000;
@@ -1138,8 +1138,7 @@ document.addEventListener(
                     (
                         Math.random() -
                         .5
-                    ) *
-                    250;
+                    ) * 250;
 
 
                 piece.animate(
@@ -1195,7 +1194,7 @@ document.addEventListener(
 
 
         /* =====================================================
-           DIWALI-STYLE CRACKLE / FIREWORK
+           DIWALI STYLE FIREWORK
         ===================================================== */
 
         function createFirework() {
