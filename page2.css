@@ -1,3 +1,7 @@
+/* =========================================================
+   RESET
+========================================================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -7,7 +11,7 @@
 html,
 body {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
 }
 
 body {
@@ -29,9 +33,9 @@ body {
 }
 
 
-/* ==============================
+/* =========================================================
    BACKGROUND
-============================== */
+========================================================= */
 
 .background-glow {
     position: fixed;
@@ -44,19 +48,22 @@ body {
 
     transform: translate(-50%, -50%);
 
-    background: rgba(255, 130, 150, 0.15);
+    background: rgba(255, 100, 130, 0.14);
 
-    filter: blur(90px);
+    filter: blur(100px);
 
     border-radius: 50%;
 
     pointer-events: none;
+
+    z-index: 0;
 }
 
 body::before {
     content: "";
 
     position: fixed;
+
     inset: 0;
 
     background-image:
@@ -68,12 +75,35 @@ body::before {
     background-size: 30px 30px;
 
     pointer-events: none;
+
+    z-index: 0;
 }
 
 
-/* ==============================
+/* =========================================================
+   WAITING SCREEN
+========================================================= */
+
+body.birthday-waiting {
+    background: #16070d;
+}
+
+body.birthday-waiting .background-glow,
+body.birthday-waiting .confetti-background,
+body.birthday-waiting .birthday-rope,
+body.birthday-waiting .party-progress,
+body.birthday-waiting .music-button {
+    opacity: 0;
+}
+
+body.birthday-waiting #party-page {
+    opacity: 0;
+}
+
+
+/* =========================================================
    BIRTHDAY ROPE
-============================== */
+========================================================= */
 
 .birthday-rope {
     position: fixed;
@@ -82,24 +112,26 @@ body::before {
     left: 0;
 
     width: 100%;
-    height: 95px;
+    height: 90px;
 
     display: flex;
 
-    align-items: flex-start;
     justify-content: space-around;
+    align-items: flex-start;
 
-    padding-top: 8px;
+    padding-top: 7px;
 
-    z-index: 20;
+    z-index: 50;
 
     pointer-events: none;
+
+    transition: opacity 1s ease;
 }
 
 .rope-line {
     position: absolute;
 
-    top: 13px;
+    top: 12px;
     left: 0;
 
     width: 100%;
@@ -113,33 +145,28 @@ body::before {
 .birthday-rope span {
     position: relative;
 
-    font-size: 34px;
+    font-size: 32px;
 
-    animation: decorationSwing 3s ease-in-out infinite;
+    animation: ropeSwing 3s ease-in-out infinite;
 }
 
 .birthday-rope span:nth-child(3) {
-    animation-delay: 0.3s;
+    animation-delay: .3s;
 }
 
 .birthday-rope span:nth-child(4) {
-    animation-delay: 0.6s;
+    animation-delay: .6s;
 }
 
 .birthday-rope span:nth-child(5) {
-    animation-delay: 0.9s;
+    animation-delay: .9s;
 }
 
 .birthday-rope span:nth-child(6) {
     animation-delay: 1.2s;
 }
 
-.birthday-rope span:nth-child(7) {
-    animation-delay: 1.5s;
-}
-
-@keyframes decorationSwing {
-
+@keyframes ropeSwing {
     0%,
     100% {
         transform: rotate(-4deg);
@@ -151,9 +178,9 @@ body::before {
 }
 
 
-/* ==============================
+/* =========================================================
    CONFETTI BACKGROUND
-============================== */
+========================================================= */
 
 .confetti-background {
     position: fixed;
@@ -170,172 +197,176 @@ body::before {
 
     font-size: 18px;
 
-    opacity: 0.35;
+    opacity: .3;
 
     animation: floatingConfetti 8s linear infinite;
 }
 
 .confetti-background span:nth-child(1) {
     left: 8%;
-    top: 30%;
+    top: 20%;
 }
 
 .confetti-background span:nth-child(2) {
-    left: 20%;
-    top: 75%;
-    animation-delay: 2s;
+    left: 22%;
+    top: 70%;
 }
 
 .confetti-background span:nth-child(3) {
-    left: 35%;
-    top: 20%;
-    animation-delay: 1s;
+    left: 40%;
+    top: 15%;
 }
 
 .confetti-background span:nth-child(4) {
-    left: 55%;
-    top: 80%;
-    animation-delay: 3s;
+    left: 58%;
+    top: 75%;
 }
 
 .confetti-background span:nth-child(5) {
     left: 72%;
     top: 25%;
-    animation-delay: 1.5s;
 }
 
 .confetti-background span:nth-child(6) {
     left: 88%;
     top: 65%;
-    animation-delay: 4s;
 }
 
 .confetti-background span:nth-child(7) {
-    left: 60%;
-    top: 45%;
-    animation-delay: 2.5s;
+    left: 50%;
+    top: 50%;
 }
 
 .confetti-background span:nth-child(8) {
-    left: 93%;
-    top: 18%;
-    animation-delay: 5s;
+    left: 15%;
+    top: 45%;
 }
 
 @keyframes floatingConfetti {
-
     0% {
         transform: translateY(0) rotate(0);
     }
 
     50% {
-        transform: translateY(-25px) rotate(90deg);
+        transform: translateY(-20px) rotate(180deg);
     }
 
     100% {
-        transform: translateY(0) rotate(180deg);
+        transform: translateY(0) rotate(360deg);
     }
 }
 
 
-/* ==============================
+/* =========================================================
    PROGRESS
-============================== */
+========================================================= */
 
 .party-progress {
     position: fixed;
 
-    top: 105px;
-    left: 50%;
+    top: 100px;
+    right: 25px;
 
-    transform: translateX(-50%);
+    z-index: 100;
 
-    padding: 7px 16px;
+    padding: 8px 15px;
 
-    background: rgba(255, 255, 255, 0.7);
+    border-radius: 30px;
 
-    border: 1px solid rgba(180, 40, 70, 0.12);
+    background: rgba(255,255,255,.7);
 
-    border-radius: 999px;
+    backdrop-filter: blur(10px);
 
-    backdrop-filter: blur(8px);
+    border: 1px solid rgba(143,36,61,.12);
 
-    font-size: 10px;
+    font-size: 11px;
 
     letter-spacing: 1px;
-
-    color: #a52b46;
-
-    z-index: 25;
 }
 
 
-/* ==============================
-   MUSIC
-============================== */
+/* =========================================================
+   MUSIC BUTTON
+========================================================= */
 
 .music-button {
     position: fixed;
 
-    right: 20px;
-    bottom: 20px;
+    bottom: 22px;
+    right: 22px;
 
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
 
-    border: 1px solid rgba(170, 40, 70, 0.2);
+    border: none;
 
     border-radius: 50%;
 
-    background: rgba(255, 255, 255, 0.7);
+    background: #8f243d;
 
-    color: #a52b46;
+    color: white;
 
-    font-size: 18px;
+    font-size: 20px;
 
     cursor: pointer;
 
-    z-index: 50;
+    z-index: 300;
 
-    box-shadow: 0 10px 25px rgba(120, 20, 40, 0.12);
+    box-shadow: 0 10px 25px rgba(143,36,61,.25);
 
-    transition: 0.3s ease;
+    transition: .3s;
 }
 
 .music-button:hover {
-    transform: scale(1.08);
+    transform: scale(1.1);
 }
 
 
-/* ==============================
-   PARTY SECTIONS
-============================== */
+/* =========================================================
+   PAGE / SECTIONS
+========================================================= */
+
+#party-page {
+    position: relative;
+
+    width: 100%;
+    height: 100vh;
+
+    z-index: 5;
+
+    transition: opacity 1.2s ease;
+}
 
 .party-section {
-    position: fixed;
+    position: absolute;
 
     inset: 0;
 
-    display: flex;
+    width: 100%;
+    height: 100%;
 
-    align-items: center;
-    justify-content: center;
+    display: flex;
 
     flex-direction: column;
 
-    padding: 120px 25px 70px;
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 110px 30px 60px;
 
     opacity: 0;
+
     visibility: hidden;
 
-    transform: scale(0.97) translateY(20px);
+    transform: scale(.96) translateY(20px);
 
     transition:
-        opacity 0.7s ease,
-        visibility 0.7s ease,
-        transform 0.7s ease;
+        opacity .8s ease,
+        transform .8s ease,
+        visibility .8s;
 
-    z-index: 5;
+    z-index: 10;
 }
 
 .party-section.active {
@@ -344,446 +375,616 @@ body::before {
     visibility: visible;
 
     transform: scale(1) translateY(0);
+
+    z-index: 20;
 }
 
 
-/* ==============================
+/* =========================================================
    WELCOME
-============================== */
+========================================================= */
 
 .welcome-content {
     text-align: center;
 
-    width: min(90%, 800px);
+    max-width: 750px;
+
+    animation: welcomeAppear 1.2s ease;
 }
 
 .birthday-crown {
-    font-size: 55px;
+    font-size: 58px;
 
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 
-    animation: crownFloat 2s ease-in-out infinite;
+    animation: crownFloat 3s ease-in-out infinite;
 }
 
 @keyframes crownFloat {
-
     0%,
     100% {
-        transform: translateY(0);
+        transform: translateY(0) rotate(-3deg);
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-10px) rotate(3deg);
     }
 }
 
 .small-title {
-    font-size: 10px;
+    font-size: 11px;
 
     letter-spacing: 4px;
 
-    font-weight: 700;
+    font-weight: 600;
 
-    color: #ad4a60;
-
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 
 .welcome-content h1 {
     font-family: "Cormorant Garamond", serif;
 
-    font-size: clamp(60px, 10vw, 110px);
+    font-size: clamp(65px, 11vw, 130px);
 
-    line-height: 0.8;
+    line-height: .78;
 
-    color: #a32342;
+    letter-spacing: 5px;
 
-    text-shadow: 0 10px 30px rgba(130, 30, 50, 0.12);
+    color: #7d1834;
 }
 
 .welcome-content h2 {
     font-family: "Great Vibes", cursive;
 
-    font-size: clamp(50px, 7vw, 75px);
+    font-size: clamp(48px, 7vw, 75px);
 
-    color: #c73656;
+    font-weight: 400;
 
-    margin: 12px 0 15px;
+    margin-top: 18px;
+
+    color: #a92549;
 }
 
 .welcome-text {
-    font-family: "Great Vibes", cursive;
+    margin: 18px 0 28px;
 
-    font-size: 30px;
+    font-size: 15px;
+}
 
-    color: #a64a5e;
+@keyframes welcomeAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(.95);
+    }
 
-    margin-bottom: 30px;
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 
-/* ==============================
-   HEADINGS
-============================== */
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.party-button {
+    border: none;
+
+    padding: 14px 28px;
+
+    border-radius: 40px;
+
+    background: #8f243d;
+
+    color: white;
+
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 25px rgba(143,36,61,.22);
+
+    transition: .3s;
+}
+
+.party-button:hover {
+    transform: translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 16px 30px rgba(143,36,61,.3);
+}
+
+.small-button {
+    border: none;
+
+    background: #ffe4e8;
+
+    color: #8f243d;
+
+    padding: 9px 17px;
+
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SECTION HEADINGS
+========================================================= */
 
 .section-heading {
     text-align: center;
 
-    margin-bottom: 20px;
+    max-width: 700px;
 
-    max-width: 650px;
+    margin-bottom: 35px;
 }
 
 .section-heading > span {
-    font-size: 42px;
+    display: block;
+
+    font-size: 38px;
+
+    margin-bottom: 8px;
 }
 
 .section-heading h2 {
     font-family: "Cormorant Garamond", serif;
 
-    font-size: clamp(38px, 6vw, 62px);
+    font-size: clamp(38px, 6vw, 64px);
 
-    color: #9f2542;
+    color: #7d1834;
 
-    margin: 5px 0;
+    line-height: 1;
 }
 
 .section-heading p {
-    color: #a74d62;
+    margin-top: 10px;
 
-    font-size: 13px;
+    font-size: 14px;
+
+    opacity: .75;
 }
 
 
-/* ==============================
-   BUTTONS
-============================== */
+/* =========================================================
+   CAKE
+========================================================= */
 
-.party-button,
-.small-button {
-    border: none;
-
-    cursor: pointer;
-
-    font-family: "Poppins", sans-serif;
-
-    font-weight: 700;
-
-    border-radius: 999px;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.party-button {
-    padding: 15px 28px;
-
-    background: #a92a48;
-
-    color: white;
-
-    box-shadow:
-        0 12px 25px rgba(130, 20, 45, 0.22);
-}
-
-.party-button:hover {
-    transform: translateY(-4px) scale(1.03);
-
-    box-shadow:
-        0 17px 32px rgba(130, 20, 45, 0.28);
-}
-
-.small-button {
-    padding: 10px 18px;
-
-    background: #ffe8eb;
-
-    color: #9d2944;
-}
-
-
-/* ==============================
-   BALLOONS
-============================== */
-
-.interactive-area {
+.cake-stage {
     position: relative;
 
-    width: min(900px, 95vw);
+    width: 350px;
+    height: 260px;
 
-    height: 390px;
+    display: flex;
 
-    margin-top: 5px;
+    justify-content: center;
+
+    align-items: flex-end;
 }
 
-.balloon {
-    position: absolute;
+.birthday-cake {
+    position: relative;
+
+    width: 220px;
+    height: 180px;
 
     border: none;
 
     background: transparent;
 
-    font-size: 75px;
-
     cursor: pointer;
 
+    transition: .4s;
+
+    z-index: 5;
+}
+
+.cake-emoji {
+    display: block;
+
+    font-size: 170px;
+
     filter:
-        drop-shadow(
-            0 15px 12px rgba(120, 30, 50, 0.18)
-        );
-
-    transition:
-        transform 0.25s ease,
-        filter 0.25s ease;
+        drop-shadow(0 15px 18px rgba(120,20,50,.18));
 }
 
-.balloon:hover {
-    transform: scale(1.15) rotate(5deg);
+.cake-glow {
+    position: absolute;
+
+    left: 50%;
+
+    top: 30px;
+
+    transform: translateX(-50%);
+
+    width: 180px;
+
+    color: #ffd35a;
+
+    opacity: 0;
+
+    transition: .4s;
 }
 
-.balloon:nth-child(1) {
-    left: 8%;
-    top: 10%;
+.birthday-cake.ready .cake-glow {
+    opacity: 1;
+
+    animation: sparkle 1s infinite alternate;
 }
 
-.balloon:nth-child(2) {
-    left: 28%;
-    top: 0;
-}
-
-.balloon:nth-child(3) {
-    left: 48%;
-    top: 12%;
-}
-
-.balloon:nth-child(4) {
-    left: 70%;
-    top: 3%;
-}
-
-.balloon:nth-child(5) {
-    left: 15%;
-    top: 55%;
-}
-
-.balloon:nth-child(6) {
-    left: 38%;
-    top: 62%;
-}
-
-.balloon:nth-child(7) {
-    left: 60%;
-    top: 53%;
-}
-
-.balloon:nth-child(8) {
-    left: 82%;
-    top: 58%;
-}
-
-.balloon.popped {
-    animation: balloonPop 0.35s ease forwards;
-}
-
-@keyframes balloonPop {
-
-    0% {
-        transform: scale(1);
-        opacity: 1;
+@keyframes sparkle {
+    from {
+        transform: translateX(-50%) scale(.9);
     }
 
-    50% {
-        transform: scale(1.5);
-        opacity: 1;
+    to {
+        transform: translateX(-50%) scale(1.15);
+    }
+}
+
+.birthday-cake.eaten {
+    animation: cakePop .8s ease forwards;
+}
+
+@keyframes cakePop {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.2) rotate(-3deg);
     }
 
     100% {
-        transform: scale(0);
-        opacity: 0;
+        transform: scale(1.05);
     }
 }
 
+.cake-candles {
+    position: absolute;
 
-/* ==============================
+    top: 45px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    gap: 25px;
+
+    z-index: 10;
+}
+
+.candle {
+    position: relative;
+
+    width: 22px;
+    height: 75px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.candle-stick {
+    position: absolute;
+
+    bottom: 0;
+    left: 5px;
+
+    width: 12px;
+    height: 58px;
+
+    border-radius: 5px;
+
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            #e9576f 0,
+            #e9576f 7px,
+            #fff 7px,
+            #fff 13px
+        );
+
+    box-shadow: 0 3px 5px rgba(0,0,0,.15);
+}
+
+.flame {
+    position: absolute;
+
+    top: -2px;
+
+    left: 1px;
+
+    font-size: 22px;
+
+    transition: .3s;
+
+    animation: flameFlicker .4s infinite alternate;
+}
+
+.candle.off .flame {
+    opacity: 0;
+
+    transform: scale(0);
+}
+
+.candle.off .candle-stick {
+    opacity: .7;
+}
+
+@keyframes flameFlicker {
+    from {
+        transform: scale(1) rotate(-3deg);
+    }
+
+    to {
+        transform: scale(1.1) rotate(3deg);
+    }
+}
+
+.cake-instruction {
+    margin-top: 15px;
+
+    font-size: 13px;
+
+    opacity: .8;
+}
+
+
+/* =========================================================
    MESSAGE BOX
-============================== */
+========================================================= */
 
 .message-box {
     position: fixed;
 
     left: 50%;
-    top: 50%;
+    bottom: 45px;
 
-    transform: translate(-50%, -50%) scale(0.85);
+    transform: translate(-50%, 30px);
 
-    width: min(90%, 470px);
+    width: min(90%, 500px);
 
-    padding: 30px 25px;
+    padding: 25px;
 
     text-align: center;
 
-    background: rgba(255, 252, 250, 0.98);
-
     border-radius: 25px;
 
+    background: rgba(255,255,255,.95);
+
+    backdrop-filter: blur(15px);
+
     box-shadow:
-        0 30px 70px rgba(100, 20, 40, 0.25);
+        0 20px 60px rgba(100,20,40,.18);
+
+    border: 1px solid rgba(143,36,61,.1);
 
     opacity: 0;
+
     visibility: hidden;
 
-    transition: 0.4s ease;
+    transition: .5s;
 
-    z-index: 100;
+    z-index: 200;
 }
 
 .message-box.show {
     opacity: 1;
+
     visibility: visible;
 
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, 0);
 }
 
 .message-icon {
-    font-size: 40px;
+    font-size: 35px;
 
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+}
+
+.message-box h3 {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 34px;
+
+    font-weight: 400;
+
+    margin-bottom: 8px;
 }
 
 .message-box p {
-    font-family: "Cormorant Garamond", serif;
+    margin-bottom: 15px;
 
-    font-size: 25px;
+    line-height: 1.6;
 
-    line-height: 1.25;
-
-    color: #9d2943;
-
-    margin-bottom: 20px;
+    font-size: 14px;
 }
 
 
-/* ==============================
-   COMPLETION
-============================== */
+/* =========================================================
+   PARTY PLAYGROUND
+========================================================= */
 
-.completion-message {
-    position: fixed;
+.party-playground {
+    width: min(1100px, 95vw);
 
-    left: 50%;
-    bottom: 35px;
-
-    transform: translateX(-50%) translateY(20px);
-
-    width: min(90%, 500px);
-
-    padding: 18px 20px;
-
-    background: rgba(255, 250, 250, 0.95);
-
-    border-radius: 20px;
-
-    text-align: center;
-
-    box-shadow: 0 15px 40px rgba(100, 20, 40, 0.15);
-
-    opacity: 0;
-    visibility: hidden;
-
-    transition: 0.5s ease;
-
-    z-index: 60;
-}
-
-.completion-message.show {
-    opacity: 1;
-    visibility: visible;
-
-    transform: translateX(-50%) translateY(0);
-}
-
-.completion-message h3 {
-    font-family: "Cormorant Garamond", serif;
-
-    font-size: 28px;
-
-    color: #a32745;
-
-    margin-bottom: 5px;
-}
-
-.completion-message p {
-    font-size: 13px;
-
-    color: #a64a5e;
-
-    margin-bottom: 12px;
-}
-
-
-/* ==============================
-   POPPERS
-============================== */
-
-.popper-area {
     display: flex;
 
     align-items: center;
-    justify-content: center;
 
-    gap: 35px;
+    justify-content: space-between;
 
-    flex-wrap: wrap;
+    gap: 30px;
 
-    width: min(900px, 90vw);
-
-    margin: 25px auto;
+    min-height: 300px;
 }
 
+.three-balloon-area {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: flex-end;
+
+    gap: 45px;
+
+    flex: 1;
+}
+
+.balloon,
 .popper {
     border: none;
 
     background: transparent;
 
-    font-size: 70px;
-
     cursor: pointer;
 
-    transition: 0.25s ease;
+    user-select: none;
 }
 
-.popper:hover {
-    transform: translateY(-10px) rotate(8deg) scale(1.1);
+.balloon {
+    font-size: 95px;
+
+    filter:
+        drop-shadow(0 12px 10px rgba(100,20,40,.15));
+
+    transition: .3s;
 }
 
-.popper.exploded {
-    animation: popperExplode 0.45s ease;
+.balloon:hover {
+    transform: translateY(-12px) scale(1.08);
 }
 
-@keyframes popperExplode {
+.balloon.popped {
+    animation: balloonPop .4s ease forwards;
+}
 
+@keyframes balloonPop {
     0% {
         transform: scale(1);
+        opacity: 1;
     }
 
-    50% {
-        transform: scale(1.5) rotate(15deg);
+    45% {
+        transform: scale(1.35);
+        opacity: .8;
     }
 
     100% {
-        transform: scale(0);
+        transform: scale(.05);
         opacity: 0;
     }
 }
 
+.side-popper {
+    font-size: 75px;
 
-/* ==============================
+    transition: .3s;
+}
+
+.side-popper:hover {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.side-popper.exploded {
+    animation: popperExplosion .5s ease forwards;
+}
+
+@keyframes popperExplosion {
+    0% {
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+
+    40% {
+        transform: scale(1.4) rotate(-12deg);
+    }
+
+    100% {
+        transform: scale(.1) rotate(25deg);
+        opacity: 0;
+    }
+}
+
+.completion-message {
+    position: fixed;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -45%) scale(.9);
+
+    width: min(90%, 500px);
+
+    padding: 30px;
+
+    text-align: center;
+
+    background: rgba(255,255,255,.97);
+
+    border-radius: 28px;
+
+    box-shadow: 0 25px 70px rgba(100,20,40,.2);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .5s;
+
+    z-index: 250;
+}
+
+.completion-message.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.completion-message h3 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 32px;
+
+    margin-bottom: 10px;
+}
+
+.completion-message p {
+    font-size: 14px;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
    CAMERA
-============================== */
+========================================================= */
 
 .camera {
     position: relative;
+
+    width: 260px;
+    height: 190px;
 
     border: none;
 
@@ -791,50 +992,59 @@ body::before {
 
     cursor: pointer;
 
-    margin-top: 20px;
-
-    transition: 0.3s ease;
+    transition: .3s;
 }
 
 .camera:hover {
-    transform: scale(1.05) rotate(-2deg);
-}
-
-.camera-body {
-    position: relative;
-
-    width: 270px;
-    height: 180px;
-
-    border-radius: 25px;
-
-    background: #9f2945;
-
-    box-shadow:
-        0 25px 40px rgba(90, 20, 40, 0.25);
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
+    transform: scale(1.04);
 }
 
 .camera-top {
     position: absolute;
 
-    top: -25px;
-
+    top: 0;
     left: 35px;
 
-    background: #9f2945;
+    width: 80px;
+    height: 35px;
+
+    border-radius: 15px 15px 0 0;
+
+    background: #8f243d;
 
     color: white;
 
-    padding: 8px 18px;
+    display: flex;
 
-    border-radius: 12px 12px 0 0;
+    align-items: center;
 
-    z-index: 2;
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+.camera-body {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 260px;
+    height: 160px;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(145deg,#a93251,#70182f);
+
+    box-shadow:
+        0 25px 50px rgba(80,10,30,.25);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 }
 
 .camera-lens {
@@ -843,293 +1053,507 @@ body::before {
 
     border-radius: 50%;
 
+    border: 12px solid #f5b9c6;
+
     background:
         radial-gradient(
-            circle,
-            #ffffff 0 12%,
-            #e5a3ae 13% 28%,
-            #761a34 29% 55%,
-            #3d1020 56%
+            circle at 35% 30%,
+            #fff,
+            #ae2e52 18%,
+            #32101b 55%,
+            #090509 100%
         );
 
-    border: 8px solid #f5cdd3;
+    box-shadow:
+        inset 0 0 20px rgba(255,255,255,.3);
 }
 
 .camera-button {
     position: absolute;
 
-    top: 18px;
+    top: 20px;
     right: 25px;
 
-    color: white;
+    width: 25px;
+    height: 25px;
 
-    font-size: 20px;
+    border-radius: 50%;
+
+    background: #fff;
+
+    color: #8f243d;
+
+    font-size: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
 }
 
-.camera-countdown {
-    position: fixed;
-
-    left: 50%;
-    top: 45%;
-
-    transform: translate(-50%, -50%);
-
-    font-size: 90px;
-
-    font-weight: 700;
-
-    color: #a32342;
-
-    opacity: 0;
-
-    z-index: 150;
-
-    pointer-events: none;
-}
-
-.camera-countdown.show {
-    animation: countdownPop 0.8s ease;
-}
-
-@keyframes countdownPop {
-
-    0% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(0.5);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-
-    100% {
-        opacity: 0;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-.camera-flash {
+.camera-reveal {
     position: fixed;
 
     inset: 0;
 
-    background: white;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: rgba(255,240,243,.97);
+
+    backdrop-filter: blur(10px);
 
     opacity: 0;
 
-    pointer-events: none;
+    visibility: hidden;
 
-    z-index: 200;
+    transform: scale(.95);
+
+    transition: .6s;
+
+    z-index: 220;
 }
 
-.camera-flash.flash {
-    animation: cameraFlash 0.5s ease;
+.camera-reveal.show {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: scale(1);
 }
 
-@keyframes cameraFlash {
+.photo-card {
+    padding: 12px 12px 20px;
 
-    0% {
-        opacity: 0;
-    }
-
-    25% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-
-/* ==============================
-   NOTES
-============================== */
-
-.notes-area {
-    width: min(800px, 90vw);
-
-    height: 350px;
-
-    position: relative;
-}
-
-.note {
-    position: absolute;
-
-    border: none;
-
-    background: #fff;
-
-    width: 95px;
-    height: 70px;
-
-    border-radius: 10px;
-
-    font-size: 35px;
-
-    cursor: pointer;
+    background: white;
 
     box-shadow:
-        0 15px 30px rgba(100, 20, 40, 0.14);
+        0 20px 50px rgba(80,20,40,.2);
 
-    transition: 0.3s ease;
+    transform: rotate(-2deg);
+
+    animation: photoAppear .8s ease;
 }
 
-.note:hover {
-    transform: translateY(-8px) rotate(2deg);
+.photo-card img {
+    display: block;
+
+    width: min(75vw, 360px);
+
+    height: min(55vh, 400px);
+
+    object-fit: cover;
+
+    border-radius: 2px;
 }
 
-.note:nth-child(1) {
-    left: 5%;
-    top: 10%;
+.photo-caption {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 28px;
+
+    color: #8f243d;
+
+    text-align: center;
+
+    padding-top: 12px;
 }
 
-.note:nth-child(2) {
-    left: 28%;
-    top: 2%;
+.photo-caption span {
+    font-family: sans-serif;
+
+    font-size: 24px;
 }
 
-.note:nth-child(3) {
-    left: 58%;
-    top: 12%;
-}
+@keyframes photoAppear {
+    from {
+        opacity: 0;
+        transform: rotate(8deg) scale(.75);
+    }
 
-.note:nth-child(4) {
-    left: 80%;
-    top: 30%;
-}
-
-.note:nth-child(5) {
-    left: 18%;
-    top: 62%;
-}
-
-.note:nth-child(6) {
-    left: 55%;
-    top: 68%;
-}
-
-.note.opened {
-    transform: scale(0.85) rotate(5deg);
-
-    opacity: 0.45;
+    to {
+        opacity: 1;
+        transform: rotate(-2deg) scale(1);
+    }
 }
 
 
-/* ==============================
-   ROSES
-============================== */
+/* =========================================================
+   ROMANTIC LETTER SECTION
+========================================================= */
+
+.romantic-stage {
+    position: relative;
+
+    width: min(800px, 95vw);
+
+    height: 360px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 70px;
+}
+
+
+/* BOUQUET */
 
 .rose-bouquet {
+    position: relative;
+
+    width: 200px;
+    height: 230px;
+
     border: none;
 
     background: transparent;
 
     cursor: pointer;
 
-    position: absolute;
+    transition: 1s cubic-bezier(.2,.8,.2,1);
 
-    right: 8%;
-    bottom: 8%;
-
-    font-size: 70px;
-
-    width: 150px;
-    height: 150px;
-
-    transition:
-        transform 0.9s cubic-bezier(.2, .8, .2, 1);
+    z-index: 10;
 }
 
 .rose-bouquet span {
     position: absolute;
+
+    font-size: 70px;
+
+    transition: .5s;
 }
 
 .rose-bouquet span:nth-child(1) {
-    left: 45px;
-    top: 5px;
+    left: 10px;
+    top: 60px;
 }
 
 .rose-bouquet span:nth-child(2) {
-    left: 15px;
-    top: 35px;
+    left: 55px;
+    top: 25px;
 }
 
 .rose-bouquet span:nth-child(3) {
-    left: 75px;
-    top: 35px;
+    left: 105px;
+    top: 50px;
 }
 
 .rose-bouquet span:nth-child(4) {
     left: 30px;
-    top: 65px;
+    top: 105px;
 }
 
 .rose-bouquet span:nth-child(5) {
-    left: 60px;
-    top: 65px;
+    left: 80px;
+    top: 100px;
 }
 
 .rose-bouquet span:nth-child(6) {
-    left: 45px;
-    top: 95px;
+    left: 125px;
+    top: 100px;
+}
+
+.rose-bouquet small {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+
+    font-size: 11px;
+
+    opacity: .7;
+}
+
+.rose-bouquet:hover {
+    transform: scale(1.06);
 }
 
 .rose-bouquet.center {
-    right: 50%;
-
-    bottom: 50%;
-
     transform:
-        translate(50%, 50%)
-        scale(1.35);
+        translate(-30px, 0)
+        scale(1.25);
 
-    filter:
-        drop-shadow(
-            0 0 30px rgba(220, 45, 80, 0.5)
-        );
+    z-index: 30;
 }
 
 
-/* ==============================
+/* ENVELOPE */
+
+.love-envelope {
+    position: relative;
+
+    width: 250px;
+    height: 165px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #fff7f8;
+
+    box-shadow:
+        0 20px 50px rgba(80,20,40,.18);
+
+    cursor: pointer;
+
+    transition: .5s;
+
+    z-index: 20;
+}
+
+.love-envelope:hover {
+    transform: translateY(-8px);
+}
+
+.envelope-body {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 24px;
+
+    color: #8f243d;
+
+    border: 2px solid #e8a8b5;
+
+    border-radius: 8px;
+}
+
+.envelope-flap {
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 45px;
+
+    background: #ffdce2;
+
+    clip-path: polygon(0 0,100% 0,50% 58%);
+
+    z-index: 2;
+
+    transition: .6s;
+}
+
+.love-envelope.opened .envelope-flap {
+    transform: rotateX(180deg);
+
+    opacity: .2;
+}
+
+
+/* =========================================================
+   LETTER MODAL
+========================================================= */
+
+.letter-modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(60,10,25,.35);
+
+    backdrop-filter: blur(8px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 25px;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition: .5s;
+
+    z-index: 500;
+}
+
+.letter-modal.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.letter-paper {
+    position: relative;
+
+    width: min(650px, 94vw);
+
+    max-height: 82vh;
+
+    overflow-y: auto;
+
+    padding: 45px 45px 35px;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.96),
+            rgba(255,247,241,.96)
+        );
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 30px 90px rgba(50,5,20,.3);
+
+    transform: translateY(30px) rotate(-1deg);
+
+    transition: .6s;
+}
+
+.letter-modal.show .letter-paper {
+    transform: translateY(0) rotate(0);
+}
+
+.letter-close {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 30px;
+
+    color: #8f243d;
+
+    cursor: pointer;
+}
+
+.letter-heart {
+    text-align: center;
+
+    font-size: 38px;
+
+    margin-bottom: 5px;
+}
+
+.letter-paper h2 {
+    text-align: center;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 42px;
+
+    font-weight: 400;
+
+    color: #8f243d;
+
+    margin-bottom: 25px;
+}
+
+.letter-text {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 20px;
+
+    line-height: 1.5;
+
+    color: #58202d;
+}
+
+.letter-text p {
+    margin-bottom: 15px;
+}
+
+.letter-signature {
+    text-align: right;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 28px;
+}
+
+
+/* =========================================================
    WINE
-============================== */
+========================================================= */
 
 .wine-bottle {
+    position: relative;
+
+    width: 190px;
+    height: 420px;
+
     border: none;
 
     background: transparent;
 
     cursor: pointer;
 
-    position: relative;
+    transition: .3s;
 
-    width: 180px;
-    height: 330px;
-
-    margin-top: 15px;
-
-    transition: transform 0.25s ease;
+    transform-origin: 50% 90%;
 }
 
 .wine-bottle:hover {
-    transform: scale(1.04);
+    transform: translateY(-8px) rotate(-2deg);
 }
 
 .bottle-neck {
     position: absolute;
 
-    width: 48px;
-    height: 75px;
+    left: 50%;
 
-    left: 66px;
     top: 0;
 
-    background: #541628;
+    transform: translateX(-50%);
 
-    border-radius: 8px 8px 3px 3px;
+    width: 65px;
+    height: 120px;
+
+    border-radius: 15px 15px 5px 5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #41111e,
+            #8e243d,
+            #47121f
+        );
 
     z-index: 1;
 }
@@ -1137,26 +1561,28 @@ body::before {
 .bottle {
     position: absolute;
 
-    width: 145px;
-    height: 250px;
-
-    left: 17px;
+    left: 50%;
     bottom: 0;
 
-    border-radius: 45px 45px 25px 25px;
+    transform: translateX(-50%);
+
+    width: 160px;
+    height: 330px;
 
     overflow: hidden;
+
+    border-radius: 45px 45px 30px 30px;
 
     background:
         linear-gradient(
             90deg,
-            #4c1224,
-            #7b1d38,
-            #4a1123
+            #35101a,
+            #81233a,
+            #41121f
         );
 
     box-shadow:
-        0 25px 50px rgba(80, 15, 35, 0.3);
+        0 25px 50px rgba(60,10,25,.3);
 }
 
 .wine-level {
@@ -1166,271 +1592,297 @@ body::before {
     bottom: 0;
 
     width: 100%;
+
     height: 85%;
 
     background:
         linear-gradient(
             90deg,
-            #4b0e22,
-            #871d3c,
-            #4a0d20
+            #56101f,
+            #9d203e,
+            #4b0c19
         );
 
     transition:
-        height 0.8s ease;
+        height 1s cubic-bezier(.2,.8,.2,1);
 }
 
 .bottle-shine {
     position: absolute;
 
-    left: 22px;
-    top: 20px;
+    left: 25px;
+    top: 30px;
 
-    width: 13px;
-    height: 170px;
+    width: 15px;
+    height: 240px;
 
     border-radius: 20px;
 
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,.18);
+
+    z-index: 3;
 }
 
 .bottle-label {
     position: absolute;
 
-    left: 22px;
-    right: 22px;
+    left: 20px;
+    right: 20px;
 
-    top: 95px;
+    top: 120px;
 
-    padding: 15px 5px;
+    padding: 20px 10px;
 
-    background: #fff3ed;
+    background: #f6e5c8;
 
-    color: #9a2943;
+    color: #66142b;
 
     font-family: "Cormorant Garamond", serif;
 
-    font-size: 24px;
+    font-size: 25px;
 
     font-weight: 700;
 
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+
+    z-index: 5;
 }
 
 .bottle-label small {
     display: block;
 
+    margin-top: 5px;
+
     font-family: "Poppins", sans-serif;
 
-    font-size: 7px;
+    font-size: 8px;
 
-    letter-spacing: 2px;
-
-    margin-top: 4px;
+    letter-spacing: 1px;
 }
 
 .wine-message {
-    font-family: "Great Vibes", cursive;
+    margin-top: 15px;
 
-    font-size: 27px;
+    font-size: 20px;
 
-    color: #a32846;
-
-    min-height: 40px;
-
-    margin-top: 10px;
-
-    text-align: center;
+    min-height: 30px;
 }
 
-.wine-final {
+
+/* =========================================================
+   FINAL BLACKOUT
+========================================================= */
+
+#final-blackout-screen {
     position: fixed;
 
     inset: 0;
 
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    background: rgba(255, 239, 241, 0.96);
+    background: #000;
 
     opacity: 0;
+
     visibility: hidden;
 
-    z-index: 300;
+    z-index: 99999;
 
-    transition: 0.5s ease;
+    transform-origin: center center;
 }
 
-.wine-final.show {
-    opacity: 1;
+body.final-transition #final-blackout-screen {
     visibility: visible;
+
+    animation:
+        finalRotateFade 2.8s cubic-bezier(.65,0,.2,1) forwards;
 }
 
-.wine-final h2 {
-    font-family: "Cormorant Garamond", serif;
-
-    font-size: 60px;
-
-    color: #9d2040;
-
-    margin-bottom: 15px;
+body.final-transition #party-page {
+    animation:
+        pageRotateFade 2.8s cubic-bezier(.65,0,.2,1) forwards;
 }
 
-.wine-final p {
-    max-width: 500px;
-
-    font-size: 16px;
-
-    color: #9c4b5e;
-
-    line-height: 1.6;
-}
-
-.wine-final .hold-on {
-    font-family: "Great Vibes", cursive;
-
-    font-size: 35px;
-
-    margin-top: 20px;
-}
-
-.countdown {
-    margin-top: 20px;
-
-    font-size: 70px;
-
-    font-weight: 700;
-
-    color: #a32846;
-}
-
-
-/* ==============================
-   TRANSITION
-============================== */
-
-body.dizzy #party-page {
-    animation: dizzyTransition 2.5s ease forwards;
-}
-
-@keyframes dizzyTransition {
-
+@keyframes pageRotateFade {
     0% {
-        transform: rotate(0) scale(1);
-    }
+        transform: rotate(0deg) scale(1);
 
-    35% {
-        transform: rotate(5deg) scale(1.03);
-    }
-
-    65% {
-        transform: rotate(-8deg) scale(1.08);
+        opacity: 1;
     }
 
     100% {
-        transform: rotate(360deg) scale(0);
+        transform: rotate(90deg) scale(.7);
+
         opacity: 0;
     }
 }
 
+@keyframes finalRotateFade {
+    0% {
+        opacity: 0;
+    }
 
-/* ==============================
-   MOBILE
-============================== */
+    65% {
+        opacity: 0;
+    }
 
-@media (max-width: 650px) {
+    100% {
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 800px) {
+
+    .party-progress {
+        top: 85px;
+
+        right: 12px;
+
+        font-size: 9px;
+    }
 
     .birthday-rope {
-        height: 75px;
+        height: 70px;
     }
 
     .birthday-rope span {
-        font-size: 25px;
-    }
-
-    .party-progress {
-        top: 82px;
+        font-size: 24px;
     }
 
     .party-section {
-        padding-top: 105px;
-        padding-bottom: 55px;
+        padding:
+            90px
+            18px
+            35px;
     }
 
-    .welcome-content h1 {
-        font-size: 62px;
+    .section-heading {
+        margin-bottom: 20px;
     }
 
-    .welcome-content h2 {
-        font-size: 50px;
+    .section-heading h2 {
+        font-size: 40px;
     }
 
-    .welcome-text {
-        font-size: 25px;
+    .party-playground {
+        gap: 8px;
+
+        min-height: 240px;
     }
 
-    .interactive-area {
-        height: 360px;
+    .three-balloon-area {
+        gap: 8px;
     }
 
     .balloon {
+        font-size: 65px;
+    }
+
+    .side-popper {
+        font-size: 50px;
+    }
+
+    .cake-stage {
+        transform: scale(.8);
+    }
+
+    .romantic-stage {
+        gap: 15px;
+
+        transform: scale(.78);
+    }
+
+    .letter-paper {
+        padding:
+            35px
+            25px
+            25px;
+    }
+
+    .letter-paper h2 {
+        font-size: 35px;
+    }
+
+    .letter-text {
+        font-size: 17px;
+    }
+
+    .wine-bottle {
+        transform: scale(.78);
+    }
+
+    .wine-bottle:hover {
+        transform: scale(.8) rotate(-2deg);
+    }
+}
+
+@media (max-width: 500px) {
+
+    .birthday-rope span {
+        font-size: 19px;
+    }
+
+    .small-title {
+        font-size: 8px;
+
+        letter-spacing: 2px;
+    }
+
+    .welcome-content h1 {
+        font-size: 70px;
+    }
+
+    .welcome-content h2 {
         font-size: 55px;
     }
 
-    .popper-area {
-        gap: 18px;
+    .welcome-text {
+        font-size: 12px;
     }
 
-    .popper {
-        font-size: 55px;
+    .party-playground {
+        width: 100%;
     }
 
-    .camera-body {
-        width: 220px;
-        height: 145px;
+    .balloon {
+        font-size: 52px;
     }
 
-    .camera-lens {
-        width: 75px;
-        height: 75px;
+    .side-popper {
+        font-size: 42px;
     }
 
-    .notes-area {
-        height: 330px;
+    .three-balloon-area {
+        gap: 0;
     }
 
-    .note {
-        width: 75px;
-        height: 60px;
-        font-size: 28px;
+    .cake-stage {
+        transform: scale(.68);
+        margin-top: -20px;
+        margin-bottom: -20px;
     }
 
-    .rose-bouquet {
-        right: 3%;
-        bottom: 5%;
-        transform: scale(0.8);
+    .romantic-stage {
+        transform: scale(.58);
     }
 
-    .rose-bouquet.center {
-        right: 50%;
-        bottom: 50%;
-
-        transform:
-            translate(50%, 50%)
-            scale(1.05);
+    .camera {
+        transform: scale(.8);
     }
 
-    .wine-final h2 {
-        font-size: 45px;
+    .camera:hover {
+        transform: scale(.83);
     }
 
-    .wine-final p {
-        padding: 0 25px;
+    .photo-card img {
+        width: 270px;
+        height: 350px;
+    }
+
+    .photo-caption {
+        font-size: 23px;
     }
 }
