@@ -1,0 +1,1473 @@
+/* =========================================
+   RESET
+========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    overflow: hidden;
+
+    font-family: "Poppins", sans-serif;
+
+    color: #27445c;
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #ffffff 0%,
+            #f7fbff 38%,
+            #e9f3fb 70%,
+            #d8e9f5 100%
+        );
+}
+
+
+/* =========================================
+   AMBIENT GLOW
+========================================= */
+
+.blue-glow {
+    position: fixed;
+
+    width: 520px;
+    height: 520px;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+.glow-one {
+    top: -180px;
+    left: -150px;
+
+    background: rgba(164, 210, 239, 0.35);
+}
+
+.glow-two {
+    right: -170px;
+    bottom: -180px;
+
+    background: rgba(190, 219, 241, 0.5);
+}
+
+
+/* =========================================
+   FAIRY LIGHTS
+========================================= */
+
+.fairy-lights {
+    position: fixed;
+
+    top: 18px;
+    left: 50%;
+
+    width: 80%;
+    height: 45px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    justify-content: space-around;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.fairy-lights span {
+    color: #b8dcf2;
+
+    font-size: 18px;
+
+    text-shadow:
+        0 0 8px rgba(127, 190, 229, 0.8);
+
+    animation: twinkle 2.2s infinite ease-in-out;
+}
+
+.fairy-lights span:nth-child(even) {
+    animation-delay: 0.8s;
+}
+
+@keyframes twinkle {
+    0%,
+    100% {
+        opacity: 0.35;
+        transform: scale(0.8);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+
+/* =========================================
+   BACKGROUND BALLOONS
+========================================= */
+
+.background-balloons {
+    position: fixed;
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 1;
+}
+
+.balloon {
+    position: absolute;
+
+    font-size: 55px;
+
+    opacity: 0.5;
+
+    filter: drop-shadow(
+        0 10px 12px rgba(60, 100, 130, 0.15)
+    );
+
+    animation: floatBalloon 8s ease-in-out infinite;
+}
+
+.background-balloons .balloon:nth-child(1) {
+    left: 4%;
+    top: 18%;
+}
+
+.background-balloons .balloon:nth-child(2) {
+    left: 12%;
+    bottom: 12%;
+    animation-delay: 2s;
+}
+
+.background-balloons .balloon:nth-child(3) {
+    right: 5%;
+    top: 22%;
+    animation-delay: 1s;
+}
+
+.background-balloons .balloon:nth-child(4) {
+    right: 12%;
+    bottom: 16%;
+    animation-delay: 3s;
+}
+
+.background-balloons .balloon:nth-child(5) {
+    left: 25%;
+    top: 8%;
+    font-size: 38px;
+    animation-delay: 1.5s;
+}
+
+.background-balloons .balloon:nth-child(6) {
+    right: 26%;
+    top: 10%;
+    font-size: 40px;
+    animation-delay: 4s;
+}
+
+@keyframes floatBalloon {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(4deg);
+    }
+}
+
+
+/* =========================================
+   CONFETTI
+========================================= */
+
+#confetti-container {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 50;
+}
+
+.confetti-piece {
+    position: absolute;
+
+    width: 8px;
+    height: 15px;
+
+    background: #9fcce8;
+
+    animation: confettiFall 2.5s linear forwards;
+}
+
+.confetti-piece:nth-child(3n) {
+    background: #ffffff;
+}
+
+.confetti-piece:nth-child(4n) {
+    background: #6faed1;
+}
+
+@keyframes confettiFall {
+    from {
+        transform:
+            translateY(-20px)
+            rotate(0deg);
+
+        opacity: 1;
+    }
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(700deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =========================================
+   PARTY SECTIONS
+========================================= */
+
+.party-section {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 30px;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: scale(1.04);
+
+    transition:
+        opacity 0.75s ease,
+        visibility 0.75s ease,
+        transform 0.75s ease;
+
+    z-index: 10;
+}
+
+.party-section.active {
+    opacity: 1;
+    visibility: visible;
+
+    transform: scale(1);
+}
+
+
+/* =========================================
+   INTRO
+========================================= */
+
+.intro-card,
+.section-card,
+.wine-card {
+    width: min(92vw, 700px);
+
+    padding: 55px 40px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.95);
+
+    border-radius: 35px;
+
+    box-shadow:
+        0 30px 80px rgba(69, 111, 139, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+    backdrop-filter: blur(18px);
+
+    position: relative;
+
+    z-index: 10;
+}
+
+.party-crown {
+    font-size: 48px;
+
+    margin-bottom: 10px;
+
+    animation: crownFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes crownFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.small-heading {
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    font-weight: 700;
+
+    color: #6b9abb;
+
+    margin-bottom: 13px;
+}
+
+.intro-card h1 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(55px, 9vw, 88px);
+
+    line-height: 0.88;
+
+    color: #284b64;
+
+    margin-bottom: 25px;
+}
+
+.intro-card h1 span {
+    color: #6faed1;
+}
+
+.intro-text {
+    max-width: 500px;
+
+    margin: auto;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color: #55758d;
+}
+
+.script-text {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 29px;
+
+    color: #4e88ad;
+
+    margin-top: 12px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================
+   SECTION HEADINGS
+========================================= */
+
+.section-card h2,
+.wine-card h2 {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: clamp(38px, 6vw, 58px);
+
+    line-height: 1;
+
+    color: #294c65;
+
+    margin-bottom: 13px;
+}
+
+.section-description,
+.wine-description {
+    color: #638197;
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+}
+
+.interaction-message {
+    min-height: 28px;
+
+    font-size: 14px;
+
+    color: #5281a1;
+
+    margin-top: 18px;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.main-button {
+    border: none;
+
+    padding: 15px 28px;
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #e6f3fb
+        );
+
+    color: #397092;
+
+    font-family: "Poppins", sans-serif;
+
+    font-weight: 700;
+
+    font-size: 13px;
+
+    letter-spacing: 0.5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 25px rgba(69, 111, 139, 0.18);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.main-button:hover {
+    transform: translateY(-4px) scale(1.03);
+
+    box-shadow:
+        0 18px 35px rgba(69, 111, 139, 0.25);
+}
+
+.main-button:active {
+    transform: scale(0.96);
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* =========================================
+   CAKE
+========================================= */
+
+.cake {
+    position: relative;
+
+    width: 310px;
+    height: 230px;
+
+    margin: 30px auto 10px;
+}
+
+.cake-bottom {
+    position: absolute;
+
+    bottom: 0;
+    left: 15px;
+
+    width: 280px;
+    height: 80px;
+
+    background:
+        linear-gradient(
+            #bcdff2,
+            #8dbbd7
+        );
+
+    border-radius: 12px 12px 22px 22px;
+
+    box-shadow:
+        0 15px 30px rgba(65, 112, 142, 0.2);
+}
+
+.cake-middle {
+    position: absolute;
+
+    left: 35px;
+    bottom: 65px;
+
+    width: 240px;
+    height: 70px;
+
+    background: #ffffff;
+
+    border-radius: 12px 12px 8px 8px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #6597b7;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 25px;
+
+    letter-spacing: 2px;
+
+    box-shadow:
+        0 8px 20px rgba(70, 110, 135, 0.12);
+}
+
+.cake-top {
+    position: absolute;
+
+    left: 55px;
+    bottom: 125px;
+
+    width: 200px;
+    height: 60px;
+
+    background:
+        linear-gradient(
+            #ffffff,
+            #eaf5fb
+        );
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #6395b5;
+
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 22px;
+
+    letter-spacing: 3px;
+
+    box-shadow:
+        0 5px 15px rgba(65, 110, 140, 0.12);
+}
+
+.cake-candles {
+    position: absolute;
+
+    top: 20px;
+    left: 47px;
+
+    width: 215px;
+
+    display: flex;
+
+    justify-content: space-around;
+
+    z-index: 10;
+}
+
+.candle {
+    width: 25px;
+    height: 65px;
+
+    border: none;
+
+    border-radius: 8px 8px 3px 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #91c6e5,
+            #ffffff,
+            #91c6e5
+        );
+
+    cursor: pointer;
+
+    position: relative;
+
+    transition: transform 0.2s ease;
+}
+
+.candle:hover {
+    transform: translateY(-5px);
+}
+
+.flame {
+    position: absolute;
+
+    top: -29px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    font-size: 25px;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+}
+
+.candle.out .flame {
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        scale(0);
+}
+
+.candle.out {
+    opacity: 0.5;
+}
+
+
+/* =========================================
+   BALLOON GAME
+========================================= */
+
+#balloon-arena {
+    position: relative;
+
+    width: 100%;
+    height: 300px;
+
+    margin: 10px auto;
+}
+
+.pop-balloon {
+    position: absolute;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 68px;
+
+    cursor: pointer;
+
+    filter:
+        drop-shadow(
+            0 10px 12px rgba(60, 100, 130, 0.18)
+        );
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.3s ease;
+}
+
+.pop-balloon:hover {
+    transform: scale(1.12);
+}
+
+.pop-balloon.popped {
+    animation: balloonPop 0.35s ease forwards;
+}
+
+@keyframes balloonPop {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+.balloon-one {
+    left: 5%;
+    top: 20%;
+}
+
+.balloon-two {
+    left: 25%;
+    top: 5%;
+}
+
+.balloon-three {
+    left: 47%;
+    top: 30%;
+}
+
+.balloon-four {
+    right: 5%;
+    top: 8%;
+}
+
+.balloon-five {
+    left: 13%;
+    bottom: 0;
+}
+
+.balloon-six {
+    left: 38%;
+    bottom: 10%;
+}
+
+.balloon-seven {
+    right: 27%;
+    bottom: 0;
+}
+
+.balloon-eight {
+    right: 3%;
+    bottom: 20%;
+}
+
+
+/* =========================================
+   PARTY POPPERS
+========================================= */
+
+.party-poppers {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    margin: 30px 0;
+}
+
+.popper {
+    border: none;
+
+    background: transparent;
+
+    font-size: 80px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.popper:hover {
+    transform:
+        translateY(-8px)
+        rotate(-5deg);
+}
+
+.popper.used {
+    animation: popperBlast 0.6s ease;
+}
+
+@keyframes popperBlast {
+    0% {
+        transform: scale(1);
+    }
+
+    35% {
+        transform: scale(1.5) rotate(-12deg);
+    }
+
+    100% {
+        transform: scale(0.9);
+    }
+}
+
+
+/* =========================================
+   CAMERA
+========================================= */
+
+.camera-area {
+    margin: 20px auto;
+}
+
+.camera {
+    position: relative;
+
+    width: 190px;
+    height: 115px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d9eaf5,
+            #8ebbd7
+        );
+
+    box-shadow:
+        0 18px 35px rgba(60, 100, 130, 0.2);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease;
+}
+
+.camera:hover {
+    transform:
+        translateY(-5px)
+        rotate(-2deg);
+}
+
+.camera-lens {
+    position: absolute;
+
+    width: 68px;
+    height: 68px;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #ffffff,
+            #6f9fbb 30%,
+            #345c74 70%
+        );
+
+    border: 8px solid #ffffff;
+}
+
+.camera-flash {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    width: 20px;
+    height: 12px;
+
+    border-radius: 4px;
+
+    background: #ffffff;
+}
+
+#camera-message {
+    margin-top: 15px;
+
+    font-size: 12px;
+
+    color: #6791aa;
+
+    letter-spacing: 2px;
+}
+
+.polaroid {
+    width: 220px;
+
+    margin: 25px auto;
+
+    padding: 12px 12px 20px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 15px 35px rgba(50, 90, 120, 0.2);
+
+    transform:
+        rotate(-3deg)
+        scale(0);
+
+    transition:
+        transform 0.6s cubic-bezier(.2,1.5,.4,1);
+}
+
+.polaroid.show {
+    transform:
+        rotate(-3deg)
+        scale(1);
+}
+
+.photo-placeholder {
+    height: 150px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8f5fc,
+            #b8dced
+        );
+
+    font-size: 50px;
+}
+
+.polaroid p {
+    font-family: "Great Vibes", cursive;
+
+    font-size: 28px;
+
+    color: #4b7896;
+
+    margin-top: 8px;
+}
+
+.polaroid span {
+    font-size: 10px;
+
+    color: #7695a8;
+}
+
+
+/* =========================================
+   MYSTERY NOTES
+========================================= */
+
+.notes-container {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 15px;
+
+    flex-wrap: wrap;
+
+    margin: 30px auto;
+}
+
+.mystery-note {
+    width: 85px;
+    height: 100px;
+
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #e6f3fa
+        );
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 12px 25px rgba(70, 110, 140, 0.16);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease;
+}
+
+.mystery-note:hover {
+    transform:
+        translateY(-7px)
+        rotate(3deg);
+}
+
+.mystery-note span {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 42px;
+
+    color: #79a9c5;
+}
+
+.mystery-note.opened {
+    transform:
+        rotateY(180deg);
+
+    opacity: 0.65;
+}
+
+.note-reveal {
+    min-height: 45px;
+
+    max-width: 550px;
+
+    margin: auto;
+
+    padding: 12px;
+
+    border-radius: 15px;
+
+    background: rgba(232, 245, 252, 0.8);
+
+    color: #4d7a97;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 24px;
+}
+
+
+/* =========================================
+   WINE
+========================================= */
+
+.wine-section {
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(72, 126, 164, 0.1),
+            transparent 60%
+        );
+}
+
+.wine-card {
+    transition:
+        transform 0.3s ease;
+}
+
+.wine-section.dizzy .wine-card {
+    animation: drunkWobble 0.8s infinite;
+}
+
+@keyframes drunkWobble {
+    0% {
+        transform: rotate(-1deg);
+    }
+
+    50% {
+        transform: rotate(1deg);
+    }
+
+    100% {
+        transform: rotate(-1deg);
+    }
+}
+
+.wine-bottle {
+    position: relative;
+
+    width: 170px;
+    height: 280px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    margin: 10px auto;
+
+    transition:
+        transform 0.2s ease;
+}
+
+.wine-bottle:hover {
+    transform:
+        translateY(-7px)
+        scale(1.03);
+}
+
+.bottle-neck {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 45px;
+    height: 90px;
+
+    border-radius: 10px 10px 4px 4px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #34596f,
+            #6e9bb3,
+            #34596f
+        );
+}
+
+.bottle-body {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    transform: translateX(-50%);
+
+    width: 140px;
+    height: 215px;
+
+    border-radius:
+        25px
+        25px
+        42px
+        42px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            90deg,
+            #29495b,
+            #6f99ac,
+            #29495b
+        );
+
+    box-shadow:
+        0 25px 35px rgba(35, 70, 90, 0.28);
+}
+
+.wine-liquid {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #572538,
+            #9c4963,
+            #572538
+        );
+
+    transition:
+        height 0.7s ease;
+}
+
+.wine-shine {
+    position: absolute;
+
+    left: 23px;
+    top: 15px;
+
+    width: 12px;
+    height: 170px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.2);
+
+    filter: blur(3px);
+}
+
+.bottle-label {
+    position: absolute;
+
+    left: 15px;
+    right: 15px;
+
+    top: 85px;
+
+    padding: 18px 8px;
+
+    background: #f9f5eb;
+
+    color: #613246;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 3px;
+
+    z-index: 5;
+}
+
+.bottle-label strong {
+    font-family: "Cormorant Garamond", serif;
+
+    font-size: 22px;
+
+    letter-spacing: 3px;
+}
+
+.bottle-label span {
+    font-size: 8px;
+
+    letter-spacing: 1px;
+}
+
+.bottle-label small {
+    font-size: 7px;
+}
+
+.wine-message {
+    min-height: 30px;
+
+    font-family: "Great Vibes", cursive;
+
+    font-size: 27px;
+
+    color: #5684a0;
+}
+
+.wine-progress {
+    width: 220px;
+    height: 6px;
+
+    margin: 10px auto;
+
+    border-radius: 999px;
+
+    background: #dbeaf3;
+
+    overflow: hidden;
+}
+
+#wine-progress-bar {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6faed1,
+            #9ccde7
+        );
+
+    transition:
+        width 0.6s ease;
+}
+
+
+/* =========================================
+   SCREEN DIZZINESS
+========================================= */
+
+body.dizzy {
+    animation:
+        screenDizzy 0.7s infinite;
+}
+
+@keyframes screenDizzy {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    25% {
+        transform: rotate(1deg) scale(1.01);
+    }
+
+    50% {
+        transform: rotate(-1deg) scale(1.02);
+    }
+
+    75% {
+        transform: rotate(0.8deg) scale(1.01);
+    }
+
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+
+/* =========================================
+   FINAL TRANSITION
+========================================= */
+
+body.page-transition {
+    animation: finalSpin 1.6s ease forwards;
+}
+
+@keyframes finalSpin {
+    0% {
+        filter: blur(0);
+        transform: scale(1) rotate(0);
+        opacity: 1;
+    }
+
+    60% {
+        filter: blur(7px);
+        transform: scale(1.12) rotate(10deg);
+        opacity: 0.7;
+    }
+
+    100% {
+        filter: blur(20px);
+        transform: scale(1.7) rotate(25deg);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================
+   MUSIC CONTROL
+========================================= */
+
+.music-control {
+    position: fixed;
+
+    right: 22px;
+    bottom: 22px;
+
+    width: 45px;
+    height: 45px;
+
+    border:
+        1px solid rgba(70, 120, 150, 0.25);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.75);
+
+    color: #477b9a;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    z-index: 200;
+
+    box-shadow:
+        0 10px 25px rgba(50, 100, 130, 0.15);
+
+    transition:
+        transform 0.25s ease;
+}
+
+.music-control:hover {
+    transform: scale(1.1);
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .party-section {
+        padding: 15px;
+    }
+
+    .intro-card,
+    .section-card,
+    .wine-card {
+        padding: 38px 20px;
+
+        border-radius: 25px;
+    }
+
+    .intro-card h1 {
+        font-size: 58px;
+    }
+
+    .script-text {
+        font-size: 25px;
+    }
+
+    .cake {
+        transform: scale(0.82);
+
+        margin-top: 5px;
+        margin-bottom: -25px;
+    }
+
+    #balloon-arena {
+        height: 260px;
+    }
+
+    .pop-balloon {
+        font-size: 52px;
+    }
+
+    .party-poppers {
+        gap: 10px;
+    }
+
+    .popper {
+        font-size: 65px;
+    }
+
+    .notes-container {
+        gap: 8px;
+    }
+
+    .mystery-note {
+        width: 65px;
+        height: 80px;
+    }
+
+    .mystery-note span {
+        font-size: 34px;
+    }
+
+    .wine-bottle {
+        transform: scale(0.85);
+        margin-top: -10px;
+        margin-bottom: -25px;
+    }
+
+    .wine-bottle:hover {
+        transform: scale(0.88);
+    }
+
+    .background-balloons .balloon {
+        font-size: 40px;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+========================================= */
+
+@media (max-height: 650px) {
+
+    .intro-card,
+    .section-card,
+    .wine-card {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+
+    .cake {
+        transform: scale(0.68);
+
+        margin-top: -25px;
+        margin-bottom: -55px;
+    }
+
+    #balloon-arena {
+        height: 220px;
+    }
+
+    .wine-bottle {
+        transform: scale(0.65);
+        margin-top: -40px;
+        margin-bottom: -80px;
+    }
+}
