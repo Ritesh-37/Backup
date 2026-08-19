@@ -1,13 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     /* =========================================
-       HELPER FUNCTIONS
+       SETTINGS
+    ========================================== */
+
+    const PHOTO_FILE = "tisha-photo.jpg";
+
+
+    /* =========================================
+       HELPERS
     ========================================== */
 
     function get(id) {
         return document.getElementById(id);
     }
-
 
     function showSection(sectionId) {
 
@@ -21,28 +27,43 @@ document.addEventListener("DOMContentLoaded", function () {
         const target = get(sectionId);
 
         if (target) {
+
             setTimeout(function () {
                 target.classList.add("active");
             }, 150);
         }
     }
 
-
     function updateProgress(number) {
 
         get("progress-text").textContent =
-            "Birthday Party • " + number + " / 6";
+            "Birthday Party • " + number + " / 8";
     }
 
 
     /* =========================================
-       MUSIC
+       AUDIO
     ========================================== */
 
     const music = get("party-music");
     const musicButton = get("music-button");
 
-    let musicStarted = false;
+    const balloonSound = get("balloon-sound");
+    const popperSound = get("popper-sound");
+    const cameraSound = get("camera-sound");
+
+    function playSound(sound) {
+
+        if (!sound) {
+            return;
+        }
+
+        sound.currentTime = 0;
+
+        sound.play().catch(function () {
+            // Browser may block audio before user interaction.
+        });
+    }
 
     function startMusic() {
 
@@ -52,26 +73,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         music.volume = 0.3;
 
-        const promise = music.play();
+        music.play().then(function () {
 
-        if (promise !== undefined) {
+            musicButton.textContent = "♫";
 
-            promise
-                .then(function () {
+        }).catch(function () {
 
-                    musicStarted = true;
+            musicButton.textContent = "🔇";
 
-                    musicButton.textContent = "♫";
-
-                })
-                .catch(function () {
-
-                    musicButton.textContent = "🔇";
-
-                });
-        }
+        });
     }
-
 
     musicButton.addEventListener("click", function () {
 
@@ -90,21 +101,95 @@ document.addEventListener("DOMContentLoaded", function () {
             music.pause();
 
             musicButton.textContent = "🔇";
-
         }
 
     });
 
 
     /* =========================================
-       START PARTY
+       START
     ========================================== */
 
     get("start-party").addEventListener("click", function () {
 
         startMusic();
 
-        updateProgress(1);
+        updateProgress(2);
+
+        showSection("cake-section");
+
+    });
+
+
+    /* =========================================
+       CAKE
+    ========================================== */
+
+    const cakeAction = get("cake-action");
+    const cakeMessage = get("cake-message");
+    const cakeComplete = get("cake-complete");
+    const cakeInstruction = get("cake-instruction");
+
+    const cake =
+        document.querySelector(".cake");
+
+    let cakeCut = false;
+
+    cakeAction.addEventListener("click", function () {
+
+        if (cakeCut) {
+            return;
+        }
+
+        cakeCut = true;
+
+        cake.classList.add("cut");
+
+        cakeInstruction.textContent =
+            "Cake successfully cut! 🎂❤️";
+
+        cakeAction.style.display =
+            "none";
+
+        createConfetti(
+            window.innerWidth / 2,
+            window.innerHeight / 2
+        );
+
+        setTimeout(function () {
+
+            cakeMessage.classList.add("show");
+
+        }, 700);
+
+    });
+
+
+    get("blow-candles").addEventListener("click", function () {
+
+        cake.classList.add("candles-out");
+
+        cakeMessage.classList.remove("show");
+
+        createConfetti(
+            window.innerWidth / 2,
+            window.innerHeight / 2
+        );
+
+        setTimeout(function () {
+
+            cakeComplete.classList.add("show");
+
+        }, 700);
+
+    });
+
+
+    get("cake-next").addEventListener("click", function () {
+
+        cakeComplete.classList.remove("show");
+
+        updateProgress(3);
 
         showSection("balloon-section");
 
@@ -124,20 +209,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const balloonMessageText =
         get("balloon-message-text");
 
-    const closeBalloonMessage =
-        get("close-balloon-message");
-
     const balloonComplete =
         get("balloon-complete");
 
     let balloonsPopped = 0;
 
-
     balloons.forEach(function (balloon) {
 
         balloon.addEventListener("click", function () {
 
-            if (balloon.classList.contains("popped")) {
+            if (
+                balloon.classList.contains("popped")
+            ) {
                 return;
             }
 
@@ -148,19 +231,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             balloonsPopped++;
 
-            balloonMessageText.textContent = message;
+            playSound(balloonSound);
+
+            balloonMessageText.textContent =
+                message;
 
             balloonMessage.classList.add("show");
 
-            createConfetti(
-                balloon.getBoundingClientRect().left +
-                balloon.offsetWidth / 2,
+            const rect =
+                balloon.getBoundingClientRect();
 
-                balloon.getBoundingClientRect().top +
-                balloon.offsetHeight / 2
+            createConfetti(
+                rect.left + rect.width / 2,
+                rect.top + rect.height / 2
             );
 
-            if (balloonsPopped === balloons.length) {
+            if (
+                balloonsPopped ===
+                balloons.length
+            ) {
 
                 setTimeout(function () {
 
@@ -175,22 +264,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    closeBalloonMessage.addEventListener("click", function () {
+    get("close-balloon-message")
+        .addEventListener("click", function () {
 
-        balloonMessage.classList.remove("show");
+            balloonMessage.classList.remove("show");
 
-    });
+        });
 
 
-    get("balloon-next").addEventListener("click", function () {
+    get("balloon-next")
+        .addEventListener("click", function () {
 
-        balloonComplete.classList.remove("show");
+            balloonComplete.classList.remove("show");
 
-        updateProgress(2);
+            updateProgress(4);
 
-        showSection("popper-section");
+            showSection("popper-section");
 
-    });
+        });
 
 
     /* =========================================
@@ -206,20 +297,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const popperMessageText =
         get("popper-message-text");
 
-    const closePopperMessage =
-        get("close-popper-message");
-
     const popperComplete =
         get("popper-complete");
 
     let poppersUsed = 0;
 
-
     poppers.forEach(function (popper) {
 
         popper.addEventListener("click", function () {
 
-            if (popper.classList.contains("exploded")) {
+            if (
+                popper.classList.contains("exploded")
+            ) {
                 return;
             }
 
@@ -230,19 +319,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
             poppersUsed++;
 
-            popperMessageText.textContent = message;
+            playSound(popperSound);
+
+            popperMessageText.textContent =
+                message;
 
             popperMessage.classList.add("show");
 
-            createConfetti(
-                popper.getBoundingClientRect().left +
-                popper.offsetWidth / 2,
+            const rect =
+                popper.getBoundingClientRect();
 
-                popper.getBoundingClientRect().top +
-                popper.offsetHeight / 2
+            createConfetti(
+                rect.left + rect.width / 2,
+                rect.top + rect.height / 2
             );
 
-            if (poppersUsed === poppers.length) {
+            if (
+                poppersUsed ===
+                poppers.length
+            ) {
 
                 setTimeout(function () {
 
@@ -257,22 +352,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    closePopperMessage.addEventListener("click", function () {
+    get("close-popper-message")
+        .addEventListener("click", function () {
 
-        popperMessage.classList.remove("show");
+            popperMessage.classList.remove("show");
 
-    });
+        });
 
 
-    get("popper-next").addEventListener("click", function () {
+    get("popper-next")
+        .addEventListener("click", function () {
 
-        popperComplete.classList.remove("show");
+            popperComplete.classList.remove("show");
 
-        updateProgress(3);
+            updateProgress(5);
 
-        showSection("camera-section");
+            showSection("camera-section");
 
-    });
+        });
 
 
     /* =========================================
@@ -288,10 +385,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const cameraFlash =
         document.querySelector(".camera-flash");
 
-    const cameraMessage =
-        get("camera-message");
+    const photoReveal =
+        get("photo-reveal");
+
+    const tishaPhoto =
+        get("tisha-photo");
 
     let cameraUsed = false;
+
+    tishaPhoto.src =
+        PHOTO_FILE;
 
 
     camera.addEventListener("click", function () {
@@ -304,7 +407,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let count = 3;
 
-        cameraCountdown.textContent = count;
+        cameraCountdown.textContent =
+            count;
 
         cameraCountdown.classList.add("show");
 
@@ -315,7 +419,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (count > 0) {
 
-                    cameraCountdown.textContent = count;
+                    cameraCountdown.textContent =
+                        count;
 
                     cameraCountdown.classList.remove("show");
 
@@ -329,11 +434,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     cameraCountdown.classList.remove("show");
 
+                    playSound(cameraSound);
+
                     cameraFlash.classList.add("flash");
 
                     setTimeout(function () {
 
-                        cameraMessage.classList.add("show");
+                        photoReveal.classList.add("show");
 
                     }, 450);
 
@@ -344,15 +451,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    get("camera-next").addEventListener("click", function () {
+    get("photo-next")
+        .addEventListener("click", function () {
 
-        cameraMessage.classList.remove("show");
+            photoReveal.classList.remove("show");
 
-        updateProgress(4);
+            updateProgress(6);
 
-        showSection("notes-section");
+            showSection("notes-section");
 
-    });
+        });
 
 
     /* =========================================
@@ -368,20 +476,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const noteMessageText =
         get("note-message-text");
 
-    const closeNoteMessage =
-        get("close-note-message");
-
     const notesComplete =
         get("notes-complete");
 
     let notesOpened = 0;
 
-
     notes.forEach(function (note) {
 
         note.addEventListener("click", function () {
 
-            if (note.classList.contains("opened")) {
+            if (
+                note.classList.contains("opened")
+            ) {
                 return;
             }
 
@@ -392,11 +498,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             notesOpened++;
 
-            noteMessageText.textContent = message;
+            noteMessageText.textContent =
+                message;
 
             noteMessage.classList.add("show");
 
-            if (notesOpened === notes.length) {
+            if (
+                notesOpened ===
+                notes.length
+            ) {
 
                 setTimeout(function () {
 
@@ -411,22 +521,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
-    closeNoteMessage.addEventListener("click", function () {
+    get("close-note-message")
+        .addEventListener("click", function () {
 
-        noteMessage.classList.remove("show");
+            noteMessage.classList.remove("show");
 
-    });
+        });
 
 
-    get("notes-next").addEventListener("click", function () {
+    get("notes-next")
+        .addEventListener("click", function () {
 
-        notesComplete.classList.remove("show");
+            notesComplete.classList.remove("show");
 
-        updateProgress(5);
+            updateProgress(7);
 
-        showSection("rose-section");
+            showSection("rose-section");
 
-    });
+        });
 
 
     /* =========================================
@@ -441,7 +553,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let roseClicked = false;
 
-
     roseBouquet.addEventListener("click", function () {
 
         if (roseClicked) {
@@ -454,24 +565,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         createRosePetals();
 
+        createConfetti(
+            window.innerWidth / 2,
+            window.innerHeight / 2
+        );
+
         setTimeout(function () {
 
             roseMessage.classList.add("show");
 
-        }, 900);
+        }, 1000);
 
     });
 
 
-    get("rose-next").addEventListener("click", function () {
+    get("rose-next")
+        .addEventListener("click", function () {
 
-        roseMessage.classList.remove("show");
+            roseMessage.classList.remove("show");
 
-        updateProgress(6);
+            updateProgress(8);
 
-        showSection("wine-section");
+            showSection("wine-section");
 
-    });
+        });
 
 
     /* =========================================
@@ -493,19 +610,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const wineFinal =
         get("wine-final");
 
+    const wineMeterFill =
+        get("wine-meter-fill");
+
     let wineClicks = 0;
 
     const wineMessages = [
 
         "Just one little sip. 🍷❤️",
 
-        "Okay… maybe another one. 😂",
+        "Okay... maybe another one. 😂🍷",
 
-        "You're getting carried away now. 😭😂",
+        "You're getting carried away now. 😭😂🍷",
 
-        "Nimbu! Put the bottle down. RIGHT NOW. 😂",
+        "Nimbuuu! Put the bottle down. RIGHT NOW. 😂🍋",
 
-        "TOO LATE. 😭🍷"
+        "TOO LATE. 😭🍷❤️"
 
     ];
 
@@ -524,20 +644,33 @@ document.addEventListener("DOMContentLoaded", function () {
         wineLevel.style.height =
             Math.max(0, remaining) + "%";
 
+        wineMeterFill.style.width =
+            Math.max(0, remaining) + "%";
+
         wineMessage.textContent =
             wineMessages[wineClicks - 1];
 
+        wineBottle.classList.remove("shake");
 
-        if (wineClicks === 3) {
+        void wineBottle.offsetWidth;
 
-            document.body.classList.add("slightly-dizzy");
+        wineBottle.classList.add("shake");
+
+
+        if (wineClicks >= 3) {
+
+            document.body.classList.add(
+                "slightly-dizzy"
+            );
 
         }
 
 
-        if (wineClicks === 4) {
+        if (wineClicks >= 4) {
 
-            document.body.classList.add("very-dizzy");
+            document.body.classList.add(
+                "very-dizzy"
+            );
 
         }
 
@@ -545,7 +678,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (wineClicks === 5) {
 
             wineInstruction.textContent =
-                "Okay sweetheart… I think that's enough. 😂❤️";
+                "Okay sweetheart... I think that's enough. 😂❤️";
 
             setTimeout(function () {
 
@@ -571,8 +704,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const finalCount =
             get("final-count");
 
-        finalCount.textContent = count;
-
+        finalCount.textContent =
+            count;
 
         const timer =
             setInterval(function () {
@@ -581,20 +714,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (count > 0) {
 
-                    finalCount.textContent = count;
+                    finalCount.textContent =
+                        count;
 
                 } else {
 
                     clearInterval(timer);
 
-                    document.body.classList.add("dizzy");
+                    document.body.classList.add(
+                        "dizzy"
+                    );
 
                     setTimeout(function () {
 
                         window.location.href =
                             "page3.html";
 
-                    }, 2300);
+                    }, 2600);
 
                 }
 
@@ -604,49 +740,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     /* =========================================
-       CONFETTI EFFECT
+       CONFETTI
     ========================================== */
 
     function createConfetti(x, y) {
 
-        for (let i = 0; i < 18; i++) {
+        for (let i = 0; i < 20; i++) {
 
             const piece =
                 document.createElement("span");
 
             piece.textContent =
-                ["✦", "♥", "•", "✧"][Math.floor(Math.random() * 4)];
+                [
+                    "✦",
+                    "♥",
+                    "•",
+                    "✧",
+                    "🎀"
+                ][
+                    Math.floor(
+                        Math.random() * 5
+                    )
+                ];
 
-            piece.style.position = "fixed";
+            piece.style.position =
+                "fixed";
 
-            piece.style.left = x + "px";
+            piece.style.left =
+                x + "px";
 
-            piece.style.top = y + "px";
+            piece.style.top =
+                y + "px";
 
-            piece.style.zIndex = "250";
+            piece.style.zIndex =
+                "250";
 
-            piece.style.pointerEvents = "none";
+            piece.style.pointerEvents =
+                "none";
 
             piece.style.fontSize =
-                (10 + Math.random() * 14) + "px";
+                (10 + Math.random() * 14) +
+                "px";
 
             const angle =
-                Math.random() * Math.PI * 2;
+                Math.random() *
+                Math.PI *
+                2;
 
             const distance =
-                50 + Math.random() * 120;
+                50 +
+                Math.random() *
+                120;
 
             const targetX =
-                Math.cos(angle) * distance;
+                Math.cos(angle) *
+                distance;
 
             const targetY =
-                Math.sin(angle) * distance;
+                Math.sin(angle) *
+                distance;
 
             piece.animate(
 
                 [
                     {
-                        transform: "translate(0, 0) scale(1)",
+                        transform:
+                            "translate(0, 0) scale(1)",
+
                         opacity: 1
                     },
 
@@ -663,9 +823,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 ],
 
                 {
-                    duration: 800 + Math.random() * 400,
+                    duration:
+                        800 +
+                        Math.random() *
+                        400,
 
-                    easing: "cubic-bezier(.2,.8,.2,1)"
+                    easing:
+                        "cubic-bezier(.2,.8,.2,1)"
                 }
 
             );
@@ -689,26 +853,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function createRosePetals() {
 
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 24; i++) {
 
             const petal =
                 document.createElement("div");
 
-            petal.textContent = "🌹";
+            petal.textContent =
+                "🌹";
 
-            petal.style.position = "fixed";
+            petal.style.position =
+                "fixed";
 
             petal.style.left =
                 Math.random() * 100 + "%";
 
-            petal.style.top = "-30px";
+            petal.style.top =
+                "-30px";
 
             petal.style.fontSize =
-                (14 + Math.random() * 18) + "px";
+                (14 + Math.random() * 18) +
+                "px";
 
-            petal.style.zIndex = "90";
+            petal.style.zIndex =
+                "90";
 
-            petal.style.pointerEvents = "none";
+            petal.style.pointerEvents =
+                "none";
 
             petal.animate(
 
@@ -734,9 +904,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 {
                     duration:
-                        3000 + Math.random() * 3000,
+                        3000 +
+                        Math.random() *
+                        3000,
 
-                    easing: "linear"
+                    easing:
+                        "linear"
                 }
 
             );
@@ -752,6 +925,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
     }
-
 
 });
