@@ -4,20 +4,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Birthday Party For Tisha ❤️</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&family=Poppins:wght@400;500;600;700&display=swap"
@@ -75,63 +67,35 @@
     </button>
 
 
-    <!-- AUDIO FILES -->
+    <!-- AUDIO -->
 
-    <audio
-        id="birthday-music"
-        loop
-        preload="auto"
-    >
-        <source
-            src="birthday-song.mp3"
-            type="audio/mpeg"
-        >
+    <audio id="birthday-music" loop preload="auto">
+        <source src="birthday-song.mp3" type="audio/mpeg">
     </audio>
 
-    <audio
-        id="candle-sound"
-        preload="auto"
-    >
-        <source
-            src="candle-out.mp3"
-            type="audio/mpeg"
-        >
+    <audio id="candle-sound" preload="auto">
+        <source src="candle-out.mp3" type="audio/mpeg">
     </audio>
 
-    <audio
-        id="balloon-pop-sound"
-        preload="auto"
-    >
-        <source
-            src="balloon-pop.mp3"
-            type="audio/mpeg"
-        >
+    <audio id="balloon-pop-sound" preload="auto">
+        <source src="balloon-pop.mp3" type="audio/mpeg">
     </audio>
 
-    <audio
-        id="popper-sound"
-        preload="auto"
-    >
-        <source
-            src="popper-pop.mp3"
-            type="audio/mpeg"
-        >
+    <audio id="popper-sound" preload="auto">
+        <source src="popper-pop.mp3" type="audio/mpeg">
     </audio>
 
-    <audio
-        id="crackle-sound"
-        preload="auto"
-    >
-        <source
-            src="diwali-crackle.mp3"
-            type="audio/mpeg"
-        >
+    <audio id="crackle-sound" preload="auto">
+        <source src="diwali-crackle.mp3" type="audio/mpeg">
     </audio>
 
 
     <main id="party-page">
 
-        <!-- WELCOME SEQUENCE -->
+
+        <!-- ==================================================
+             WELCOME SEQUENCE
+        ================================================== -->
 
         <section
             id="welcome-section"
@@ -249,7 +213,9 @@
         </section>
 
 
-        <!-- CAKE SECTION -->
+        <!-- ==================================================
+             CAKE SECTION
+        ================================================== -->
 
         <section
             id="cake-section"
@@ -275,13 +241,14 @@
             </div>
 
 
-            <!-- CAKE + CANDLES -->
+            <!-- CAKE + INTERACTIVE CANDLES -->
 
             <div class="cake-stage">
 
                 <div class="cake-wrapper">
 
-                    <!-- INTERACTIVE CANDLES -->
+
+                    <!-- ONLY INTERACTIVE CANDLES -->
 
                     <div class="cake-candles">
 
@@ -328,19 +295,45 @@
                     </div>
 
 
-                    <!-- CAKE -->
+                    <!-- CSS CAKE -->
 
                     <div
                         id="birthday-cake"
                         class="birthday-cake"
                     >
 
-                        <div class="cake-top">
-                            🍓
-                        </div>
+                        <div class="cake-plate"></div>
 
-                        <div class="cake-emoji">
-                            🎂
+                        <div class="cake-body">
+
+                            <div class="cake-top-layer">
+
+                                <span class="cake-berry berry-one">
+                                    🍓
+                                </span>
+
+                                <span class="cake-berry berry-two">
+                                    🍓
+                                </span>
+
+                                <span class="cake-berry berry-three">
+                                    🍓
+                                </span>
+
+                            </div>
+
+                            <div class="cake-cream"></div>
+
+                            <div class="cake-bottom-layer"></div>
+
+                            <div class="cake-drip drip-one"></div>
+                            <div class="cake-drip drip-two"></div>
+                            <div class="cake-drip drip-three"></div>
+
+                            <div class="cake-decoration">
+                                ♥ &nbsp; ♥ &nbsp; ♥
+                            </div>
+
                         </div>
 
                         <div class="cake-glow">
@@ -362,7 +355,7 @@
             </p>
 
 
-            <!-- CELEBRATION -->
+            <!-- 10 SECOND CELEBRATION -->
 
             <div
                 id="celebration-layer"
@@ -380,7 +373,7 @@
             </div>
 
 
-            <!-- FINAL BIRTHDAY POPUP -->
+            <!-- FINAL POPUP -->
 
             <div
                 id="birthday-popup"
@@ -426,4 +419,5 @@
     <script src="page2.js"></script>
 
 </body>
+
 </html>
