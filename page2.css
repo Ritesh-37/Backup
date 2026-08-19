@@ -1,7 +1,3 @@
-/* =========================================================
-   RESET
-========================================================= */
-
 * {
     margin: 0;
     padding: 0;
@@ -17,82 +13,56 @@ body {
 body {
     min-height: 100vh;
     overflow: hidden;
-
     font-family: "Poppins", sans-serif;
-
     color: #8f243d;
-
     background:
-        radial-gradient(
-            circle at 50% 20%,
-            #fffafa 0%,
-            #fff1f1 35%,
-            #ffe4e6 70%,
-            #ffd4d9 100%
-        );
+        radial-gradient(circle at 50% 20%,
+        #fffafa 0%,
+        #fff1f3 35%,
+        #ffe2e7 70%,
+        #ffd1d9 100%);
 }
 
-
-/* =========================================================
-   BACKGROUND
-========================================================= */
+button {
+    font-family: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
 
 .background-glow {
     position: fixed;
-
-    width: 650px;
-    height: 650px;
-
+    width: 700px;
+    height: 700px;
     left: 50%;
     top: 50%;
-
     transform: translate(-50%, -50%);
-
-    background: rgba(255, 100, 130, 0.14);
-
+    background: rgba(255, 80, 120, 0.15);
     filter: blur(100px);
-
     border-radius: 50%;
-
     pointer-events: none;
-
     z-index: 0;
 }
 
 body::before {
     content: "";
-
     position: fixed;
-
     inset: 0;
-
     background-image:
         radial-gradient(
             rgba(180, 40, 70, 0.08) 1px,
             transparent 1px
         );
-
     background-size: 30px 30px;
-
     pointer-events: none;
-
     z-index: 0;
 }
 
-
-/* =========================================================
-   WAITING SCREEN
-========================================================= */
-
 body.birthday-waiting {
-    background: #16070d;
+    background: #12050b;
 }
 
 body.birthday-waiting .background-glow,
 body.birthday-waiting .confetti-background,
-body.birthday-waiting .birthday-rope,
-body.birthday-waiting .party-progress,
-body.birthday-waiting .music-button {
+body.birthday-waiting #music-button {
     opacity: 0;
 }
 
@@ -100,106 +70,19 @@ body.birthday-waiting #party-page {
     opacity: 0;
 }
 
-
-/* =========================================================
-   BIRTHDAY ROPE
-========================================================= */
-
-.birthday-rope {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 90px;
-
-    display: flex;
-
-    justify-content: space-around;
-    align-items: flex-start;
-
-    padding-top: 7px;
-
-    z-index: 50;
-
-    pointer-events: none;
-
-    transition: opacity 1s ease;
-}
-
-.rope-line {
-    position: absolute;
-
-    top: 12px;
-    left: 0;
-
-    width: 100%;
-    height: 3px;
-
-    background: #b92c48;
-
-    opacity: 0.35;
-}
-
-.birthday-rope span {
-    position: relative;
-
-    font-size: 32px;
-
-    animation: ropeSwing 3s ease-in-out infinite;
-}
-
-.birthday-rope span:nth-child(3) {
-    animation-delay: .3s;
-}
-
-.birthday-rope span:nth-child(4) {
-    animation-delay: .6s;
-}
-
-.birthday-rope span:nth-child(5) {
-    animation-delay: .9s;
-}
-
-.birthday-rope span:nth-child(6) {
-    animation-delay: 1.2s;
-}
-
-@keyframes ropeSwing {
-    0%,
-    100% {
-        transform: rotate(-4deg);
-    }
-
-    50% {
-        transform: rotate(4deg);
-    }
-}
-
-
-/* =========================================================
-   CONFETTI BACKGROUND
-========================================================= */
-
 .confetti-background {
     position: fixed;
-
     inset: 0;
-
     pointer-events: none;
-
     z-index: 1;
+    transition: opacity 1s ease;
 }
 
 .confetti-background span {
     position: absolute;
-
     font-size: 18px;
-
-    opacity: .3;
-
-    animation: floatingConfetti 8s linear infinite;
+    opacity: 0.25;
+    animation: floatingConfetti 7s ease-in-out infinite;
 }
 
 .confetti-background span:nth-child(1) {
@@ -243,160 +126,69 @@ body.birthday-waiting #party-page {
 }
 
 @keyframes floatingConfetti {
-    0% {
+    0%,
+    100% {
         transform: translateY(0) rotate(0);
     }
 
     50% {
-        transform: translateY(-20px) rotate(180deg);
-    }
-
-    100% {
-        transform: translateY(0) rotate(360deg);
+        transform: translateY(-25px) rotate(180deg);
     }
 }
 
 
-/* =========================================================
-   PROGRESS
-========================================================= */
-
-.party-progress {
-    position: fixed;
-
-    top: 100px;
-    right: 25px;
-
-    z-index: 100;
-
-    padding: 8px 15px;
-
-    border-radius: 30px;
-
-    background: rgba(255,255,255,.7);
-
-    backdrop-filter: blur(10px);
-
-    border: 1px solid rgba(143,36,61,.12);
-
-    font-size: 11px;
-
-    letter-spacing: 1px;
-}
-
-
-/* =========================================================
-   MUSIC BUTTON
-========================================================= */
-
-.music-button {
-    position: fixed;
-
-    bottom: 22px;
-    right: 22px;
-
-    width: 48px;
-    height: 48px;
-
-    border: none;
-
-    border-radius: 50%;
-
-    background: #8f243d;
-
-    color: white;
-
-    font-size: 20px;
-
-    cursor: pointer;
-
-    z-index: 300;
-
-    box-shadow: 0 10px 25px rgba(143,36,61,.25);
-
-    transition: .3s;
-}
-
-.music-button:hover {
-    transform: scale(1.1);
-}
-
-
-/* =========================================================
-   PAGE / SECTIONS
-========================================================= */
+/* =====================================================
+   PAGE SECTIONS
+===================================================== */
 
 #party-page {
     position: relative;
-
     width: 100%;
     height: 100vh;
-
     z-index: 5;
-
-    transition: opacity 1.2s ease;
+    transition: opacity 0.8s ease;
 }
 
 .party-section {
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     align-items: center;
-
-    padding: 110px 30px 60px;
-
+    padding: 80px 25px 35px;
     opacity: 0;
-
     visibility: hidden;
-
-    transform: scale(.96) translateY(20px);
-
+    transform: scale(0.96) translateY(20px);
     transition:
-        opacity .8s ease,
-        transform .8s ease,
-        visibility .8s;
-
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        visibility 0.8s;
     z-index: 10;
 }
 
 .party-section.active {
     opacity: 1;
-
     visibility: visible;
-
     transform: scale(1) translateY(0);
-
     z-index: 20;
 }
 
 
-/* =========================================================
+/* =====================================================
    WELCOME
-========================================================= */
+===================================================== */
 
 .welcome-content {
     text-align: center;
-
-    max-width: 750px;
-
-    animation: welcomeAppear 1.2s ease;
+    width: min(850px, 92vw);
 }
 
 .birthday-crown {
-    font-size: 58px;
-
-    margin-bottom: 10px;
-
+    font-size: 60px;
+    margin-bottom: 18px;
     animation: crownFloat 3s ease-in-out infinite;
 }
 
@@ -412,49 +204,56 @@ body.birthday-waiting #party-page {
 }
 
 .small-title {
-    font-size: 11px;
-
+    font-size: 10px;
     letter-spacing: 4px;
-
+    margin-bottom: 25px;
     font-weight: 600;
-
-    margin-bottom: 12px;
 }
 
-.welcome-content h1 {
+#welcome-lines {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.welcome-line {
+    opacity: 0;
+    transform: translateY(25px);
+}
+
+.welcome-line.show {
+    animation: welcomeLineIn 1s ease forwards;
+}
+
+.welcome-line:nth-child(1) {
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(48px, 8vw, 80px);
+    font-weight: 400;
+    color: #9b2443;
+}
+
+.welcome-line:nth-child(2),
+.welcome-line:nth-child(3),
+.welcome-line:nth-child(4),
+.welcome-line:nth-child(5) {
+    margin-top: 12px;
     font-family: "Cormorant Garamond", serif;
+    font-size: clamp(24px, 4vw, 40px);
+}
 
-    font-size: clamp(65px, 11vw, 130px);
-
-    line-height: .78;
-
-    letter-spacing: 5px;
-
+.welcome-line:nth-child(6) {
+    margin-top: 20px;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(42px, 7vw, 70px);
+    font-weight: 400;
     color: #7d1834;
 }
 
-.welcome-content h2 {
-    font-family: "Great Vibes", cursive;
-
-    font-size: clamp(48px, 7vw, 75px);
-
-    font-weight: 400;
-
-    margin-top: 18px;
-
-    color: #a92549;
-}
-
-.welcome-text {
-    margin: 18px 0 28px;
-
-    font-size: 15px;
-}
-
-@keyframes welcomeAppear {
+@keyframes welcomeLineIn {
     from {
         opacity: 0;
-        transform: translateY(30px) scale(.95);
+        transform: translateY(25px) scale(0.96);
     }
 
     to {
@@ -464,235 +263,154 @@ body.birthday-waiting #party-page {
 }
 
 
-/* =========================================================
-   BUTTONS
-========================================================= */
-
-.party-button {
-    border: none;
-
-    padding: 14px 28px;
-
-    border-radius: 40px;
-
-    background: #8f243d;
-
-    color: white;
-
-    font-family: "Poppins", sans-serif;
-
-    font-weight: 600;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    box-shadow:
-        0 12px 25px rgba(143,36,61,.22);
-
-    transition: .3s;
-}
-
-.party-button:hover {
-    transform: translateY(-3px) scale(1.03);
-
-    box-shadow:
-        0 16px 30px rgba(143,36,61,.3);
-}
-
-.small-button {
-    border: none;
-
-    background: #ffe4e8;
-
-    color: #8f243d;
-
-    padding: 9px 17px;
-
-    border-radius: 20px;
-
-    cursor: pointer;
-
-    font-weight: 600;
-}
-
-
-/* =========================================================
-   SECTION HEADINGS
-========================================================= */
+/* =====================================================
+   HEADINGS
+===================================================== */
 
 .section-heading {
     text-align: center;
-
     max-width: 700px;
-
-    margin-bottom: 35px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 15;
 }
 
 .section-heading > span {
     display: block;
-
     font-size: 38px;
-
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 
 .section-heading h2 {
     font-family: "Cormorant Garamond", serif;
-
     font-size: clamp(38px, 6vw, 64px);
-
-    color: #7d1834;
-
     line-height: 1;
+    color: #7d1834;
 }
 
 .section-heading p {
     margin-top: 10px;
-
     font-size: 14px;
-
-    opacity: .75;
+    opacity: 0.75;
 }
 
 
-/* =========================================================
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.party-button {
+    border: none;
+    padding: 14px 27px;
+    border-radius: 40px;
+    background: #8f243d;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    cursor: pointer;
+    box-shadow: 0 12px 28px rgba(143, 36, 61, 0.25);
+    transition: 0.3s;
+}
+
+.party-button:hover {
+    transform: translateY(-3px) scale(1.03);
+}
+
+.party-button:active {
+    transform: scale(0.97);
+}
+
+
+/* =====================================================
    CAKE
-========================================================= */
+===================================================== */
 
 .cake-stage {
     position: relative;
-
-    width: 350px;
-    height: 260px;
-
+    width: 380px;
+    height: 285px;
     display: flex;
-
     justify-content: center;
-
     align-items: flex-end;
+    z-index: 12;
 }
 
 .birthday-cake {
     position: relative;
-
-    width: 220px;
-    height: 180px;
-
+    width: 240px;
+    height: 190px;
     border: none;
-
     background: transparent;
-
     cursor: pointer;
-
-    transition: .4s;
-
     z-index: 5;
+    transition: 0.4s;
 }
 
 .cake-emoji {
     display: block;
-
-    font-size: 170px;
-
-    filter:
-        drop-shadow(0 15px 18px rgba(120,20,50,.18));
+    font-size: 180px;
+    filter: drop-shadow(
+        0 18px 20px rgba(100, 20, 40, 0.2)
+    );
 }
 
 .cake-glow {
     position: absolute;
-
+    top: 25px;
     left: 50%;
-
-    top: 30px;
-
     transform: translateX(-50%);
-
-    width: 180px;
-
     color: #ffd35a;
-
     opacity: 0;
-
-    transition: .4s;
+    font-size: 25px;
 }
 
 .birthday-cake.ready .cake-glow {
     opacity: 1;
-
-    animation: sparkle 1s infinite alternate;
+    animation: sparkle 0.8s infinite alternate;
 }
 
 @keyframes sparkle {
     from {
-        transform: translateX(-50%) scale(.9);
+        transform: translateX(-50%) scale(0.8);
     }
 
     to {
-        transform: translateX(-50%) scale(1.15);
+        transform: translateX(-50%) scale(1.2);
     }
 }
 
-.birthday-cake.eaten {
-    animation: cakePop .8s ease forwards;
-}
 
-@keyframes cakePop {
-    0% {
-        transform: scale(1);
-    }
-
-    40% {
-        transform: scale(1.2) rotate(-3deg);
-    }
-
-    100% {
-        transform: scale(1.05);
-    }
-}
+/* =====================================================
+   CANDLES
+===================================================== */
 
 .cake-candles {
     position: absolute;
-
-    top: 45px;
-
+    top: 35px;
     left: 50%;
-
     transform: translateX(-50%);
-
     display: flex;
-
-    gap: 25px;
-
-    z-index: 10;
+    gap: 22px;
+    z-index: 20;
 }
 
 .candle {
     position: relative;
-
     width: 22px;
-    height: 75px;
-
+    height: 80px;
     border: none;
-
     background: transparent;
-
     cursor: pointer;
-
     padding: 0;
 }
 
 .candle-stick {
     position: absolute;
-
     bottom: 0;
     left: 5px;
-
     width: 12px;
-    height: 58px;
-
+    height: 60px;
     border-radius: 5px;
-
     background:
         repeating-linear-gradient(
             -45deg,
@@ -701,32 +419,39 @@ body.birthday-waiting #party-page {
             #fff 7px,
             #fff 13px
         );
-
-    box-shadow: 0 3px 5px rgba(0,0,0,.15);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .flame {
     position: absolute;
-
-    top: -2px;
-
-    left: 1px;
-
-    font-size: 22px;
-
-    transition: .3s;
-
-    animation: flameFlicker .4s infinite alternate;
+    top: -4px;
+    left: 0;
+    font-size: 23px;
+    animation: flameFlicker 0.4s infinite alternate;
+    transition: 0.3s;
 }
 
 .candle.off .flame {
     opacity: 0;
-
     transform: scale(0);
 }
 
 .candle.off .candle-stick {
-    opacity: .7;
+    opacity: 0.65;
+}
+
+.smoke {
+    position: absolute;
+    top: -10px;
+    left: 3px;
+    opacity: 0;
+    font-size: 24px;
+    color: #aaa;
+}
+
+.candle.off .smoke {
+    opacity: 0.6;
+    animation: smokeRise 1.4s ease forwards;
 }
 
 @keyframes flameFlicker {
@@ -739,145 +464,132 @@ body.birthday-waiting #party-page {
     }
 }
 
+@keyframes smokeRise {
+    from {
+        opacity: 0.6;
+        transform: translateY(0) scale(0.8);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-35px) scale(1.4);
+    }
+}
+
+.candle.final-candle {
+    animation: finalCandleGlow 0.7s infinite alternate;
+}
+
+@keyframes finalCandleGlow {
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.15);
+    }
+}
+
 .cake-instruction {
-    margin-top: 15px;
-
+    margin-top: 5px;
     font-size: 13px;
-
-    opacity: .8;
+    opacity: 0.8;
 }
 
 
-/* =========================================================
-   MESSAGE BOX
-========================================================= */
+/* =====================================================
+   CAKE BALLOONS
+===================================================== */
 
-.message-box {
-    position: fixed;
-
-    left: 50%;
-    bottom: 45px;
-
-    transform: translate(-50%, 30px);
-
-    width: min(90%, 500px);
-
-    padding: 25px;
-
-    text-align: center;
-
-    border-radius: 25px;
-
-    background: rgba(255,255,255,.95);
-
-    backdrop-filter: blur(15px);
-
-    box-shadow:
-        0 20px 60px rgba(100,20,40,.18);
-
-    border: 1px solid rgba(143,36,61,.1);
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition: .5s;
-
-    z-index: 200;
+.cake-balloons {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 6;
 }
 
-.message-box.show {
-    opacity: 1;
-
-    visibility: visible;
-
-    transform: translate(-50%, 0);
-}
-
-.message-icon {
-    font-size: 35px;
-
-    margin-bottom: 8px;
-}
-
-.message-box h3 {
-    font-family: "Great Vibes", cursive;
-
-    font-size: 34px;
-
-    font-weight: 400;
-
-    margin-bottom: 8px;
-}
-
-.message-box p {
-    margin-bottom: 15px;
-
-    line-height: 1.6;
-
-    font-size: 14px;
-}
-
-
-/* =========================================================
-   PARTY PLAYGROUND
-========================================================= */
-
-.party-playground {
-    width: min(1100px, 95vw);
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 30px;
-
-    min-height: 300px;
-}
-
-.three-balloon-area {
-    display: flex;
-
-    justify-content: center;
-
-    align-items: flex-end;
-
-    gap: 45px;
-
-    flex: 1;
-}
-
-.balloon,
-.popper {
+.cake-balloon {
+    position: absolute;
     border: none;
-
     background: transparent;
-
-    cursor: pointer;
-
-    user-select: none;
+    font-size: 85px;
+    cursor: default;
+    pointer-events: none;
+    filter: drop-shadow(
+        0 12px 10px rgba(100, 20, 40, 0.15)
+    );
+    animation: balloonFloat 4s ease-in-out infinite;
 }
 
-.balloon {
-    font-size: 95px;
-
-    filter:
-        drop-shadow(0 12px 10px rgba(100,20,40,.15));
-
-    transition: .3s;
+.balloon-one {
+    left: 3%;
+    top: 18%;
 }
 
-.balloon:hover {
-    transform: translateY(-12px) scale(1.08);
+.balloon-two {
+    left: 13%;
+    top: 55%;
+    font-size: 70px;
+    animation-delay: 0.5s;
 }
 
-.balloon.popped {
-    animation: balloonPop .4s ease forwards;
+.balloon-three {
+    left: 25%;
+    top: 10%;
+    font-size: 62px;
+    animation-delay: 1s;
 }
 
-@keyframes balloonPop {
+.balloon-four {
+    right: 4%;
+    top: 18%;
+    animation-delay: 0.7s;
+}
+
+.balloon-five {
+    right: 13%;
+    top: 55%;
+    font-size: 70px;
+    animation-delay: 1.2s;
+}
+
+.balloon-six {
+    right: 25%;
+    top: 10%;
+    font-size: 62px;
+    animation-delay: 1.6s;
+}
+
+.balloon-seven {
+    left: 7%;
+    bottom: 8%;
+    font-size: 58px;
+    animation-delay: 1.8s;
+}
+
+.balloon-eight {
+    right: 7%;
+    bottom: 8%;
+    font-size: 58px;
+    animation-delay: 2.2s;
+}
+
+@keyframes balloonFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(3deg);
+    }
+}
+
+.cake-balloon.burst {
+    animation: balloonBurst 0.45s ease forwards;
+}
+
+@keyframes balloonBurst {
     0% {
         transform: scale(1);
         opacity: 1;
@@ -885,114 +597,161 @@ body.birthday-waiting #party-page {
 
     45% {
         transform: scale(1.35);
-        opacity: .8;
     }
 
     100% {
-        transform: scale(.05);
+        transform: scale(0.05);
         opacity: 0;
     }
 }
 
-.side-popper {
-    font-size: 75px;
 
-    transition: .3s;
+/* =====================================================
+   PARTY POPPERS
+===================================================== */
+
+.cake-popper {
+    position: absolute;
+    border: none;
+    background: transparent;
+    font-size: 95px;
+    z-index: 15;
+    cursor: default;
+    filter: drop-shadow(
+        0 15px 15px rgba(100, 20, 40, 0.2)
+    );
+    animation: popperFloat 2.5s ease-in-out infinite;
 }
 
-.side-popper:hover {
-    transform: scale(1.15) rotate(-5deg);
+.left-popper {
+    left: 2%;
+    top: 50%;
 }
 
-.side-popper.exploded {
-    animation: popperExplosion .5s ease forwards;
+.right-popper {
+    right: 2%;
+    top: 50%;
+    transform: scaleX(-1);
 }
 
-@keyframes popperExplosion {
+@keyframes popperFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateY(-12px) rotate(4deg);
+    }
+}
+
+.cake-popper.explode {
+    animation: popperExplode 0.5s ease forwards;
+}
+
+@keyframes popperExplode {
     0% {
         transform: scale(1) rotate(0);
         opacity: 1;
     }
 
     40% {
-        transform: scale(1.4) rotate(-12deg);
+        transform: scale(1.5) rotate(-15deg);
     }
 
     100% {
-        transform: scale(.1) rotate(25deg);
+        transform: scale(0.05) rotate(25deg);
         opacity: 0;
     }
 }
 
-.completion-message {
+
+/* =====================================================
+   CELEBRATION
+===================================================== */
+
+.celebration-overlay {
     position: fixed;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -45%) scale(.9);
-
-    width: min(90%, 500px);
-
-    padding: 30px;
-
-    text-align: center;
-
-    background: rgba(255,255,255,.97);
-
-    border-radius: 28px;
-
-    box-shadow: 0 25px 70px rgba(100,20,40,.2);
-
+    inset: 0;
+    background: rgba(60, 5, 25, 0.35);
+    backdrop-filter: blur(7px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     opacity: 0;
-
     visibility: hidden;
-
-    transition: .5s;
-
-    z-index: 250;
+    z-index: 500;
+    transition: 0.5s;
 }
 
-.completion-message.show {
+.celebration-overlay.show {
     opacity: 1;
-
     visibility: visible;
-
-    transform: translate(-50%, -50%) scale(1);
 }
 
-.completion-message h3 {
+.celebration-card {
+    width: min(520px, 94vw);
+    padding: 35px 28px;
+    text-align: center;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.98),
+            rgba(255,241,244,0.98)
+        );
+    border-radius: 28px;
+    box-shadow: 0 30px 90px rgba(50, 5, 20, 0.3);
+    transform: translateY(30px) scale(0.85);
+    transition: 0.6s cubic-bezier(.2,.8,.2,1);
+}
+
+.celebration-overlay.show .celebration-card {
+    transform: translateY(0) scale(1);
+}
+
+.celebration-icon {
+    font-size: 65px;
+    margin-bottom: 5px;
+}
+
+.celebration-sparkles {
+    color: #d29a3a;
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.celebration-card h2 {
     font-family: "Cormorant Garamond", serif;
+    font-size: 38px;
+    color: #7d1834;
+    margin-bottom: 12px;
+}
 
-    font-size: 32px;
+.celebration-card h2 span {
+    font-family: "Great Vibes", cursive;
+    font-weight: 400;
+}
 
+.celebration-card p {
+    font-size: 14px;
+    line-height: 1.7;
     margin-bottom: 10px;
 }
 
-.completion-message p {
-    font-size: 14px;
 
-    margin-bottom: 20px;
-}
-
-
-/* =========================================================
+/* =====================================================
    CAMERA
-========================================================= */
+===================================================== */
 
 .camera {
     position: relative;
-
     width: 260px;
     height: 190px;
-
     border: none;
-
     background: transparent;
-
     cursor: pointer;
-
-    transition: .3s;
+    transition: 0.3s;
 }
 
 .camera:hover {
@@ -1001,60 +760,42 @@ body.birthday-waiting #party-page {
 
 .camera-top {
     position: absolute;
-
     top: 0;
     left: 35px;
-
     width: 80px;
     height: 35px;
-
     border-radius: 15px 15px 0 0;
-
     background: #8f243d;
-
     color: white;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    font-size: 22px;
 }
 
 .camera-body {
     position: absolute;
-
     left: 0;
     bottom: 0;
-
     width: 260px;
     height: 160px;
-
     border-radius: 30px;
-
     background:
-        linear-gradient(145deg,#a93251,#70182f);
-
-    box-shadow:
-        0 25px 50px rgba(80,10,30,.25);
-
+        linear-gradient(
+            145deg,
+            #a93251,
+            #70182f
+        );
+    box-shadow: 0 25px 50px rgba(80, 10, 30, 0.25);
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 }
 
 .camera-lens {
     width: 95px;
     height: 95px;
-
     border-radius: 50%;
-
     border: 12px solid #f5b9c6;
-
     background:
         radial-gradient(
             circle at 35% 30%,
@@ -1063,257 +804,280 @@ body.birthday-waiting #party-page {
             #32101b 55%,
             #090509 100%
         );
-
-    box-shadow:
-        inset 0 0 20px rgba(255,255,255,.3);
 }
 
 .camera-button {
     position: absolute;
-
     top: 20px;
     right: 25px;
-
     width: 25px;
     height: 25px;
-
     border-radius: 50%;
-
-    background: #fff;
-
+    background: white;
     color: #8f243d;
-
-    font-size: 12px;
-
     display: flex;
-
-    align-items: center;
-
     justify-content: center;
+    align-items: center;
+}
+
+.camera-hint {
+    margin-top: 15px;
+    font-size: 13px;
+}
+
+.camera-countdown {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(120px, 25vw, 250px);
+    color: white;
+    text-shadow: 0 0 50px rgba(255,255,255,0.5);
+    background: rgba(0,0,0,0.65);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 800;
+}
+
+.camera-countdown.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.camera-countdown.animate {
+    animation: countdownPulse 0.85s ease;
+}
+
+@keyframes countdownPulse {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+
+    40% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .camera-reveal {
     position: fixed;
-
     inset: 0;
-
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     align-items: center;
-
-    gap: 20px;
-
-    background: rgba(255,240,243,.97);
-
+    gap: 22px;
+    background: rgba(255, 240, 243, 0.97);
     backdrop-filter: blur(10px);
-
     opacity: 0;
-
     visibility: hidden;
-
-    transform: scale(.95);
-
-    transition: .6s;
-
-    z-index: 220;
+    transform: scale(0.95);
+    transition: 0.6s;
+    z-index: 700;
 }
 
 .camera-reveal.show {
     opacity: 1;
-
     visibility: visible;
-
     transform: scale(1);
 }
 
 .photo-card {
-    padding: 12px 12px 20px;
-
+    padding: 12px 12px 22px;
     background: white;
-
-    box-shadow:
-        0 20px 50px rgba(80,20,40,.2);
-
-    transform: rotate(-2deg);
-
-    animation: photoAppear .8s ease;
+    box-shadow: 0 25px 60px rgba(80, 20, 40, 0.25);
+    transform: rotate(-2deg) scale(0.7);
+    animation: photoDrop 0.9s ease forwards;
 }
 
 .photo-card img {
     display: block;
-
     width: min(75vw, 360px);
-
     height: min(55vh, 400px);
-
     object-fit: cover;
-
-    border-radius: 2px;
 }
 
 .photo-caption {
-    font-family: "Great Vibes", cursive;
-
-    font-size: 28px;
-
-    color: #8f243d;
-
     text-align: center;
-
-    padding-top: 12px;
+    padding-top: 13px;
 }
 
 .photo-caption span {
-    font-family: sans-serif;
-
-    font-size: 24px;
+    display: block;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
 }
 
-@keyframes photoAppear {
+.photo-caption strong {
+    display: block;
+    margin-top: 3px;
+    font-family: "Great Vibes", cursive;
+    font-size: 30px;
+    font-weight: 400;
+    color: #8f243d;
+}
+
+@keyframes photoDrop {
     from {
+        transform: rotate(8deg) scale(0.55) translateY(50px);
         opacity: 0;
-        transform: rotate(8deg) scale(.75);
     }
 
     to {
-        opacity: 1;
         transform: rotate(-2deg) scale(1);
+        opacity: 1;
     }
 }
 
 
-/* =========================================================
-   ROMANTIC LETTER SECTION
-========================================================= */
+/* =====================================================
+   BOUQUET
+===================================================== */
 
 .romantic-stage {
     position: relative;
-
-    width: min(800px, 95vw);
-
+    width: min(850px, 95vw);
     height: 360px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    gap: 70px;
+    gap: 80px;
 }
-
-
-/* BOUQUET */
 
 .rose-bouquet {
     position: relative;
-
-    width: 200px;
-    height: 230px;
-
+    width: 220px;
+    height: 250px;
     border: none;
-
     background: transparent;
-
     cursor: pointer;
-
-    transition: 1s cubic-bezier(.2,.8,.2,1);
-
-    z-index: 10;
+    transition: 0.9s cubic-bezier(.2,.8,.2,1);
+    z-index: 20;
 }
 
-.rose-bouquet span {
+.bouquet-roses span {
     position: absolute;
-
-    font-size: 70px;
-
-    transition: .5s;
+    font-size: 68px;
+    transition: 0.5s;
 }
 
-.rose-bouquet span:nth-child(1) {
+.bouquet-roses span:nth-child(1) {
     left: 10px;
-    top: 60px;
+    top: 65px;
 }
 
-.rose-bouquet span:nth-child(2) {
+.bouquet-roses span:nth-child(2) {
     left: 55px;
     top: 25px;
 }
 
-.rose-bouquet span:nth-child(3) {
+.bouquet-roses span:nth-child(3) {
     left: 105px;
     top: 50px;
 }
 
-.rose-bouquet span:nth-child(4) {
-    left: 30px;
+.bouquet-roses span:nth-child(4) {
+    left: 25px;
     top: 105px;
 }
 
-.rose-bouquet span:nth-child(5) {
+.bouquet-roses span:nth-child(5) {
     left: 80px;
     top: 100px;
 }
 
-.rose-bouquet span:nth-child(6) {
-    left: 125px;
+.bouquet-roses span:nth-child(6) {
+    left: 130px;
     top: 100px;
+}
+
+.bouquet-leaves {
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: 45px;
+    font-size: 25px;
+}
+
+.bouquet-wrap {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 38px;
 }
 
 .rose-bouquet small {
     position: absolute;
-
-    bottom: 0;
+    bottom: -5px;
     left: 50%;
-
     transform: translateX(-50%);
-
     white-space: nowrap;
-
     font-size: 11px;
-
-    opacity: .7;
+    opacity: 0.7;
 }
 
 .rose-bouquet:hover {
-    transform: scale(1.06);
+    transform: translateY(-8px) scale(1.05);
 }
 
 .rose-bouquet.center {
-    transform:
-        translate(-30px, 0)
-        scale(1.25);
+    transform: scale(1.3) translateY(-10px);
+}
 
-    z-index: 30;
+.bouquet-message {
+    position: fixed;
+    left: 50%;
+    top: 18%;
+    transform: translate(-50%, -20px) scale(0.8);
+    opacity: 0;
+    visibility: hidden;
+    text-align: center;
+    z-index: 400;
+    transition: 0.7s;
+}
+
+.bouquet-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0) scale(1);
+}
+
+.bouquet-message div {
+    font-size: 45px;
+}
+
+.bouquet-message span {
+    display: block;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(34px, 6vw, 55px);
+    color: #8f243d;
+    text-shadow: 0 0 25px rgba(255, 100, 130, 0.35);
 }
 
 
-/* ENVELOPE */
+/* =====================================================
+   ENVELOPE
+===================================================== */
 
 .love-envelope {
     position: relative;
-
     width: 250px;
     height: 165px;
-
     border: none;
-
     border-radius: 8px;
-
     background: #fff7f8;
-
-    box-shadow:
-        0 20px 50px rgba(80,20,40,.18);
-
+    box-shadow: 0 20px 50px rgba(80,20,40,0.18);
     cursor: pointer;
-
-    transition: .5s;
-
-    z-index: 20;
+    transition: 0.5s;
 }
 
 .love-envelope:hover {
@@ -1322,124 +1086,74 @@ body.birthday-waiting #party-page {
 
 .envelope-body {
     position: absolute;
-
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    height: 100%;
-
+    inset: 0;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-family: "Great Vibes", cursive;
-
     font-size: 24px;
-
     color: #8f243d;
-
     border: 2px solid #e8a8b5;
-
     border-radius: 8px;
 }
 
 .envelope-flap {
     position: absolute;
-
-    left: 0;
-    top: 0;
-
-    width: 100%;
-    height: 100%;
-
+    inset: 0;
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     font-size: 45px;
-
     background: #ffdce2;
-
-    clip-path: polygon(0 0,100% 0,50% 58%);
-
+    clip-path: polygon(0 0, 100% 0, 50% 58%);
     z-index: 2;
-
-    transition: .6s;
+    transition: 0.6s;
 }
 
 .love-envelope.opened .envelope-flap {
     transform: rotateX(180deg);
-
-    opacity: .2;
+    opacity: 0.15;
 }
 
 
-/* =========================================================
-   LETTER MODAL
-========================================================= */
+/* =====================================================
+   LETTER
+===================================================== */
 
 .letter-modal {
     position: fixed;
-
     inset: 0;
-
-    background: rgba(60,10,25,.35);
-
+    background: rgba(60, 10, 25, 0.4);
     backdrop-filter: blur(8px);
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    padding: 25px;
-
+    padding: 20px;
     opacity: 0;
-
     visibility: hidden;
-
-    transition: .5s;
-
-    z-index: 500;
+    transition: 0.5s;
+    z-index: 900;
 }
 
 .letter-modal.show {
     opacity: 1;
-
     visibility: visible;
 }
 
 .letter-paper {
-    position: relative;
-
     width: min(650px, 94vw);
-
-    max-height: 82vh;
-
+    max-height: 84vh;
     overflow-y: auto;
-
-    padding: 45px 45px 35px;
-
+    padding: 40px 40px 30px;
     background:
         linear-gradient(
-            rgba(255,255,255,.96),
-            rgba(255,247,241,.96)
+            rgba(255,255,255,0.98),
+            rgba(255,247,241,0.98)
         );
-
     border-radius: 8px;
-
-    box-shadow:
-        0 30px 90px rgba(50,5,20,.3);
-
-    transform: translateY(30px) rotate(-1deg);
-
-    transition: .6s;
+    box-shadow: 0 30px 90px rgba(50,5,20,0.3);
+    transform: translateY(35px) rotate(-1deg);
+    transition: 0.6s;
 }
 
 .letter-modal.show .letter-paper {
@@ -1448,50 +1162,34 @@ body.birthday-waiting #party-page {
 
 .letter-close {
     position: absolute;
-
-    top: 15px;
-    right: 18px;
-
+    top: 10px;
+    right: 15px;
     border: none;
-
     background: transparent;
-
     font-size: 30px;
-
     color: #8f243d;
-
     cursor: pointer;
 }
 
 .letter-heart {
     text-align: center;
-
     font-size: 38px;
-
     margin-bottom: 5px;
 }
 
 .letter-paper h2 {
     text-align: center;
-
     font-family: "Great Vibes", cursive;
-
-    font-size: 42px;
-
+    font-size: 43px;
     font-weight: 400;
-
     color: #8f243d;
-
-    margin-bottom: 25px;
+    margin-bottom: 22px;
 }
 
 .letter-text {
     font-family: "Cormorant Garamond", serif;
-
     font-size: 20px;
-
-    line-height: 1.5;
-
+    line-height: 1.55;
     color: #58202d;
 }
 
@@ -1501,31 +1199,30 @@ body.birthday-waiting #party-page {
 
 .letter-signature {
     text-align: right;
-
     font-family: "Great Vibes", cursive;
-
-    font-size: 28px;
+    font-size: 29px;
 }
 
 
-/* =========================================================
+/* =====================================================
    WINE
-========================================================= */
+===================================================== */
+
+#wine-section {
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease,
+        filter 1s ease;
+}
 
 .wine-bottle {
     position: relative;
-
     width: 190px;
     height: 420px;
-
     border: none;
-
     background: transparent;
-
     cursor: pointer;
-
-    transition: .3s;
-
+    transition: 0.3s;
     transform-origin: 50% 90%;
 }
 
@@ -1535,18 +1232,12 @@ body.birthday-waiting #party-page {
 
 .bottle-neck {
     position: absolute;
-
     left: 50%;
-
     top: 0;
-
     transform: translateX(-50%);
-
     width: 65px;
     height: 120px;
-
     border-radius: 15px 15px 5px 5px;
-
     background:
         linear-gradient(
             90deg,
@@ -1554,25 +1245,18 @@ body.birthday-waiting #party-page {
             #8e243d,
             #47121f
         );
-
     z-index: 1;
 }
 
 .bottle {
     position: absolute;
-
     left: 50%;
     bottom: 0;
-
     transform: translateX(-50%);
-
     width: 160px;
     height: 330px;
-
     overflow: hidden;
-
     border-radius: 45px 45px 30px 30px;
-
     background:
         linear-gradient(
             90deg,
@@ -1580,21 +1264,15 @@ body.birthday-waiting #party-page {
             #81233a,
             #41121f
         );
-
-    box-shadow:
-        0 25px 50px rgba(60,10,25,.3);
+    box-shadow: 0 25px 50px rgba(60,10,25,0.3);
 }
 
 .wine-level {
     position: absolute;
-
     left: 0;
     bottom: 0;
-
     width: 100%;
-
     height: 85%;
-
     background:
         linear-gradient(
             90deg,
@@ -1602,208 +1280,258 @@ body.birthday-waiting #party-page {
             #9d203e,
             #4b0c19
         );
-
-    transition:
-        height 1s cubic-bezier(.2,.8,.2,1);
+    transition: height 1s ease;
 }
 
 .bottle-shine {
     position: absolute;
-
     left: 25px;
     top: 30px;
-
     width: 15px;
     height: 240px;
-
     border-radius: 20px;
-
-    background: rgba(255,255,255,.18);
-
+    background: rgba(255,255,255,0.18);
     z-index: 3;
 }
 
 .bottle-label {
     position: absolute;
-
     left: 20px;
     right: 20px;
-
     top: 120px;
-
     padding: 20px 10px;
-
     background: #f6e5c8;
-
     color: #66142b;
-
     font-family: "Cormorant Garamond", serif;
-
     font-size: 25px;
-
     font-weight: 700;
-
     letter-spacing: 3px;
-
     z-index: 5;
 }
 
 .bottle-label small {
     display: block;
-
     margin-top: 5px;
-
     font-family: "Poppins", sans-serif;
-
     font-size: 8px;
-
     letter-spacing: 1px;
 }
 
 .wine-message {
-    margin-top: 15px;
-
-    font-size: 20px;
-
+    margin-top: 10px;
     min-height: 30px;
+    font-family: "Great Vibes", cursive;
+    font-size: 28px;
+}
+
+body.wine-fade-1 #wine-section {
+    filter: brightness(0.88);
+}
+
+body.wine-fade-2 #wine-section {
+    filter: brightness(0.74);
+}
+
+body.wine-fade-3 #wine-section {
+    filter: brightness(0.57) blur(0.4px);
+}
+
+body.wine-fade-4 #wine-section {
+    filter: brightness(0.38) blur(1px);
+}
+
+body.wine-fade-5 #wine-section {
+    filter: brightness(0.16) blur(2px);
 }
 
 
-/* =========================================================
-   FINAL BLACKOUT
-========================================================= */
+/* =====================================================
+   DRUNK POPUP
+===================================================== */
 
-#final-blackout-screen {
+.drunk-popup {
     position: fixed;
-
     inset: 0;
-
-    background: #000;
-
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
     opacity: 0;
-
     visibility: hidden;
-
-    z-index: 99999;
-
-    transform-origin: center center;
+    transition: 0.7s;
+    z-index: 1000;
 }
 
-body.final-transition #final-blackout-screen {
+.drunk-popup.show {
+    opacity: 1;
     visibility: visible;
-
-    animation:
-        finalRotateFade 2.8s cubic-bezier(.65,0,.2,1) forwards;
 }
 
-body.final-transition #party-page {
-    animation:
-        pageRotateFade 2.8s cubic-bezier(.65,0,.2,1) forwards;
+.drunk-card {
+    width: min(480px, 94vw);
+    padding: 35px 25px;
+    background: #fff8fa;
+    border-radius: 28px;
+    text-align: center;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.45);
+    transform: scale(0.7) rotate(-3deg);
+    transition: 0.7s cubic-bezier(.2,.8,.2,1);
 }
 
-@keyframes pageRotateFade {
-    0% {
-        transform: rotate(0deg) scale(1);
+.drunk-popup.show .drunk-card {
+    transform: scale(1) rotate(0);
+}
 
-        opacity: 1;
-    }
+.drunk-icon {
+    font-size: 65px;
+}
 
+.drunk-card h2 {
+    font-family: "Great Vibes", cursive;
+    font-size: 48px;
+    color: #8f243d;
+    margin: 10px 0;
+}
+
+.drunk-card p {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
+
+.music-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: #8f243d;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 2000;
+    box-shadow: 0 10px 25px rgba(143,36,61,0.25);
+}
+
+
+/* =====================================================
+   CONFETTI CREATED BY JS
+===================================================== */
+
+.party-confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 2000;
+    font-size: 20px;
+}
+
+
+/* =====================================================
+   SCREEN SHAKE
+===================================================== */
+
+body.screen-shake #party-page {
+    animation: screenShake 0.35s ease;
+}
+
+@keyframes screenShake {
+    0%,
     100% {
-        transform: rotate(90deg) scale(.7);
+        transform: translateX(0);
+    }
 
-        opacity: 0;
+    20% {
+        transform: translateX(-8px);
+    }
+
+    40% {
+        transform: translateX(8px);
+    }
+
+    60% {
+        transform: translateX(-6px);
+    }
+
+    80% {
+        transform: translateX(6px);
     }
 }
 
-@keyframes finalRotateFade {
-    0% {
-        opacity: 0;
-    }
 
-    65% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+/* =====================================================
+   MOBILE
+===================================================== */
 
 @media (max-width: 800px) {
 
-    .party-progress {
-        top: 85px;
-
-        right: 12px;
-
-        font-size: 9px;
-    }
-
-    .birthday-rope {
-        height: 70px;
-    }
-
-    .birthday-rope span {
-        font-size: 24px;
-    }
-
     .party-section {
-        padding:
-            90px
-            18px
-            35px;
+        padding: 75px 15px 25px;
     }
 
     .section-heading {
-        margin-bottom: 20px;
+        margin-bottom: 8px;
     }
 
     .section-heading h2 {
-        font-size: 40px;
-    }
-
-    .party-playground {
-        gap: 8px;
-
-        min-height: 240px;
-    }
-
-    .three-balloon-area {
-        gap: 8px;
-    }
-
-    .balloon {
-        font-size: 65px;
-    }
-
-    .side-popper {
-        font-size: 50px;
+        font-size: 38px;
     }
 
     .cake-stage {
-        transform: scale(.8);
+        transform: scale(0.78);
+        margin: -25px 0;
+    }
+
+    .cake-balloon {
+        font-size: 55px;
+    }
+
+    .balloon-two,
+    .balloon-five {
+        font-size: 48px;
+    }
+
+    .balloon-three,
+    .balloon-six {
+        font-size: 45px;
+    }
+
+    .balloon-seven,
+    .balloon-eight {
+        font-size: 42px;
+    }
+
+    .cake-popper {
+        font-size: 60px;
+    }
+
+    .left-popper {
+        left: 0;
+    }
+
+    .right-popper {
+        right: 0;
     }
 
     .romantic-stage {
-        gap: 15px;
-
-        transform: scale(.78);
+        gap: 5px;
+        transform: scale(0.7);
     }
 
     .letter-paper {
-        padding:
-            35px
-            25px
-            25px;
+        padding: 35px 23px 25px;
     }
 
     .letter-paper h2 {
-        font-size: 35px;
+        font-size: 36px;
     }
 
     .letter-text {
@@ -1811,70 +1539,57 @@ body.final-transition #party-page {
     }
 
     .wine-bottle {
-        transform: scale(.78);
-    }
-
-    .wine-bottle:hover {
-        transform: scale(.8) rotate(-2deg);
+        transform: scale(0.75);
+        margin: -30px 0;
     }
 }
 
 @media (max-width: 500px) {
 
-    .birthday-rope span {
-        font-size: 19px;
+    .birthday-crown {
+        font-size: 45px;
     }
 
     .small-title {
-        font-size: 8px;
-
+        font-size: 7px;
         letter-spacing: 2px;
     }
 
-    .welcome-content h1 {
-        font-size: 70px;
+    #welcome-lines {
+        min-height: 260px;
     }
 
-    .welcome-content h2 {
-        font-size: 55px;
+    .welcome-line:nth-child(1) {
+        font-size: 45px;
     }
 
-    .welcome-text {
-        font-size: 12px;
+    .welcome-line:nth-child(2),
+    .welcome-line:nth-child(3),
+    .welcome-line:nth-child(4),
+    .welcome-line:nth-child(5) {
+        font-size: 23px;
     }
 
-    .party-playground {
-        width: 100%;
-    }
-
-    .balloon {
-        font-size: 52px;
-    }
-
-    .side-popper {
-        font-size: 42px;
-    }
-
-    .three-balloon-area {
-        gap: 0;
+    .welcome-line:nth-child(6) {
+        font-size: 40px;
     }
 
     .cake-stage {
-        transform: scale(.68);
-        margin-top: -20px;
-        margin-bottom: -20px;
+        transform: scale(0.63);
+        margin: -45px 0;
+    }
+
+    .cake-popper {
+        font-size: 48px;
+    }
+
+    .cake-balloon {
+        font-size: 45px;
     }
 
     .romantic-stage {
-        transform: scale(.58);
-    }
-
-    .camera {
-        transform: scale(.8);
-    }
-
-    .camera:hover {
-        transform: scale(.83);
+        transform: scale(0.56);
+        margin: -30px 0;
     }
 
     .photo-card img {
@@ -1882,7 +1597,19 @@ body.final-transition #party-page {
         height: 350px;
     }
 
-    .photo-caption {
-        font-size: 23px;
+    .photo-caption strong {
+        font-size: 25px;
+    }
+
+    .celebration-card {
+        padding: 28px 20px;
+    }
+
+    .celebration-card h2 {
+        font-size: 31px;
+    }
+
+    .drunk-card h2 {
+        font-size: 40px;
     }
 }
