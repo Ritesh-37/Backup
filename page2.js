@@ -1,284 +1,1425 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    /* =========================================================
+       HELPER
+    ========================================================= */
+
     function get(id) {
         return document.getElementById(id);
     }
 
 
-    /* =========================
-       AUDIO
-    ========================== */
+    /* =========================================================
+       AUDIO ENGINE
+       CLEAN / SINGLE AUDIO SYSTEM
+    ========================================================= */
 
-    const music = get("birthday-music");
+    let audioContext = null;
+
+    let masterGain = null;
+    let musicGain = null;
+    let effectGain = null;
+    let celebrationGain = null;
+
+    let audioReady = false;
+
+    let musicPlaying = false;
+    let musicMuted = false;
+    let celebrationPlaying = false;
+
+    let musicTimer = null;
+    let celebrationTimer = null;
+    let clapTimer = null;
+    let cheerTimer = null;
+
+    let musicStep = 0;
+
     const musicButton = get("music-button");
 
-    const candleSound = get("candle-sound");
-    const balloonSound = get("balloon-pop-sound");
-    const popperSound = get("popper-sound");
-    const crackleSound = get("crackle-sound");
 
+    /* =========================================================
+       AUDIO INITIALIZATION
+    ========================================================= */
 
-    function playSound(audio, volume) {
+    function initAudio() {
 
-        if (!audio) {
-            return;
-        }
+        if (!audioContext) {
 
-        try {
+            try {
 
-            audio.pause();
-            audio.currentTime = 0;
-            audio.volume = volume || 0.6;
+                audioContext =
+                    new (
+                        window.AudioContext ||
+                        window.webkitAudioContext
+                    )();
 
-            const promise = audio.play();
+            } catch (error) {
 
-            if (promise) {
-                promise.catch(function () {});
+                console.log(
+                    "Web Audio is not supported."
+                );
+
+                return false;
             }
-
-        } catch (error) {
-            console.log("Audio error:", error);
         }
+
+
+        if (
+            audioContext.state === "suspended"
+        ) {
+
+            audioContext.resume()
+                .catch(function () {});
+
+        }
+
+
+        if (!masterGain) {
+
+            masterGain =
+                audioContext.createGain();
+
+            musicGain =
+                audioContext.createGain();
+
+            effectGain =
+                audioContext.createGain();
+
+            celebrationGain =
+                audioContext.createGain();
+
+
+            masterGain.gain.value = 0.85;
+
+            musicGain.gain.value = 0.20;
+
+            effectGain.gain.value = 0.32;
+
+            celebrationGain.gain.value = 0.62;
+
+
+            musicGain.connect(masterGain);
+
+            effectGain.connect(masterGain);
+
+            celebrationGain.connect(masterGain);
+
+            masterGain.connect(
+                audioContext.destination
+            );
+
+        }
+
+
+        audioReady = true;
+
+        return true;
     }
 
 
-    function startBirthdayMusic() {
+    /* =========================================================
+       RESUME AUDIO CONTEXT
+    ========================================================= */
 
-        if (!music) {
+    function unlockAudio() {
+
+        if (!initAudio()) {
             return;
         }
 
-        music.volume = 0.38;
 
-        const promise = music.play();
+        if (
+            audioContext.state === "suspended"
+        ) {
 
-        if (promise) {
-
-            promise
-                .then(function () {
-                    musicButton.textContent = "♫";
-                })
-                .catch(function () {
-                    musicButton.textContent = "🔇";
-                });
+            audioContext.resume()
+                .catch(function () {});
 
         }
+
+
+        /*
+           IMPORTANT:
+
+           Unlocking audio does NOT change mute state.
+
+           It only starts music if the user has not
+           deliberately muted it.
+        */
+
+        if (
+            !musicMuted &&
+            !celebrationPlaying
+        ) {
+
+            startCuteBGM();
+
+        }
+
     }
 
 
-    musicButton.addEventListener(
-        "click",
-        function () {
+    /*
+       Android / Chrome audio unlock.
 
-            if (!music) {
-                return;
-            }
+       We intentionally use a single global handler.
+    */
 
-            if (music.paused) {
+    let audioUnlockHandled = false;
 
-                music.play()
-                    .then(function () {
-                        musicButton.textContent = "♫";
-                    })
-                    .catch(function () {});
 
-            } else {
+    function firstUserInteraction() {
 
-                music.pause();
+        if (audioUnlockHandled) {
+            return;
+        }
 
-                musicButton.textContent = "🔇";
-            }
+        audioUnlockHandled = true;
 
+        unlockAudio();
+
+    }
+
+
+    document.addEventListener(
+        "pointerdown",
+        firstUserInteraction,
+        {
+            passive: true,
+            once: true
         }
     );
 
 
-    /* =========================
+    /* =========================================================
+       BASIC TONE
+    ========================================================= */
+
+    function tone(
+        frequency,
+        duration,
+        volume,
+        type,
+        destination,
+        delay
+    ) {
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        const start =
+            audioContext.currentTime +
+            (delay || 0);
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            type || "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            frequency,
+            start
+        );
+
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            start
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            volume,
+            start + 0.018
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            start + duration
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            destination || effectGain
+        );
+
+
+        oscillator.start(start);
+
+        oscillator.stop(
+            start + duration + 0.04
+        );
+
+    }
+
+
+    /* =========================================================
+       UI CLICK
+    ========================================================= */
+
+    function uiClickSound() {
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        tone(
+            620,
+            0.065,
+            0.032,
+            "sine",
+            effectGain
+        );
+
+
+        tone(
+            850,
+            0.045,
+            0.018,
+            "sine",
+            effectGain,
+            0.035
+        );
+
+    }
+
+
+    /* =========================================================
+       MAGICAL CHIME
+    ========================================================= */
+
+    function magicalChime() {
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        tone(
+            523.25,
+            0.28,
+            0.055,
+            "sine",
+            effectGain
+        );
+
+
+        tone(
+            659.25,
+            0.32,
+            0.042,
+            "sine",
+            effectGain,
+            0.08
+        );
+
+
+        tone(
+            783.99,
+            0.42,
+            0.032,
+            "triangle",
+            effectGain,
+            0.16
+        );
+
+    }
+
+
+    /* =========================================================
+       CANDLE SOUND
+    ========================================================= */
+
+    function candleFlick() {
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        const start =
+            audioContext.currentTime;
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            "triangle";
+
+
+        oscillator.frequency.setValueAtTime(
+            430,
+            start
+        );
+
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            190,
+            start + 0.11
+        );
+
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            start
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.055,
+            start + 0.015
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            start + 0.14
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(effectGain);
+
+
+        oscillator.start(start);
+
+        oscillator.stop(
+            start + 0.17
+        );
+
+    }
+
+
+    /* =========================================================
+       FINAL CANDLE
+    ========================================================= */
+
+    function finalCandleSound() {
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        tone(
+            523.25,
+            0.30,
+            0.055,
+            "sine",
+            effectGain
+        );
+
+
+        tone(
+            659.25,
+            0.35,
+            0.050,
+            "sine",
+            effectGain,
+            0.10
+        );
+
+
+        tone(
+            783.99,
+            0.45,
+            0.045,
+            "triangle",
+            effectGain,
+            0.20
+        );
+
+
+        tone(
+            1046.50,
+            0.65,
+            0.028,
+            "sine",
+            effectGain,
+            0.32
+        );
+
+    }
+
+
+    /* =========================================================
+       CUTE BGM
+    ========================================================= */
+
+    function startCuteBGM() {
+
+        /*
+           NEVER start normal music while celebration
+           music is active.
+        */
+
+        if (
+            musicPlaying ||
+            musicMuted ||
+            celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        musicPlaying = true;
+
+        musicStep = 0;
+
+
+        if (musicButton) {
+
+            musicButton.textContent = "♫";
+
+        }
+
+
+        playMusicLoop();
+
+    }
+
+
+    function playMusicLoop() {
+
+        if (
+            !musicPlaying ||
+            musicMuted ||
+            celebrationPlaying
+        ) {
+
+            return;
+
+        }
+
+
+        const melody = [
+
+            523.25,
+            659.25,
+            783.99,
+            659.25,
+
+            587.33,
+            698.46,
+            880.00,
+            698.46,
+
+            523.25,
+            659.25,
+            783.99,
+            987.77,
+
+            880.00,
+            783.99,
+            659.25,
+            587.33
+
+        ];
+
+
+        const note =
+            melody[musicStep];
+
+
+        tone(
+            note,
+            0.42,
+            0.022,
+            "sine",
+            musicGain
+        );
+
+
+        /*
+           Soft harmony every fourth note.
+        */
+
+        if (
+            musicStep % 4 === 0
+        ) {
+
+            tone(
+                note / 2,
+                0.62,
+                0.009,
+                "triangle",
+                musicGain
+            );
+
+        }
+
+
+        musicStep++;
+
+
+        if (
+            musicStep >= melody.length
+        ) {
+
+            musicStep = 0;
+
+        }
+
+
+        musicTimer =
+            setTimeout(
+                playMusicLoop,
+                390
+            );
+
+    }
+
+
+    /* =========================================================
+       STOP NORMAL BGM
+    ========================================================= */
+
+    function stopCuteBGM() {
+
+        musicPlaying = false;
+
+
+        if (musicTimer) {
+
+            clearTimeout(
+                musicTimer
+            );
+
+            musicTimer = null;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       MUSIC BUTTON
+    ========================================================= */
+
+    if (musicButton) {
+
+        musicButton.addEventListener(
+            "pointerdown",
+            function (event) {
+
+                event.stopPropagation();
+
+                initAudio();
+
+
+                if (musicMuted) {
+
+                    /*
+                       USER IS TURNING MUSIC ON.
+                    */
+
+                    musicMuted = false;
+
+                    if (
+                        !celebrationPlaying
+                    ) {
+
+                        startCuteBGM();
+
+                    }
+
+
+                } else {
+
+                    /*
+                       USER IS TURNING MUSIC OFF.
+                    */
+
+                    musicMuted = true;
+
+                    stopCuteBGM();
+
+
+                    musicButton.textContent =
+                        "🔇";
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       CELEBRATION CLAP
+    ========================================================= */
+
+    function createClap() {
+
+        if (
+            !audioContext ||
+            !celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        const duration = 0.055;
+
+
+        const buffer =
+            audioContext.createBuffer(
+                1,
+                audioContext.sampleRate *
+                duration,
+                audioContext.sampleRate
+            );
+
+
+        const data =
+            buffer.getChannelData(0);
+
+
+        for (
+            let i = 0;
+            i < data.length;
+            i++
+        ) {
+
+            data[i] =
+                (
+                    Math.random() * 2 - 1
+                ) *
+                Math.exp(
+                    -i /
+                    (
+                        data.length * 0.10
+                    )
+                );
+
+        }
+
+
+        const source =
+            audioContext.createBufferSource();
+
+
+        const gain =
+            audioContext.createGain();
+
+
+        source.buffer =
+            buffer;
+
+
+        gain.gain.value =
+            0.13;
+
+
+        source.connect(gain);
+
+        gain.connect(
+            celebrationGain
+        );
+
+
+        source.start();
+
+    }
+
+
+    /* =========================================================
+       CHEER
+    ========================================================= */
+
+    function createCheer() {
+
+        if (
+            !audioContext ||
+            !celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        const duration = 0.7;
+
+
+        const buffer =
+            audioContext.createBuffer(
+                1,
+                audioContext.sampleRate *
+                duration,
+                audioContext.sampleRate
+            );
+
+
+        const data =
+            buffer.getChannelData(0);
+
+
+        for (
+            let i = 0;
+            i < data.length;
+            i++
+        ) {
+
+            const noise =
+                Math.random() * 2 - 1;
+
+
+            const envelope =
+                Math.sin(
+                    Math.PI *
+                    i /
+                    data.length
+                );
+
+
+            data[i] =
+                noise *
+                envelope *
+                0.15;
+
+        }
+
+
+        const source =
+            audioContext.createBufferSource();
+
+
+        const filter =
+            audioContext.createBiquadFilter();
+
+
+        const gain =
+            audioContext.createGain();
+
+
+        source.buffer =
+            buffer;
+
+
+        filter.type =
+            "bandpass";
+
+
+        filter.frequency.value =
+            1250;
+
+
+        filter.Q.value =
+            0.7;
+
+
+        gain.gain.value =
+            0.075;
+
+
+        source.connect(filter);
+
+        filter.connect(gain);
+
+        gain.connect(
+            celebrationGain
+        );
+
+
+        source.start();
+
+    }
+
+
+    /* =========================================================
+       CELEBRATION MUSIC
+       10 SECONDS
+    ========================================================= */
+
+    function celebrationMelody() {
+
+        if (
+            !celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        const notes = [
+
+            523.25,
+            523.25,
+            587.33,
+            523.25,
+
+            698.46,
+            659.25,
+
+            523.25,
+            523.25,
+            587.33,
+            523.25,
+
+            783.99,
+            698.46
+
+        ];
+
+
+        notes.forEach(
+            function (
+                note,
+                index
+            ) {
+
+                tone(
+                    note,
+                    0.32,
+                    0.035,
+                    "sine",
+                    celebrationGain,
+                    index * 0.36
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       START 10 SECOND CELEBRATION
+    ========================================================= */
+
+    function startCelebrationAudio() {
+
+        if (
+            celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        if (!initAudio()) {
+            return;
+        }
+
+
+        celebrationPlaying = true;
+
+
+        /*
+           STOP NORMAL BGM FIRST.
+        */
+
+        stopCuteBGM();
+
+
+        /*
+           Celebration melody.
+        */
+
+        celebrationMelody();
+
+
+        /*
+           Initial warm chord.
+        */
+
+        tone(
+            523.25,
+            0.45,
+            0.045,
+            "triangle",
+            celebrationGain
+        );
+
+
+        tone(
+            659.25,
+            0.50,
+            0.035,
+            "triangle",
+            celebrationGain,
+            0.08
+        );
+
+
+        tone(
+            783.99,
+            0.60,
+            0.030,
+            "triangle",
+            celebrationGain,
+            0.16
+        );
+
+
+        /*
+           CLAPPING
+
+           Not too frequent.
+        */
+
+        clapTimer =
+            setInterval(
+                function () {
+
+                    if (
+                        !celebrationPlaying
+                    ) {
+                        return;
+                    }
+
+
+                    createClap();
+
+
+                    /*
+                       Occasional double clap.
+                    */
+
+                    if (
+                        Math.random() < 0.30
+                    ) {
+
+                        setTimeout(
+                            function () {
+
+                                if (
+                                    celebrationPlaying
+                                ) {
+
+                                    createClap();
+
+                                }
+
+                            },
+                            110
+                        );
+
+                    }
+
+                },
+                650
+            );
+
+
+        /*
+           CHEERS
+
+           Less frequent than clapping
+           so the sound stays pleasant.
+        */
+
+        cheerTimer =
+            setInterval(
+                function () {
+
+                    if (
+                        celebrationPlaying
+                    ) {
+
+                        createCheer();
+
+                    }
+
+                },
+                1900
+            );
+
+
+        /*
+           EXACTLY 10 SECONDS.
+        */
+
+        celebrationTimer =
+            setTimeout(
+                function () {
+
+                    stopCelebrationAudio();
+
+                },
+                10000
+            );
+
+    }
+
+
+    /* =========================================================
+       STOP CELEBRATION
+    ========================================================= */
+
+    function stopCelebrationAudio() {
+
+        if (
+            !celebrationPlaying
+        ) {
+            return;
+        }
+
+
+        celebrationPlaying = false;
+
+
+        if (celebrationTimer) {
+
+            clearTimeout(
+                celebrationTimer
+            );
+
+            celebrationTimer = null;
+
+        }
+
+
+        if (clapTimer) {
+
+            clearInterval(
+                clapTimer
+            );
+
+            clapTimer = null;
+
+        }
+
+
+        if (cheerTimer) {
+
+            clearInterval(
+                cheerTimer
+            );
+
+            cheerTimer = null;
+
+        }
+
+
+        /*
+           Return to normal BGM.
+
+           Respect user's mute state.
+        */
+
+        if (!musicMuted) {
+
+            setTimeout(
+                function () {
+
+                    startCuteBGM();
+
+                },
+                180
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
        SECTION SWITCH
-    ========================== */
+    ========================================================= */
 
     function showSection(id) {
 
         document
-            .querySelectorAll(".party-section")
-            .forEach(function (section) {
+            .querySelectorAll(
+                ".party-section"
+            )
+            .forEach(
+                function (section) {
 
-                section.classList.remove("active");
+                    section.classList.remove(
+                        "active"
+                    );
 
-            });
+                }
+            );
 
 
-        const target = get(id);
+        const target =
+            get(id);
+
 
         if (!target) {
             return;
         }
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            target.classList.add("active");
+                target.classList.add(
+                    "active"
+                );
 
-        }, 50);
+            },
+            50
+        );
+
     }
 
 
-    /* =========================
+    /* =========================================================
        WELCOME
-    ========================== */
+    ========================================================= */
 
     const welcomeSteps =
-        document.querySelectorAll(".welcome-step");
-
-    const welcomeButtons =
-        document.querySelectorAll(".welcome-next");
-
-
-    welcomeButtons.forEach(function (button) {
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                const next =
-                    button.getAttribute("data-next");
-
-
-                welcomeSteps.forEach(function (step) {
-
-                    step.classList.remove("active");
-
-                });
-
-
-                const nextStep =
-                    get("welcome-step-" + next);
-
-
-                if (nextStep) {
-
-                    setTimeout(function () {
-
-                        nextStep.classList.add("active");
-
-                    }, 100);
-
-                }
-
-            }
+        document.querySelectorAll(
+            ".welcome-step"
         );
 
-    });
+
+    const welcomeButtons =
+        document.querySelectorAll(
+            ".welcome-next"
+        );
 
 
-    /* =========================
-       ENTER CAKE
-    ========================== */
+    welcomeButtons.forEach(
+        function (button) {
 
-    get("start-cake").addEventListener(
-        "click",
-        function () {
+            button.addEventListener(
+                "click",
+                function () {
 
-            showSection("cake-section");
+                    unlockAudio();
 
-            startBirthdayMusic();
+                    uiClickSound();
+
+
+                    const next =
+                        button.getAttribute(
+                            "data-next"
+                        );
+
+
+                    welcomeSteps.forEach(
+                        function (step) {
+
+                            step.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+
+                    const nextStep =
+                        get(
+                            "welcome-step-" +
+                            next
+                        );
+
+
+                    if (nextStep) {
+
+                        setTimeout(
+                            function () {
+
+                                nextStep.classList.add(
+                                    "active"
+                                );
+
+                            },
+                            100
+                        );
+
+                    }
+
+                }
+            );
 
         }
     );
 
 
-    /* =========================
+    /* =========================================================
+       ENTER CAKE
+    ========================================================= */
+
+    const startCake =
+        get("start-cake");
+
+
+    if (startCake) {
+
+        startCake.addEventListener(
+            "click",
+            function () {
+
+                unlockAudio();
+
+                uiClickSound();
+
+
+                showSection(
+                    "cake-section"
+                );
+
+
+                setTimeout(
+                    function () {
+
+                        magicalChime();
+
+                    },
+                    180
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
        CANDLES
-    ========================== */
+    ========================================================= */
 
     const candles =
-        document.querySelectorAll(".candle");
+        document.querySelectorAll(
+            ".candle"
+        );
+
 
     const cakeInstruction =
         get("cake-instruction");
 
+
     const celebrationLayer =
         get("celebration-layer");
+
 
     const birthdayPopup =
         get("birthday-popup");
 
 
     let candlesOff = 0;
+
     let celebrationStarted = false;
 
 
-    candles.forEach(function (candle) {
+    candles.forEach(
+        function (candle) {
 
-        candle.addEventListener(
-            "click",
-            function () {
+            candle.addEventListener(
+                "click",
+                function () {
 
-                if (
-                    candle.classList.contains("off")
-                ) {
-                    return;
+                    unlockAudio();
+
+
+                    if (
+                        candle.classList.contains(
+                            "off"
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    candle.classList.add(
+                        "off"
+                    );
+
+
+                    candlesOff++;
+
+
+                    candleFlick();
+
+
+                    createSmallSparkle(
+                        candle
+                    );
+
+
+                    const remaining =
+                        candles.length -
+                        candlesOff;
+
+
+                    if (
+                        remaining > 0
+                    ) {
+
+                        cakeInstruction.textContent =
+                            remaining +
+                            " candle" +
+                            (
+                                remaining === 1
+                                    ? ""
+                                    : "s"
+                            ) +
+                            " left, sweetheart... 🕯️❤️";
+
+                    }
+
+
+                    /*
+                       LAST CANDLE
+                    */
+
+                    if (
+                        candlesOff ===
+                        candles.length
+                    ) {
+
+                        cakeInstruction.textContent =
+                            "MAKE A WISH, BEAUTIFUL GIRL... ❤️✨";
+
+
+                        finalCandleSound();
+
+
+                        setTimeout(
+                            function () {
+
+                                startMegaCelebration();
+
+                            },
+                            180
+                        );
+
+                    }
+
                 }
+            );
+
+        }
+    );
 
 
-                candle.classList.add("off");
-
-                candlesOff++;
-
-
-                playSound(
-                    candleSound,
-                    0.5
-                );
-
-
-                createSmallSparkle(candle);
-
-
-                const remaining =
-                    candles.length - candlesOff;
-
-
-                if (remaining > 0) {
-
-                    cakeInstruction.textContent =
-                        remaining +
-                        " candle" +
-                        (
-                            remaining === 1
-                                ? ""
-                                : "s"
-                        ) +
-                        " left, sweetheart... 🕯️❤️";
-
-                }
-
-
-                if (
-                    candlesOff === candles.length
-                ) {
-
-                    cakeInstruction.textContent =
-                        "MAKE A WISH, BEAUTIFUL GIRL... ❤️✨";
-
-                    startMegaCelebration();
-
-                }
-
-            }
-        );
-
-    });
-
-
-    /* =========================
+    /* =========================================================
        SMALL SPARKLES
-    ========================== */
+    ========================================================= */
 
     function createSmallSparkle(candle) {
 
         const rect =
             candle.getBoundingClientRect();
+
 
         const symbols = [
             "✦",
@@ -288,13 +1429,21 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
 
-        for (let i = 0; i < 8; i++) {
+        for (
+            let i = 0;
+            i < 8;
+            i++
+        ) {
 
             const sparkle =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             sparkle.className =
                 "celebration-particle sparkle";
+
 
             sparkle.textContent =
                 symbols[
@@ -309,26 +1458,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 (
                     rect.left +
                     rect.width / 2
-                ) + "px";
+                ) +
+                "px";
+
 
             sparkle.style.top =
-                rect.top + "px";
+                rect.top +
+                "px";
 
 
             sparkle.style.fontSize =
                 (
                     12 +
                     Math.random() * 10
-                ) + "px";
+                ) +
+                "px";
 
 
-            document.body.appendChild(sparkle);
+            document.body.appendChild(
+                sparkle
+            );
 
 
             const x =
                 (
-                    Math.random() - .5
-                ) * 120;
+                    Math.random() - 0.5
+                ) *
+                120;
+
 
             const y =
                 -(
@@ -359,94 +1516,129 @@ document.addEventListener("DOMContentLoaded", function () {
                         600 +
                         Math.random() * 400,
 
-                    easing: "ease-out"
+                    easing:
+                        "ease-out"
                 }
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                sparkle.remove();
+                    sparkle.remove();
 
-            }, 1200);
+                },
+                1200
+            );
 
         }
 
     }
 
 
-    /* =========================
-       10 SECOND CELEBRATION
-    ========================== */
+    /* =========================================================
+       10 SECOND VISUAL CELEBRATION
+    ========================================================= */
 
     function startMegaCelebration() {
 
-        if (celebrationStarted) {
+        if (
+            celebrationStarted
+        ) {
             return;
         }
+
 
         celebrationStarted = true;
 
 
-        celebrationLayer.classList.add("active");
+        if (
+            celebrationLayer
+        ) {
 
-        startBirthdayMusic();
+            celebrationLayer.classList.add(
+                "active"
+            );
+
+        }
+
+
+        /*
+           AUDIO STARTS HERE.
+        */
+
+        startCelebrationAudio();
 
 
         createMegaBurst();
+
         createBalloonBurst();
+
         createPopperBurst();
+
         createFirework();
 
 
         const celebrationStart =
             Date.now();
 
+
         const celebrationDuration =
             10000;
 
 
-        const celebrationTimer =
-            setInterval(function () {
+        const celebrationVisualTimer =
+            setInterval(
+                function () {
 
-                const elapsed =
-                    Date.now() -
-                    celebrationStart;
-
-
-                if (
-                    elapsed >=
-                    celebrationDuration
-                ) {
-
-                    clearInterval(
-                        celebrationTimer
-                    );
-
-                    finishCelebration();
-
-                    return;
-                }
+                    const elapsed =
+                        Date.now() -
+                        celebrationStart;
 
 
-                createSparkleWave();
+                    if (
+                        elapsed >=
+                        celebrationDuration
+                    ) {
 
-                createConfettiBurst();
+                        clearInterval(
+                            celebrationVisualTimer
+                        );
 
-                createFirework();
 
-                createBalloonBurst();
+                        finishCelebration();
 
-                createPopperBurst();
+                        return;
 
-            }, 650);
+                    }
+
+
+                    /*
+                       VISUALS ONLY.
+
+                       No sound is triggered here.
+                    */
+
+                    createSparkleWave();
+
+                    createConfettiBurst();
+
+                    createFirework();
+
+                    createBalloonBurst();
+
+                    createPopperBurst();
+
+                },
+                650
+            );
 
     }
 
 
-    /* =========================
+    /* =========================================================
        MEGA BURST
-    ========================== */
+    ========================================================= */
 
     function createMegaBurst() {
 
@@ -461,10 +1653,17 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
 
-        for (let i = 0; i < 55; i++) {
+        for (
+            let i = 0;
+            i < 55;
+            i++
+        ) {
 
             const particle =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             particle.className =
                 "celebration-particle sparkle";
@@ -479,17 +1678,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 ];
 
 
-            particle.style.left = "50%";
-            particle.style.top = "50%";
+            particle.style.left =
+                "50%";
 
 
-            document.body.appendChild(particle);
+            particle.style.top =
+                "50%";
+
+
+            document.body.appendChild(
+                particle
+            );
 
 
             const angle =
                 Math.random() *
                 Math.PI *
                 2;
+
 
             const distance =
                 100 +
@@ -500,6 +1706,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const x =
                 Math.cos(angle) *
                 distance;
+
 
             const y =
                 Math.sin(angle) *
@@ -540,20 +1747,23 @@ document.addEventListener("DOMContentLoaded", function () {
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                particle.remove();
+                    particle.remove();
 
-            }, 2200);
+                },
+                2200
+            );
 
         }
 
     }
 
 
-    /* =========================
+    /* =========================================================
        SPARKLE WAVE
-    ========================== */
+    ========================================================= */
 
     function createSparkleWave() {
 
@@ -566,10 +1776,17 @@ document.addEventListener("DOMContentLoaded", function () {
         ];
 
 
-        for (let i = 0; i < 15; i++) {
+        for (
+            let i = 0;
+            i < 15;
+            i++
+        ) {
 
             const particle =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             particle.className =
                 "celebration-particle sparkle";
@@ -585,20 +1802,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             particle.style.left =
-                Math.random() * 100 + "%";
+                Math.random() *
+                100 +
+                "%";
+
 
             particle.style.top =
-                Math.random() * 100 + "%";
+                Math.random() *
+                100 +
+                "%";
 
 
             particle.style.fontSize =
                 (
                     12 +
-                    Math.random() * 25
-                ) + "px";
+                    Math.random() *
+                    25
+                ) +
+                "px";
 
 
-            document.body.appendChild(particle);
+            document.body.appendChild(
+                particle
+            );
 
 
             particle.animate(
@@ -622,25 +1848,29 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         900 +
-                        Math.random() * 800
+                        Math.random() *
+                        800
                 }
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                particle.remove();
+                    particle.remove();
 
-            }, 1800);
+                },
+                1800
+            );
 
         }
 
     }
 
 
-    /* =========================
+    /* =========================================================
        CONFETTI
-    ========================== */
+    ========================================================= */
 
     function createConfettiBurst() {
 
@@ -658,15 +1888,23 @@ document.addEventListener("DOMContentLoaded", function () {
             Math.random() *
             window.innerWidth;
 
+
         const y =
             window.innerHeight *
-            .1;
+            0.1;
 
 
-        for (let i = 0; i < 18; i++) {
+        for (
+            let i = 0;
+            i < 18;
+            i++
+        ) {
 
             const piece =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             piece.className =
                 "celebration-particle confetti";
@@ -682,23 +1920,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             piece.style.left =
-                x + "px";
+                x +
+                "px";
+
 
             piece.style.top =
-                y + "px";
+                y +
+                "px";
 
 
-            document.body.appendChild(piece);
+            document.body.appendChild(
+                piece
+            );
 
 
             const moveX =
                 (
-                    Math.random() - .5
-                ) * 350;
+                    Math.random() -
+                    0.5
+                ) *
+                350;
+
 
             const moveY =
                 250 +
-                Math.random() * 500;
+                Math.random() *
+                500;
 
 
             piece.animate(
@@ -724,27 +1971,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         1200 +
-                        Math.random() * 900,
+                        Math.random() *
+                        900,
 
-                    easing: "ease-out"
+                    easing:
+                        "ease-out"
                 }
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                piece.remove();
+                    piece.remove();
 
-            }, 2300);
+                },
+                2300
+            );
 
         }
 
     }
 
 
-    /* =========================
-       BALLOON POP
-    ========================== */
+    /* =========================================================
+       BALLOON BURST
+       VISUAL ONLY
+    ========================================================= */
 
     function createBalloonBurst() {
 
@@ -752,53 +2005,60 @@ document.addEventListener("DOMContentLoaded", function () {
             Math.random() *
             window.innerWidth;
 
+
         const y =
             100 +
             Math.random() *
             (
                 window.innerHeight *
-                .45
+                0.45
             );
 
 
-        playSound(
-            balloonSound,
-            0.45
-        );
-
-
         const particle =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         particle.className =
             "celebration-particle";
+
 
         particle.textContent =
             "🎈💥";
 
 
         particle.style.left =
-            x + "px";
+            x +
+            "px";
+
 
         particle.style.top =
-            y + "px";
+            y +
+            "px";
 
 
-        document.body.appendChild(particle);
+        document.body.appendChild(
+            particle
+        );
 
 
         particle.animate(
             [
                 {
-                    transform: "scale(.2)",
+                    transform:
+                        "scale(.2)",
                     opacity: 0
                 },
                 {
-                    transform: "scale(1.5)",
+                    transform:
+                        "scale(1.5)",
                     opacity: 1
                 },
                 {
-                    transform: "scale(0)",
+                    transform:
+                        "scale(0)",
                     opacity: 0
                 }
             ],
@@ -808,23 +2068,27 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            particle.remove();
+                particle.remove();
 
-        }, 900);
+            },
+            900
+        );
 
     }
 
 
-    /* =========================
+    /* =========================================================
        PARTY POPPER
-    ========================== */
+       VISUAL ONLY
+    ========================================================= */
 
     function createPopperBurst() {
 
         const x =
-            Math.random() < .5
+            Math.random() < 0.5
                 ? 80
                 : window.innerWidth - 80;
 
@@ -832,35 +2096,39 @@ document.addEventListener("DOMContentLoaded", function () {
         const y =
             window.innerHeight *
             (
-                .35 +
-                Math.random() * .3
+                0.35 +
+                Math.random() *
+                0.3
             );
 
 
-        playSound(
-            popperSound,
-            0.5
-        );
-
-
         const popper =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         popper.className =
             "celebration-particle";
+
 
         popper.textContent =
             "🎉";
 
 
         popper.style.left =
-            x + "px";
+            x +
+            "px";
+
 
         popper.style.top =
-            y + "px";
+            y +
+            "px";
 
 
-        document.body.appendChild(popper);
+        document.body.appendChild(
+            popper
+        );
 
 
         popper.animate(
@@ -887,10 +2155,17 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        for (let i = 0; i < 12; i++) {
+        for (
+            let i = 0;
+            i < 12;
+            i++
+        ) {
 
             const piece =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             piece.className =
                 "celebration-particle confetti";
@@ -904,19 +2179,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     "•"
                 ][
                     Math.floor(
-                        Math.random() * 4
+                        Math.random() *
+                        4
                     )
                 ];
 
 
             piece.style.left =
-                x + "px";
+                x +
+                "px";
+
 
             piece.style.top =
-                y + "px";
+                y +
+                "px";
 
 
-            document.body.appendChild(piece);
+            document.body.appendChild(
+                piece
+            );
 
 
             const direction =
@@ -930,14 +2211,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 direction *
                 (
                     80 +
-                    Math.random() * 250
+                    Math.random() *
+                    250
                 );
 
 
             const moveY =
                 (
-                    Math.random() - .5
-                ) * 250;
+                    Math.random() -
+                    0.5
+                ) *
+                250;
 
 
             piece.animate(
@@ -960,70 +2244,85 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         700 +
-                        Math.random() * 700,
+                        Math.random() *
+                        700,
 
-                    easing: "ease-out"
+                    easing:
+                        "ease-out"
                 }
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                piece.remove();
+                    piece.remove();
 
-            }, 1700);
+                },
+                1700
+            );
 
         }
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            popper.remove();
+                popper.remove();
 
-        }, 1000);
+            },
+            1000
+        );
 
     }
 
 
-    /* =========================
+    /* =========================================================
        FIREWORK
-    ========================== */
+       VISUAL ONLY
+    ========================================================= */
 
     function createFirework() {
 
         const x =
             10 +
-            Math.random() * 80;
+            Math.random() *
+            80;
+
 
         const y =
             15 +
-            Math.random() * 45;
-
-
-        playSound(
-            crackleSound,
-            0.45
-        );
+            Math.random() *
+            45;
 
 
         const firework =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
+
 
         firework.className =
             "celebration-particle crackle";
+
 
         firework.textContent =
             "💥";
 
 
         firework.style.left =
-            x + "%";
+            x +
+            "%";
+
 
         firework.style.top =
-            y + "%";
+            y +
+            "%";
 
 
-        document.body.appendChild(firework);
+        document.body.appendChild(
+            firework
+        );
 
 
         firework.animate(
@@ -1050,17 +2349,27 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            firework.remove();
+                firework.remove();
 
-        }, 700);
+            },
+            700
+        );
 
 
-        for (let i = 0; i < 20; i++) {
+        for (
+            let i = 0;
+            i < 20;
+            i++
+        ) {
 
             const spark =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             spark.className =
                 "celebration-particle sparkle";
@@ -1073,19 +2382,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     "✨"
                 ][
                     Math.floor(
-                        Math.random() * 3
+                        Math.random() *
+                        3
                     )
                 ];
 
 
             spark.style.left =
-                x + "%";
+                x +
+                "%";
+
 
             spark.style.top =
-                y + "%";
+                y +
+                "%";
 
 
-            document.body.appendChild(spark);
+            document.body.appendChild(
+                spark
+            );
 
 
             const angle =
@@ -1103,6 +2418,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const moveX =
                 Math.cos(angle) *
                 distance;
+
 
             const moveY =
                 Math.sin(angle) *
@@ -1138,59 +2454,139 @@ document.addEventListener("DOMContentLoaded", function () {
                 {
                     duration:
                         600 +
-                        Math.random() * 500,
+                        Math.random() *
+                        500,
 
-                    easing: "ease-out"
+                    easing:
+                        "ease-out"
                 }
             );
 
 
-            setTimeout(function () {
+            setTimeout(
+                function () {
 
-                spark.remove();
+                    spark.remove();
 
-            }, 1500);
+                },
+                1500
+            );
 
         }
 
     }
 
 
-    /* =========================
-       FINISH
-    ========================== */
+    /* =========================================================
+       FINISH CELEBRATION
+    ========================================================= */
 
     function finishCelebration() {
+
+        /*
+           Audio is stopped by its own
+           10-second timer.
+
+           This is just a safety call.
+        */
+
+        stopCelebrationAudio();
+
 
         createMegaBurst();
 
 
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            celebrationLayer.classList.remove("active");
+                if (
+                    celebrationLayer
+                ) {
 
-            birthdayPopup.classList.add("show");
+                    celebrationLayer.classList.remove(
+                        "active"
+                    );
 
-            cakeInstruction.textContent =
-                "Happy Birthday, beautiful girl. ❤️";
+                }
 
-        }, 900);
+
+                if (
+                    birthdayPopup
+                ) {
+
+                    birthdayPopup.classList.add(
+                        "show"
+                    );
+
+                }
+
+
+                if (
+                    cakeInstruction
+                ) {
+
+                    cakeInstruction.textContent =
+                        "Happy Birthday, beautiful girl. ❤️";
+
+                }
+
+            },
+            900
+        );
 
     }
 
 
-    /* =========================
+    /* =========================================================
        PAGE 3
-    ========================== */
+    ========================================================= */
 
-    get("page3-button").addEventListener(
-        "click",
-        function () {
+    const page3Button =
+        get("page3-button");
 
-            window.location.href =
-                "page3.html";
 
-        }
-    );
+    if (page3Button) {
+
+        page3Button.addEventListener(
+            "click",
+            function () {
+
+                unlockAudio();
+
+                uiClickSound();
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "page3.html";
+
+                    },
+                    120
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       INITIAL MUSIC BUTTON STATE
+    ========================================================= */
+
+    if (musicButton) {
+
+        /*
+           IMPORTANT:
+           Do NOT claim music is playing before
+           the browser has allowed audio.
+        */
+
+        musicButton.textContent =
+            "🔇";
+
+    }
 
 });
